@@ -1,0 +1,93 @@
+{% extends 'main.html' %}
+
+{% block title %}
+    Work
+{% endblock %}
+
+{% block content %}
+<div class="background-table" >
+    <div class="row mt-5">
+        <div class="col-10 m-auto">
+            {% include 'widgets/navbar.html' %}                
+            <div class="table-box">
+                <table class="table">
+                    <thead class="border-info">
+                        <tr>
+                        <th>#</th>
+                        <th>F.I.SH</th>
+                        <th>
+                                <div class="btn-group">
+                                    <button class="btn btn-light btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Tuman & Shaxar
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="#">Nurafshon sh</a></li>
+                                    </ul>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="btn-group">
+                                    <button class="btn btn-light btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Mahalalar
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="#">Bobur MFY</a></li>
+                                    </ul>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="btn-group">
+                                    <button class="btn btn-light btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Maktablar №
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="#">26-maktab</a></li>
+                                    </ul>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="btn-group">
+                                    <button class="btn btn-light btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Kollej №
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="#">Qibray moliya-iqtisodiyot kolleji</a></li>
+                                    </ul>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="btn-group">
+                                    <button class="btn btn-light btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Topshirgan OTM nomi
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="#">O’zbekiston milliy universiteti</a></li>
+                                    </ul>
+                                </div>
+                            </th>
+                            <th>Ish Joyi</th>
+                            <th>Telefon raqam</th>
+                            <th>Kun/Oy/Yil</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td><a href="{% url 'DCV' %}">Dilshod Bekzodov</a></td>
+                            <td>Nurafshon sh</td>
+                            <td>Bobur MFY</td>
+                            <td></td>
+                            <td>O‘rta CHirchiq axborot texnologiyalari va servis kasb-hunar kolleji</td>
+                            <td></td>
+                            <td>Artel MCHJ</td>
+                            <td>(+998) 33 265-65-65</td>
+                            <td>04/04/2004</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+        </div>
+    </div>
+</div>
+{% endblock %}

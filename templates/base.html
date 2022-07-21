@@ -1,0 +1,31 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block title %}
+    Home
+{% endblock %}
+{% block content %}
+
+    <div class="background">
+        {% include 'widgets/sidebar.html' %}
+        <div class="main">
+            <div class="chart">
+                <h1>Bu yilgi bitiruvchilar raqamlarda</h1>
+                <img src="{% static 'images/chart.png' %}" alt="">
+            </div>
+            <div class="tumanlar">
+                <h1>Toshkent vilotatini barcha tumanlar</h1>
+                <ul id="tuman">
+                    <li><a href="{% url 'D' %}">Angeren sh</a></li>
+                    <li><a href="#">Nurafshon sh</a></li>
+                    <li><a href="#">Ohangoron sh</a></li>
+                    <li><a href="#">Piskent tuman</a></li>
+                    <li><a href="#">Bo'ka tuman</a></li>
+                    <li><a href="#">Olmaliq sh</a></li>
+                    <li><a href="#">Bekobod sh</a></li>
+                    <li><a href="#">O'rta chirchiq tuman</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
