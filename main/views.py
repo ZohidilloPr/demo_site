@@ -1,5 +1,9 @@
-from django.shortcuts import render
+from urllib import request
+from django.shortcuts import redirect, render
 
+from .models import Mahalla
+from .models import Maktab as MK
+from .forms import MaktabForm
 # Create your views here.
 list = [1, 2, 3, 4, 5]
 
@@ -68,3 +72,27 @@ def Dilshod_(request):
 
 def Jasur_(request):
     return render(request, 'pages2/cv/jasur.html')
+
+# Add Sections
+
+def DataAdd(request):
+    return render(request, 'pages/data-add.html')
+
+def MaktabAdd(request):
+    if request.method == "POST":
+        form = MaktabForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("MBA")
+    form = MaktabForm
+    return render(request, 'forms/add/maktabAdd.html', {"form":form})
+
+def load_mahalla(request):
+    tuman_id = request.GET.get('tuman_id')
+    mahalla = Mahalla.objects.filter(tuman_id=tuman_id).order_by('name')
+    return render(request, 'loads/load_mahalla_list.html', {"mahalla":mahalla})
+
+def load_maktab(request):
+    tuman_id = request.GET.get('tuman_id')
+    maktab = MK.objects.filter(tuman_id=tuman_id).order_by("name")
+    return render(request, 'loads/load_maktab_list.html', {"maktab" : maktab})

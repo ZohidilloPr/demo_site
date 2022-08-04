@@ -1,0 +1,22 @@
+{% extends "../main.html" %}
+
+{% block title %}
+    Malumot qo'shish
+{% endblock title %}
+
+{% block content %}
+
+    <div class="background h-100">
+        {% include '../widgets/sidebar.html' %}              
+        <div class="main">
+            <div class="tumanlar">
+                <ul id="tuman">
+                    <li><a href="{% url 'MBA' %}">Maktab Bitiruvchilari</a></li>
+                    <li><a href="#">Kollej Bitiruvchilari</a></li>
+                    <li><a href="#">Universitet Bitiruvchilari</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}

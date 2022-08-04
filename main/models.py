@@ -1,3 +1,105 @@
 from django.db import models
-
 # Create your models here.
+
+
+l = 300
+
+t_sh = (
+    ("tuman", "tuman"),
+    ("shahar", "shahar"),
+)
+
+yesNo = (
+    ("Bor", "Bor"),
+    ("Yoq", "Yoq"),
+)
+
+class AutoTime(models.Model):
+    name = models.CharField(max_length=l, verbose_name="Nomi")
+    add_time = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.name
+
+class TumanVaShahar(AutoTime):
+    status = models.CharField(max_length=l, choices=t_sh, default="shaxar")
+
+    def __str__(self):
+        return f"{super().name} {self.status}"
+
+class Mahalla(AutoTime):
+    tuman = models.ForeignKey(TumanVaShahar, on_delete=models.CASCADE, verbose_name="Qaysi tuman")
+
+    def __str__(self):
+        return f"{super().__str__()} MFY"
+
+class Maktab(AutoTime):
+    tuman = models.ForeignKey(TumanVaShahar, on_delete=models.CASCADE, verbose_name="Qaysi tuman")
+    status = models.CharField(max_length=l, default="maktab", null=True)
+
+    def __str__(self):
+        return f"{super().name}-{self.status}"
+
+
+class Kollej(AutoTime):
+    tuman = models.ForeignKey(TumanVaShahar, on_delete=models.CASCADE, verbose_name="Qaysi tuman")
+
+    def __str__(self):
+        return super().__str__()
+
+class Universitet(AutoTime):
+    tuman = models.ForeignKey(TumanVaShahar, on_delete=models.CASCADE, verbose_name="Qaysi tuman")
+
+    def __str__(self):
+        return super().__str__()
+
+class Qiziqish(AutoTime):
+
+    def __str__(self):
+        return super().__str__()
+
+class Imkonyat(AutoTime):
+
+    def __str__(self):
+        return super().__str__()
+
+class ChetTili(AutoTime):
+    
+    def __str__(self):
+        return super().__str__()
+
+class Bitiruvchi(models.Model):
+    f_name = models.CharField(max_length=l, verbose_name="F.I.Sh")
+    t_sana = models.DateField(verbose_name="Tug'ulgan sana")
+    phone = models.CharField(max_length=9, verbose_name="(+998) ")
+    email = models.EmailField(max_length=l, verbose_name="E-Pochta", null=True)
+    tuman = models.ForeignKey(TumanVaShahar, on_delete=models.CASCADE, verbose_name="Yashaydigan tuman(shahar)")
+    mahalla = models.ForeignKey(Mahalla, on_delete=models.CASCADE, verbose_name="Mahalla Nomi")
+    imkonyat = models.ManyToManyField(Imkonyat, related_name="abilty", verbose_name="Qoshimcha bilimi")
+    qiziqish = models.ManyToManyField(Qiziqish, related_name="interest")
+    chettili = models.ManyToManyField(ChetTili, related_name="f_lang")
+    guvohnoma = models.CharField(verbose_name="Haydovchilik Guvohnomasi", max_length=l, choices=yesNo, default="Yoq")
+    idea = models.CharField(verbose_name="Biznes g'oya", max_length=l, choices=yesNo, default="Yoq")
+
+    def __str__(self):
+        return self.f_name
+
+class MaktabBitiruvchisi(Bitiruvchi):
+    maktab = models.ForeignKey(Maktab, on_delete=models.CASCADE, verbose_name="Bitirayotgan maktab")
+
+    def __str__(self):
+        return super().__str__()
+
+class KollejBitiruvchisi(Bitiruvchi):
+    kollej = models.ForeignKey(Kollej, on_delete=models.CASCADE, verbose_name="Bitirayotgan Kollej")
+
+    def __str__(self):
+        return super().__str__()
+
+class UniversitetBitiruvchisi(Bitiruvchi):
+    universitet = models.ForeignKey(Universitet, on_delete=models.CASCADE, verbose_name="Bitirayotgan OTM")
+
+    def __str__(self):
+        return super().__str__()
+
+

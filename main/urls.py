@@ -20,6 +20,10 @@ from .views import (
     Bekzod_, 
     Dilshod_, 
     Jasur_,
+    MaktabAdd,
+    load_mahalla,
+    load_maktab,
+    DataAdd,
 )
 urlpatterns = [
     path("", Home, name="H"),
@@ -42,4 +46,8 @@ urlpatterns = [
     path("bekzod_/", Bekzod_, name="BeCV_"),
     path("dilshod_/", Dilshod_, name="DCV_"),
     path("jasur_/", Jasur_, name="JCV_"),
+    path("data/new/add/", DataAdd, name="DA"),
+    path("bitiruvchi/maktab/new/add/", MaktabAdd, name="MBA"),
+    path("ajax/load/mahalla/list", load_mahalla, name="ALM"),
+    path("ajax/load/maktab/list", load_maktab, name="ALMa"),
 ]
