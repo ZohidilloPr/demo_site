@@ -6,7 +6,7 @@
             <a href="{% url 'H' %}" class="btn btn-outline-primary">Diagramma</a>
         </li>
         <li class="nav-item">
-            <a href="{% url 'T' %}" class="nav-link active-nav">Hammasi</a>
+            <a href="{% url 'T' %}" class="nav-link active">Hammasi</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{% url 'M' %}">Matab</a>
@@ -31,3 +31,9 @@
       </ul>
     </div>
 </nav>
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script>
+    $(document).on("click", " ul li", function(){
+        $(this).addClass("active").siblings().removeClass("active");
+    })
+</script>

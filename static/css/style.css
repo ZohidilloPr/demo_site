@@ -48,8 +48,9 @@ table tbody{
 }
 table tbody tr td a{
     color: darkcyan;
+    text-decoration: none;
 }
-table tbody tr td a:hover{
+table tbody tr td a:hover, .active-td{
     color: darkcyan;
     text-decoration: underline;
 }
@@ -93,6 +94,7 @@ thead tr th{
     /* background: linear-gradient(rgba(255, 255, 255, 0.1), rgba(0,0, 0, 0.4)), url(""); */
 }
 .background-table{
+    height: 100vh;
     background-image: url("https://catherineasquithgallery.com/uploads/posts/2021-03/1614603227_28-p-fon-dlya-prezentatsii-s-belim-fonom-33.png");
 }
 #sidebar{
