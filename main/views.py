@@ -1,9 +1,13 @@
-from urllib import request
 from django.shortcuts import redirect, render
 
 from .models import Mahalla
 from .models import Maktab as MK
-from .forms import MaktabForm
+from .models import Kollej as KJ
+from .forms import (
+    MaktabForm,
+    KollejForm,
+    UniversitetForm,
+)
 # Create your views here.
 list = [1, 2, 3, 4, 5]
 
@@ -96,3 +100,26 @@ def load_maktab(request):
     tuman_id = request.GET.get('tuman_id')
     maktab = MK.objects.filter(tuman_id=tuman_id).order_by("name")
     return render(request, 'loads/load_maktab_list.html', {"maktab" : maktab})
+
+def KollejAdd(request):
+    if request.method == "POST":
+        form = KollejForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("KBA")
+    form = KollejForm
+    return render(request, 'forms/add/kollejAdd.html', {"form":form})
+
+def load_kollej(request):
+    tuman_id = request.GET.get("tuman_id")
+    kollej = KJ.objects.filter(tuman_id=tuman_id).order_by('name')
+    return render(request, 'loads/load_kollej_list.html', {"kollej":kollej})
+
+def UniversitetAdd(request):
+    if request.method == "POST":
+        form = UniversitetForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("UBA")
+    form = UniversitetForm
+    return render(request, 'forms/add/universitetAdd.html', {"form":form})

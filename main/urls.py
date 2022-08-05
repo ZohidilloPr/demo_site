@@ -24,6 +24,9 @@ from .views import (
     load_mahalla,
     load_maktab,
     DataAdd,
+    KollejAdd,
+    load_kollej,
+    UniversitetAdd,
 )
 urlpatterns = [
     path("", Home, name="H"),
@@ -48,6 +51,9 @@ urlpatterns = [
     path("jasur_/", Jasur_, name="JCV_"),
     path("data/new/add/", DataAdd, name="DA"),
     path("bitiruvchi/maktab/new/add/", MaktabAdd, name="MBA"),
+    path("bitiruvchi/kollej/new/add/", KollejAdd, name="KBA"),
+    path("bitiruvchi/universitet/new/add/", UniversitetAdd, name="UBA"),
     path("ajax/load/mahalla/list", load_mahalla, name="ALM"),
     path("ajax/load/maktab/list", load_maktab, name="ALMa"),
+    path("ajax/load/kollej/list", load_kollej, name="ALK"),
 ]

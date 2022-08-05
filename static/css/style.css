@@ -84,7 +84,8 @@ thead tr th{
     font-size: 25px;
     font-family: serif;
 }
-.background, .background-table{
+.background, .background-table, .data-bg{
+    height: auto;
     padding: 50px 0;
     scrollbar-width: none;
     background-size: cover;
@@ -93,6 +94,9 @@ thead tr th{
     background-image: url("https://img.freepik.com/premium-vector/white-abstract-background-in-3d-paper-style_23-2148403778.jpg?w=2000");
     /* background: linear-gradient(rgba(255, 255, 255, 0.1), rgba(0,0, 0, 0.4)), url(""); */
 }
+.data-bg{
+    height: 100vh;
+}
 .background-table{
     height: 100vh;
     background-image: url("https://catherineasquithgallery.com/uploads/posts/2021-03/1614603227_28-p-fon-dlya-prezentatsii-s-belim-fonom-33.png");
@@ -100,7 +104,7 @@ thead tr th{
 #sidebar{
     top: 0;
     left: 0;
-    width: 23%;
+    width: 20%;
     height: 100vh;
     position: fixed;
     background-color: #3F4C5C;
@@ -170,9 +174,16 @@ thead tr th{
     text-align: center;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
+
 .tumanlar ul {
     display: grid;
     grid-template-columns: auto auto auto;
+}
+.tumanlar #data{
+    display: inline-flex;
+}
+#data li{
+    margin-right: 45px;
 }
 .tumanlar ul li{
     margin-top: 25px;
@@ -184,6 +195,7 @@ thead tr th{
     height: 250px;
     display: flex;
     padding: 10px;
+    border-radius: 15px;
     transition: 0.5s;
     color: aliceblue;
     text-align: center;

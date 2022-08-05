@@ -6,14 +6,16 @@
 
 {% block content %}
 
-    <div class="background h-100">
+    <div class="data-bg">
         {% include '../widgets/sidebar.html' %}              
         <div class="main">
             <div class="tumanlar">
-                <ul id="tuman">
+                <ul id="data">
                     <li><a href="{% url 'MBA' %}">Maktab Bitiruvchilari</a></li>
-                    <li><a href="#">Kollej Bitiruvchilari</a></li>
-                    <li><a href="#">Universitet Bitiruvchilari</a></li>
+                    <li><a href="{% url 'KBA' %}">Kollej Bitiruvchilari</a></li>
+                </ul>
+                <ul>
+                    <li><a href="{% url 'UBA' %}">Universitet Bitiruvchilari</a></li>
                 </ul>
             </div>
         </div>
