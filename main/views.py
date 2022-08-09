@@ -1,6 +1,13 @@
 from django.shortcuts import redirect, render
 
-from .models import Mahalla
+from .models import (
+    Mahalla, 
+    TumanVaShahar, 
+    MaktabBitiruvchisi, 
+    KollejBitiruvchisi, 
+    UniversitetBitiruvchisi,
+    )
+
 from .models import Maktab as MK
 from .models import Kollej as KJ
 from .forms import (
@@ -16,31 +23,68 @@ list = [1, 2, 3, 4, 5]
 def Home(request):
     return render(request, 'base.html')
 
-def Districts(request):
-    return render(request, "pages2/tumanlar.html")    
+def Districts(request, pk):
+    d = TumanVaShahar.objects.get(pk=pk)
+    maktab = MK.objects.filter(tuman=pk).all()
+    all_d = TumanVaShahar.objects.all().order_by('name')
+    return render(request, "pages2/tumanlar.html", {
+        'd':d,
+        'pk':pk,
+        'maktab':maktab,
+        'all_d':all_d,
+    })    
 
-def Schools(request):
-    return render(request, "pages2/maktab/maktab.html", context={"list":list}) 
+def Schools(request, pk):
+    maktab = MK.objects.get(pk=pk)
+    tuman_pk = MK.objects.get(pk=pk).tuman.pk
+    maktab_all = MK.objects.filter(tuman_id=tuman_pk)
+    kollej_all = KJ.objects.filter(tuman_id=tuman_pk)
+    student = MaktabBitiruvchisi.objects.filter(maktab=maktab.pk)
+    all_d = TumanVaShahar.objects.all().order_by('name')
+    return render(request, "pages2/maktab/maktab.html",{
+        'pk':pk,
+        'all_d': all_d,
+        'mk':maktab,
+        'student':student,
+        'all_mk':maktab_all,
+        'all_kj': kollej_all,
+    }) 
 
 # tables section
 
 def Table(request):
-    return render(request, 'index.html', {"list": list})
+    mk = MaktabBitiruvchisi.objects.all()
+    kj = KollejBitiruvchisi.objects.all()
+    un = UniversitetBitiruvchisi.objects.all()
+    return render(request, 'index.html', {
+        "mk": mk,
+        "kj": kj,
+        "un": un,
+    })
 
 def Maktab(request):
-    return render(request, "pages/maktab.html")
+    mk = MaktabBitiruvchisi.objects.all()
+    return render(request, "pages/maktab.html", {
+        'mk':mk,
+    })
 
 def Ish(request):
     return render(request, "pages/ish_.html")
 
 def Kollej(request):
-    return render(request, "pages/kollej.html")
+    kj = KollejBitiruvchisi.objects.all()
+    return render(request, "pages/kollej.html", {
+        'kj':kj,
+    })
 
 def OTM_Enter(request):
     return render(request, "pages/otm_topshirganlar.html")
 
 def OTM_Finish(request):
-    return render(request, "pages/otm_bitiruvchilari.html")
+    un = UniversitetBitiruvchisi.objects.all()
+    return render(request, "pages/otm_bitiruvchilari.html", {
+        'un':un,
+    })
 
 def Other(request):
     return render(request, "pages/boshqa.html")
@@ -76,6 +120,10 @@ def Dilshod_(request):
 
 def Jasur_(request):
     return render(request, 'pages2/cv/jasur.html')
+
+def AllDistricts(request):
+    all_d = TumanVaShahar.objects.all().order_by('name')
+    return render(request, 'pages2/all_tumanlar.html', {"all_d": all_d })
 
 # Add Sections
 

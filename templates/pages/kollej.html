@@ -35,7 +35,7 @@
                                         </ul>
                                     </div>
                                 </th>
-                                <th>
+                                <!-- <th>
                                     <div class="btn-group">
                                         <button class="btn btn-light btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         Maktablar №
@@ -44,7 +44,7 @@
                                             <li><a class="dropdown-item" href="#">26-maktab</a></li>
                                         </ul>
                                     </div>
-                                </th>
+                                </th> -->
                                 <th>
                                     <div class="btn-group">
                                         <button class="btn btn-light btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -55,7 +55,7 @@
                                         </ul>
                                     </div>
                                 </th>
-                                <th>
+                                <!-- <th>
                                     <div class="btn-group">
                                         <button class="btn btn-light btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         Topshirgan OTM nomi
@@ -65,60 +65,26 @@
                                         </ul>
                                     </div>
                                 </th>
-                                <th>Passport Id</th>
+                                <th>Passport Id</th> -->
                                 <th>Telefon raqam</th>
                                 <th>Kun/Oy/Yil</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td><a href="{% url 'BeCV' %}">Bekzod Umarov</a></td>
-                                <td>Angeren sh</td>
-                                <td>Ziyolilar MFY</td>
-                                <td></td>
-                                <td>Qibray moliya-iqtisodiyot kolleji</td>
-                                <td>O’zbekiston milliy universiteti</td>
-                                <td></td>
-                                <td>(+998) 33 265-65-65</td>
-                                <td>04/04/2004</td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td><a href="{% url 'JCV' %}">Jasur Umarov</a></td>
-                                <td>Angeren sh</td>
-                                <td>Ziyolilar MFY</td>
-                                <td></td>
-                                <td>Toshkent viloyat pedagogika kolleji</td>
-                                <td></td>
-                                <td></td>
-                                <td>(+998) 33 265-65-65</td>
-                                <td>04/04/2004</td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td><a href="{% url 'DCV' %}">Dilshod Bekzodov</a></td>
-                                <td>Nurafshon sh</td>
-                                <td>Bobur MFY</td>
-                                <td></td>
-                                <td>O‘rta CHirchiq axborot texnologiyalari va servis kasb-hunar kolleji</td>
-                                <td></td>
-                                <td>Artel MCHJ</td>
-                                <td>(+998) 33 265-65-65</td>
-                                <td>04/04/2004</td>
-                            </tr>
-                            <tr>
-                                <td>4</td>
-                                <td><a href="Be">Bekzod Bekzodov</a></td>
-                                <td>Nurafshon sh</td>
-                                <td>Uchqun MFY</td>
-                                <td></td>
-                                <td>O‘rta CHirchiq axborot texnologiyalari va servis kasb-hunar kolleji</td>
-                                <td></td>
-                                <td></td>
-                                <td>(+998) 33 265-65-65</td>
-                                <td>04/04/2004</td>
-                            </tr>
+                            {% for i in kj %}
+                                <tr>
+                                    <td>{{ i.pk }}</td>
+                                    <td><a href="{% url 'ACV' %}">{{ i.f_name }}</a></td>
+                                    <td>{{ i.tuman }}</td>
+                                    <td>{{ i.mahalla }}</td>
+                                    <!-- <td></td> -->
+                                    <td>{{ i.kollej }}</td>
+                                    <!-- <td>O’zbekiston milliy universiteti</td>
+                                    <td></td> -->
+                                    <td>{{ i.phone }}</td>
+                                    <td>{{ t.sana }}</td>
+                                </tr>
+                            {% endfor %}
                         </tbody>
                     </table>
                 </div>

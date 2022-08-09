@@ -1,53 +1,22 @@
 {% extends 'main.html' %}
 {% load static %}
-{% block titls %}
-    Districts
+{% block title %}
+    Tumanlar
 {% endblock %}
 {% block content %}
     <div class="background">
-        <div id="sidebar">
-            <div id="bar">
-                <ul>
-                    <li>
-                        <a href="{% url 'H' %}">Bosh sahifa</a>
-                    </li>
-                    <li>
-                        <a href="#tuman" class="active-sidebar text-dark">Tumanlar</a>
-                    </li>
-                    <li>
-                        <ol class="tm">
-                            <li><a href="{% url 'D' %}" class="text-dark">Angeren sh</a></li>
-                            <li><a href="#">Nurafshon sh</a></li>
-                            <li><a href="#">Ohangoron sh</a></li>
-                            <li><a href="#">Piskent tuman</a></li>
-                            <li><a href="#">Bo'ka tuman</a></li>
-                            <li><a href="#">Olmaliq sh</a></li>
-                            <li><a href="#">Bekobod sh</a></li>
-                            <li><a href="#">O'rta chirchiq tuman</a></li>
-                        </ol>
-                    </li>
-                    <li>
-                        <a href="{% url 'T' %}">Jadvallarda ko'rish</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
+        {% include "../widgets/sidebar.html" %}
         <div class="main">
             <div class="chart">
-                <h1>Bu yilgi bitiruvchilar raqamlarda</h1>
+                <h1>Bu yilgi bitiruvchilar {{ d.name }} misolida</h1>
                 <img src="{% static 'images/chartTuman.png' %}" alt="">
             </div>
             <div class="tumanlar">
-                <h1>Tumandagi barcha ta'lim muassasalari</h1>
+                <h1>{{ d }}dagi barcha ta'lim muassasalari</h1>
                 <ul id="tuman">
-                    <li><a href="{% url 'S' %}">26-umumiy o'rta ta'lim maktabi </a></li>
-                    <li><a href="#">27-umumiy o'rta ta'lim maktabi </a></li>
-                    <li><a href="#">49-umumiy o'rta ta'lim maktabi </a></li>
-                    <li><a href="#">Angren kimyo sanoati kasb-hunar kolleji</a></li>
-                    <li><a href="#">Angren ko‘mir sanoati kasb-hunar kolleji</a></li>
-                    <li><a href="#">Angren avtomatika va servis kasb-hunar kolleji (Angren sanoat va xizmat ko‘rsatish KXK)</a></li>
-                    <li><a href="#">Angren iqtisodiyot va tadbirkorlik kasb-hunar kolleji (Angren xizmat ko‘rsatish KXK)</a></li>
-                    <li><a href="#">Angren politexnika kasb-hunar kolleji</a></li>
+                    {% for i in maktab %}  
+                        <li><a href="{% url 'S' pk=i.pk %}">{{ i }}</a></li>
+                    {% endfor %}
                 </ul>
             </div>
         </div>

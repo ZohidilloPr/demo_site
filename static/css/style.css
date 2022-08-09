@@ -144,6 +144,8 @@ thead tr th{
     /* border: 1px solid darkcyan; */
 }
 .main .chart img{
+    width: 1000px;
+    height: 600px;
     transition: 1s ease-in;
     border: 1px solid #3F4C5C;
     box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;

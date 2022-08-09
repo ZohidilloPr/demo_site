@@ -14,6 +14,11 @@ yesNo = (
     ("Yoq", "Yoq"),
 )
 
+sinf = (
+    ("9-sinf", "9-sinf"),
+    ("11-sinf", "11-sinf"),
+)
+
 class AutoTime(models.Model):
     name = models.CharField(max_length=l, verbose_name="Nomi")
     add_time = models.DateTimeField(auto_now_add=True)
@@ -26,6 +31,9 @@ class TumanVaShahar(AutoTime):
 
     def __str__(self):
         return f"{super().name} {self.status}"
+    
+    def all_maktab(self):
+        return self.maktab_set.all()
 
 class Mahalla(AutoTime):
     tuman = models.ForeignKey(TumanVaShahar, on_delete=models.CASCADE, verbose_name="Qaysi tuman")
@@ -84,20 +92,25 @@ class Bitiruvchi(models.Model):
     def __str__(self):
         return self.f_name
 
+    
+
 class MaktabBitiruvchisi(Bitiruvchi):
     maktab = models.ForeignKey(Maktab, on_delete=models.CASCADE, verbose_name="Bitirayotgan maktab")
+    sinf = models.CharField(max_length=l, choices=sinf, default='9-sinf', verbose_name="Sinf")
+    univer_sity = models.CharField(max_length=l, verbose_name="Topshirmoqchi bo'lgan universitet")
 
     def __str__(self):
         return super().__str__()
 
 class KollejBitiruvchisi(Bitiruvchi):
     kollej = models.ForeignKey(Kollej, on_delete=models.CASCADE, verbose_name="Bitirayotgan Kollej")
+    univer_sity = models.CharField(max_length=l, verbose_name="Topshirmoqchi bo'lgan universitet", null=True, blank=True)
 
     def __str__(self):
         return super().__str__()
 
 class UniversitetBitiruvchisi(Bitiruvchi):
-    universitet = models.ForeignKey(Universitet, on_delete=models.CASCADE, verbose_name="Bitirayotgan OTM")
+    universitet = models.ForeignKey(Universitet, on_delete=models.CASCADE, verbose_name="Bitirayotgan OTM", null=True, blank=True)
 
     def __str__(self):
         return super().__str__()
