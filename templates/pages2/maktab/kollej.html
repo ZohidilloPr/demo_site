@@ -1,14 +1,14 @@
 {% extends 'main.html' %}
 {% load static %}
 {% block title %}
-    {{ mk }}
+    {{ kj }}
 {% endblock %}
 {% block content %}
     <div class="background">
         {% include "../../widgets/sidebar.html" %}
         <div class="main">
             <div class="chart">
-                <h1>Bu yilgi  bitiruvchilar {{ mk }} misolida</h1>
+                <h1>Bu yilgi  bitiruvchilar " {{ kj }} " misolida</h1>
                 <canvas id="maktab"></canvas>
             </div>
             <div class="jadval my-5">
@@ -26,14 +26,14 @@
                         {% for i in student %}
                             <tr>
                                 <td>{{ forloop.counter }}</td>
-                                <td><a href="{% url 'RM' pk=i.pk %}">{{ i.f_name }}</a></td>
+                                <td><a href="">{{ i.f_name }}</a></td>
                                 <td>(+998) {{ i.phone }}</td>
                                 <td>{{ i.mahalla }}</td>
                                 <td>O’zbekiston milliy universiteti</td>
                             </tr>
                         {% empty %}
                             <tr>
-                                <th>Hozirda talabalar yoq! Malumotlarni to'ldirish kerak <a href="{% url 'MBA' %}">link</a></th>
+                                <th>Hozirda talabalar yoq! Malumotlarni to'ldirish kerak <a href="{% url 'KBA' %}">link</a></th>
                             </tr>
                         {% endfor %}
                     </tbody>
@@ -46,7 +46,7 @@
                         <li><a href="{% url 'S' pk=i.pk %}">{{ i }}</a></li>
                     {% endfor %}
                     {% for i in all_kj %}
-                        <li><a href="{% url 'KD' pk=i.pk %}">{{ i }}</a></li>
+                        <li><a href="#">{{ i }}</a></li>
                     {% endfor %}
                 </ul>
                 
@@ -59,27 +59,29 @@
         const maktabChart = new Chart(maktab, {
             type: 'bar',
             data: {
-                labels : ['9-sinf bitiruvchilari', '11-sinf bitiruvchilari', 'O\'g\'il bolalar', 'qiz bolalar'],
+                labels : ['O\'g\'il bolalar', 'qiz bolalar'],
                 datasets : [{
                     label: '',
-                    data: ['{{ gra_11 }}', '{{ gra_9 }}', '{{ boys }}', '{{ grils }}'],
+                    data: ['{{ boys }}', '{{ grils }}'],
+                    fill: false,
                     backgroundColor: [
                         'rgba(5, 140, 145, 0.47)', 
                         'rgba(9, 57, 142, 0.45)',
-                        'rgba(8, 140, 78, 0.5)',
-                        'rgba(8, 140, 78, 0.5)',
+                        // 'rgba(8, 140, 78, 0.5)',
+                        // 'rgba(8, 140, 78, 0.5)',
                     ],
                     borderColor: [
                         'rgba(5, 140, 145, 1)',
                         'rgba(9, 57, 142, 1)',
-                        'rgba(8, 140, 78, 1)',
-                        'rgba(8, 140, 78, 1)',
+                        // 'rgba(8, 140, 78, 1)',
+                        // 'rgba(8, 140, 78, 1)',
                     ],
                     borderWidth: 1,
                     hoverOffset: 10,
                 }]
             },
             options: {
+                indexAxis: 'y',
                 scales:{
                     y:{
                         beginAtZone :true

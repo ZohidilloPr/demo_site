@@ -10,7 +10,8 @@
         <div class="main">
             <div class="chart">
                 <h1>Bu yilgi bitiruvchilar raqamlarda</h1>
-                <img src="{% static 'images/chart.png' %}" alt="">
+                <!-- <img src="{% static 'images/chart.png' %}" alt=""> -->
+                <canvas id="toshvil"></canvas>
             </div>
             <!-- <div class="tumanlar">
                 <h1>Toshkent vilotatini barcha tumanlar</h1>
@@ -22,5 +23,44 @@
             </div> -->
         </div>
     </div>
-
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <script>
+        const toshvil = document.getElementById("toshvil").getContext("2d");
+        const vilChart = new Chart(toshvil, {
+            type: 'bar',
+            data: {
+                labels : ['Universitet bitiruvchilari', 'Professional ta\'lim bitiruvchilari', 'Maktab bitiruvchilari'],
+                datasets : [{
+                    label: '',
+                    axis: 'y',
+                    data: ['{{ unb }}', '{{ kjb }}', '{{ mkb }}'],
+                    fill: false,
+                    backgroundColor: [
+                        'rgba(5, 140, 145, 0.47)', 
+                        'rgba(9, 57, 142, 0.45)',
+                        'rgba(8, 140, 78, 0.5)',
+                    ],
+                    borderColor: [
+                        'rgba(5, 140, 145, 1)',
+                        'rgba(9, 57, 142, 1)',
+                        'rgba(8, 140, 78, 1)',
+                    ],
+                    borderWidth: 1,
+                    hoverOffset: 10,
+                }]
+            },
+            options: {
+                scales:{
+                    y:{
+                        beginAtZone :true,
+                    },
+                    x:{
+                        grid:{
+                            offset: true,
+                        },
+                    }
+                }
+            }
+        })
+    </script>
 {% endblock %}

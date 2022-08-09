@@ -2,7 +2,9 @@ from django.urls import path
 from .views import (
     Ish,
     Home,
+    KollejD,
     Other,
+    ResumeMaktab,
     Table,
     Maktab,
     Kollej,
@@ -47,9 +49,12 @@ urlpatterns = [
     path("bekzod_/", Bekzod_, name="BeCV_"),
     path("dilshod_/", Dilshod_, name="DCV_"),
     path("jasur_/", Jasur_, name="JCV_"),
+    # news 
+    path("tuman/maktab/bitiruvchi/<pk>/", ResumeMaktab, name="RM"),
     path("tuman/<pk>/", Districts, name="D"),
     path("tumanlar/all/", AllDistricts, name="AD"),
     path("tumanlar/maktablar/<pk>/", Schools, name="S"),
+    path("tumanlar/kollejlar/<pk>/", KollejD, name="KD"),
     path("table/", Table, name="T"),
     path("data/new/add/", DataAdd, name="DA"),
     path("bitiruvchi/maktab/new/add/", MaktabAdd, name="MBA"),

@@ -21,17 +21,32 @@ list = [1, 2, 3, 4, 5]
 # diagramm section
 
 def Home(request):
-    return render(request, 'base.html')
+    mkb = MaktabBitiruvchisi.objects.all().count()
+    kjb = KollejBitiruvchisi.objects.all().count()
+    unb = UniversitetBitiruvchisi.objects.all().count()
+    return render(request, 'base.html', {
+        'mkb':mkb,
+        'kjb':kjb,
+        'unb':unb,
+    })
 
 def Districts(request, pk):
     d = TumanVaShahar.objects.get(pk=pk)
     maktab = MK.objects.filter(tuman=pk).all()
+    kollej_all = KJ.objects.filter(tuman_id=pk)
     all_d = TumanVaShahar.objects.all().order_by('name')
+    mkb = MaktabBitiruvchisi.objects.filter(tuman_id=pk).count()
+    kjb = KollejBitiruvchisi.objects.filter(tuman_id=pk).count()
+    unb = UniversitetBitiruvchisi.objects.filter(tuman_id=pk).count()    
     return render(request, "pages2/tumanlar.html", {
         'd':d,
         'pk':pk,
         'maktab':maktab,
         'all_d':all_d,
+        'mkb':mkb,
+        'kjb':kjb,
+        'unb':unb,
+        'all_kj':kollej_all,
     })    
 
 def Schools(request, pk):
@@ -39,17 +54,51 @@ def Schools(request, pk):
     tuman_pk = MK.objects.get(pk=pk).tuman.pk
     maktab_all = MK.objects.filter(tuman_id=tuman_pk)
     kollej_all = KJ.objects.filter(tuman_id=tuman_pk)
-    student = MaktabBitiruvchisi.objects.filter(maktab=maktab.pk)
     all_d = TumanVaShahar.objects.all().order_by('name')
+    student = MaktabBitiruvchisi.objects.filter(maktab=maktab.pk)
+    gra_9 = MaktabBitiruvchisi.objects.filter(maktab=pk, sinf="9-sinf").count()
+    gra_11 = MaktabBitiruvchisi.objects.filter(maktab=pk, sinf="11-sinf").count()
+    grils = MaktabBitiruvchisi.objects.filter(maktab=pk, jins="qiz bola").count()
+    boys = MaktabBitiruvchisi.objects.filter(maktab=pk, jins="o'g'il bola").count()
     return render(request, "pages2/maktab/maktab.html",{
         'pk':pk,
-        'all_d': all_d,
         'mk':maktab,
+        'boys': boys,
+        'grils': grils,
+        'all_d': all_d,
+        'gra_9': gra_9,
+        'gra_11': gra_11,
         'student':student,
         'all_mk':maktab_all,
         'all_kj': kollej_all,
     }) 
 
+def KollejD(request, pk):
+    kollej = KJ.objects.get(pk=pk)
+    tuman_pk = kollej.tuman.pk
+    maktab_all = MK.objects.filter(tuman_id=tuman_pk)
+    kollej_all = KJ.objects.filter(tuman_id=tuman_pk)
+    all_d = TumanVaShahar.objects.all().order_by('name')
+    student = KollejBitiruvchisi.objects.filter(kollej=kollej.pk)
+    grils = KollejBitiruvchisi.objects.filter(kollej=pk, jins="qiz bola").count()
+    boys = KollejBitiruvchisi.objects.filter(kollej=pk, jins="o'g'il bola").count()
+    return render(request, 'pages2/maktab/kollej.html', {
+        'pk':pk,
+        'kj':kollej,
+        'boys':boys,
+        'all_d':all_d,
+        'grils': grils,
+        'student':student,
+        'all_mk':maktab_all,
+        'all_kj':kollej_all,
+
+    })
+
+def ResumeMaktab(request, pk):
+    maktab_b = MaktabBitiruvchisi.objects.get(pk=pk)
+    return render(request, 'cv/resume_maktab.html', {
+        'object': maktab_b,
+    })
 # tables section
 
 def Table(request):

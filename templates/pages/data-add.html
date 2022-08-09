@@ -6,10 +6,32 @@
 
 {% block content %}
 
-    <div class="data-bg">
+    <div class="background">
         {% include '../widgets/sidebar.html' %}              
         <div class="main">
             <div class="tumanlar">
+                <br>
+                <hr>
+                <br>
+                <ul id="data">
+                    <li><a href="#">Maktab</a></li>
+                    <li><a href="#">Kollej</a></li>
+                    <li><a href="#">Universitet</a></li>
+                </ul>
+                <br>
+                <hr>
+                <br>
+                <ul id="data">
+                    <li><a href="#">Qiziqishlar</a></li>
+                    <li><a href="#">Imkonyatlar</a></li>
+                    <li><a href="#">Chet tili</a></li>
+                </ul>
+                <ul>
+                    <li><a href="#">Mahalla</a></li>
+                </ul>
+                <br>
+                <hr>
+                <br>
                 <ul id="data">
                     <li><a href="{% url 'MBA' %}">Maktab Bitiruvchilari</a></li>
                     <li><a href="{% url 'KBA' %}">Kollej Bitiruvchilari</a></li>
@@ -17,6 +39,9 @@
                 <ul>
                     <li><a href="{% url 'UBA' %}">Universitet Bitiruvchilari</a></li>
                 </ul>
+                <br>
+                <hr>
+                <br>
             </div>
         </div>
     </div>

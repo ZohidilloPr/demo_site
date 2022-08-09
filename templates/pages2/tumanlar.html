@@ -8,8 +8,8 @@
         {% include "../widgets/sidebar.html" %}
         <div class="main">
             <div class="chart">
-                <h1>Bu yilgi bitiruvchilar {{ d.name }} misolida</h1>
-                <img src="{% static 'images/chartTuman.png' %}" alt="">
+                <h1>Bu yilgi bitiruvchilar {{ d }} misolida</h1>
+                <canvas id="tumanChart"></canvas>
             </div>
             <div class="tumanlar">
                 <h1>{{ d }}dagi barcha ta'lim muassasalari</h1>
@@ -17,8 +17,44 @@
                     {% for i in maktab %}  
                         <li><a href="{% url 'S' pk=i.pk %}">{{ i }}</a></li>
                     {% endfor %}
+                    {% for i in all_kj %}
+                        <li><a href="{% url 'KD' pk=i.pk %}">{{ i }}</a></li>
+                    {% endfor %}
                 </ul>
             </div>
         </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <script>
+        const tuman = document.getElementById("tumanChart").getContext("2d");
+        const tumanChart = new Chart(tuman, {
+            type: 'bar',
+            data: {
+                labels : ['Universitet bitiruvchilari', 'Professional ta\'lim bitiruvchilari', 'Maktab bitiruvchilari'],
+                datasets : [{
+                    label: '',
+                    data: ['{{ unb }}', '{{ kjb }}', '{{ mkb }}'],
+                    backgroundColor: [
+                        'rgba(5, 140, 145, 0.47)', 
+                        'rgba(9, 57, 142, 0.45)',
+                        'rgba(8, 140, 78, 0.5)',
+                    ],
+                    // borderColor: [
+                    //     'rgba(5, 140, 145, 1)',
+                    //     'rgba(9, 57, 142, 1)',
+                    //     'rgba(8, 140, 78, 1)',
+                    // ],
+                    // borderWidth: 1,
+                    hoverOffset: 10,
+                }]
+            },
+            options: {
+                scales:{
+                    y:{
+                        beginAtZone :true
+                    }
+                }
+            }
+        })
+    </script>
 {% endblock %}

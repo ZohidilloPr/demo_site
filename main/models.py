@@ -19,6 +19,11 @@ sinf = (
     ("11-sinf", "11-sinf"),
 )
 
+jins = (
+    ("o'g'il bola", "o'g'il bola"),
+    ("qiz bola", "qiz bola"),
+)
+
 class AutoTime(models.Model):
     name = models.CharField(max_length=l, verbose_name="Nomi")
     add_time = models.DateTimeField(auto_now_add=True)
@@ -88,6 +93,7 @@ class Bitiruvchi(models.Model):
     chettili = models.ManyToManyField(ChetTili, related_name="f_lang")
     guvohnoma = models.CharField(verbose_name="Haydovchilik Guvohnomasi", max_length=l, choices=yesNo, default="Yoq")
     idea = models.CharField(verbose_name="Biznes g'oya", max_length=l, choices=yesNo, default="Yoq")
+    jins = models.CharField(max_length=l, choices=jins, verbose_name="Jinsi", default="o'g'il bola")
 
     def __str__(self):
         return self.f_name
