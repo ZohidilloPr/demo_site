@@ -10,17 +10,8 @@
         <div class="main">
             <div class="chart">
                 <h1>Bu yilgi bitiruvchilar raqamlarda</h1>
-                <!-- <img src="{% static 'images/chart.png' %}" alt=""> -->
                 <canvas id="toshvil"></canvas>
             </div>
-            <!-- <div class="tumanlar">
-                <h1>Toshkent vilotatini barcha tumanlar</h1>
-                <ul id="tuman">
-                    {% for i in all_tumanlar %}
-                        <li><a href="{% url 'D' pk=i.pk %}">{{ i }}</a></li>
-                    {% endfor %}
-                </ul>
-            </div> -->
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>

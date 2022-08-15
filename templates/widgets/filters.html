@@ -1,0 +1,19 @@
+{% load widget_tweaks %}
+
+<div class="my-4 p-3 bg-shadow-a bg-light">
+    <form action="" method="get" novalidate>
+        <label for="id_tuman" class="mx-3">Tuman&Shahar</label>
+        {{ mkFil.form.tuman|add_class:"btn btn-outline-secondary btn-sm" }}
+        <label for="id_mahalla" class="mx-3">Mahalla</label>
+        {{ mkFil.form.mahalla|attr:"mahalla-queries-url:{% url 'ALM' %}"|add_class:"btn btn-outline-secondary btn-sm" }} {% comment %}|attr:"mahalla-queries-url:{% url 'ALM' %}" |attr:"maktab-queries-url:{% url 'ALMa' %}" {% endcomment %}
+        {% if mkFil.form.maktab %}
+            <label for="id_maktab" class="mx-3">Maktab №</label>  
+            {{ mkFil.form.maktab|add_class:"btn btn-outline-secondary btn-sm"}}
+        {% endif %}        
+        {% if mkfil.form.kollej %}
+            <label for="id_kollej" class="mx-3">Kollej №</label>  
+            {{ mkFil.form.kollej|add_class:"btn btn-outline-secondary btn-sm"}}
+        {% endif %}
+        <input type="submit" value="Qidirish" class="mx-3 btn btn-outline-dark text- btn-sm">
+    </form>
+</div>

@@ -225,6 +225,9 @@ thead tr th{
     box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
 
 }
+.bg-shadow-a{
+    box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+}
 .jadval::-webkit-scrollbar{
     display: none;
 }

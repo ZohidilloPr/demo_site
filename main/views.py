@@ -15,6 +15,12 @@ from .forms import (
     KollejForm,
     UniversitetForm,
 )
+
+from .filters import (
+    KollejFilter,
+    MaktabFilter,
+)
+
 # Create your views here.
 list = [1, 2, 3, 4, 5]
 
@@ -99,32 +105,46 @@ def ResumeMaktab(request, pk):
     return render(request, 'cv/resume_maktab.html', {
         'object': maktab_b,
     })
+
 # tables section
 
 def Table(request):
     mk = MaktabBitiruvchisi.objects.all()
     kj = KollejBitiruvchisi.objects.all()
     un = UniversitetBitiruvchisi.objects.all()
+    all_object = {}
+    all_object.update(mk.__dict__)
+    all_object.update(kj.__dict__)
+    all_object.update(un.__dict__)
+     
     return render(request, 'index.html', {
         "mk": mk,
         "kj": kj,
         "un": un,
+        "a_obj":all_object,
     })
 
 def Maktab(request):
     mk = MaktabBitiruvchisi.objects.all()
+    mkFilter = MaktabFilter(request.GET, queryset=mk)
+    mk = mkFilter.qs
     return render(request, "pages/maktab.html", {
         'mk':mk,
+        'mkFil':mkFilter,
+    })
+
+def Kollej(request):
+    kj = KollejBitiruvchisi.objects.all()
+    kjFilter = KollejFilter(request.GET, queryset=kj)
+    kj=kjFilter.qs
+    return render(request, "pages/kollej.html", {
+        'kj':kj,
+        'mkFil':kjFilter,
     })
 
 def Ish(request):
     return render(request, "pages/ish_.html")
 
-def Kollej(request):
-    kj = KollejBitiruvchisi.objects.all()
-    return render(request, "pages/kollej.html", {
-        'kj':kj,
-    })
 
 def OTM_Enter(request):
     return render(request, "pages/otm_topshirganlar.html")
@@ -137,6 +157,7 @@ def OTM_Finish(request):
 
 def Other(request):
     return render(request, "pages/boshqa.html")
+
 
 # cv section
 
@@ -151,6 +172,8 @@ def Bekzod(request):
 
 def Dilshod(request):
     return render(request, 'cv/dilshod.html')
+
+
 
 def Jasur(request):
     return render(request, 'cv/jasur.html')

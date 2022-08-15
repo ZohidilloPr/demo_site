@@ -35,7 +35,6 @@ urlpatterns = [
     path("", Home, name="H"),
     path("ish/", Ish, name="I"),
     path("other/", Other, name="O"),
-    path("maktab/", Maktab, name="M"),
     path("kollej/", Kollej, name="K"),
     path("enter/", OTM_Enter, name="E"),
     path("finish/", OTM_Finish, name="F"),
@@ -49,7 +48,10 @@ urlpatterns = [
     path("bekzod_/", Bekzod_, name="BeCV_"),
     path("dilshod_/", Dilshod_, name="DCV_"),
     path("jasur_/", Jasur_, name="JCV_"),
-    # news 
+
+    # new 
+    path("maktab/", Maktab, name="M"),
+
     path("tuman/maktab/bitiruvchi/<pk>/", ResumeMaktab, name="RM"),
     path("tuman/<pk>/", Districts, name="D"),
     path("tumanlar/all/", AllDistricts, name="AD"),

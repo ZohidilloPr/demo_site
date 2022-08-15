@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     'main.apps.MainConfig',
 
     #global apps
+    'widget_tweaks',
+    'django_filters',
     "django_bootstrap5",
 ]
 
