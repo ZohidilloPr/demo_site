@@ -1,15 +1,14 @@
-
 from django import forms
 from django.urls import reverse_lazy
 
 from .models import (
-    Imkonyat, 
-    KollejBitiruvchisi, 
-    Mahalla, 
-    MaktabBitiruvchisi, 
-    Maktab, 
     Kollej,
+    Maktab, 
+    Mahalla, 
+    Imkonyat, 
     Universitet,
+    KollejBitiruvchisi, 
+    MaktabBitiruvchisi, 
     UniversitetBitiruvchisi,
 )
 
@@ -128,9 +127,7 @@ class MaktabFilterForm(forms.Form):
                 self.fields['maktab'].queryset = Maktab.objects.filter(tuman_id=tuman_id).all()
             except (ValueError, TypeError):
                 pass
-        # elif self.instance.pk:
-        #     self.fields['mahalla'].queryset = self.instance.tuman.mahalla_set.all()
-        #     self.fields['maktab'].queryset = self.instance.tuman.maktab_set.all()
+
 
 class KollejFilterForm(forms.Form):
     def __init__(self, *args, **kwargs):
@@ -157,3 +154,24 @@ class UniversiterFilterForm(forms.Form):
                 self.fields['mahalla'].queryset = Mahalla.objects.filter(tuman_id=tuman_id).all()
             except (ValueError, TypeError):
                 pass
+
+class MaktabNameForm(forms.ModelForm):
+    class Meta:
+        model = Maktab
+        fields = '__all__'
+
+        # widgets = {
+        #     'status': forms.TextInput(attrs={
+        #         'hidden': 'true'
+        #     })
+        # }
+
+class KollejNameForm(forms.ModelForm):
+    class Meta:
+        model = Kollej
+        fields = '__all__'
+
+class UniversitetNameForm(forms.ModelForm):
+    class Meta:
+        model = Universitet
+        fields = '__all__'

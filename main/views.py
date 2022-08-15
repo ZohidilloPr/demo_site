@@ -1,7 +1,13 @@
+from multiprocessing import get_context
 from django.shortcuts import redirect, render
+from django.urls import reverse_lazy
 
 from .models import (
-    Mahalla, 
+    ChetTili,
+    Imkonyat,
+    Mahalla,
+    Qiziqish, 
+    Universitet,
     TumanVaShahar, 
     MaktabBitiruvchisi, 
     KollejBitiruvchisi, 
@@ -11,9 +17,12 @@ from .models import (
 from .models import Maktab as MK
 from .models import Kollej as KJ
 from .forms import (
+    KollejNameForm,
     MaktabForm,
     KollejForm,
+    MaktabNameForm,
     UniversitetForm,
+    UniversitetNameForm,
 )
 
 from .filters import (
@@ -22,8 +31,11 @@ from .filters import (
     UniversitetFilter,
 )
 
+from django.views.generic.edit import (
+    CreateView
+)
+
 # Create your views here.
-list = [1, 2, 3, 4, 5]
 
 # diagramm section
 
@@ -176,46 +188,8 @@ def OTM_Enter(request):
 def Ish(request):
     return render(request, "pages/ish_.html")
 
-
-
-
 def Other(request):
     return render(request, "pages/boshqa.html")
-
-
-# cv section
-
-def Akmal(request):
-    return render(request, 'cv/akmal.html')
-
-def Bekmatov(request):
-    return render(request, 'cv/bekmatov.html')
-
-def Bekzod(request):
-    return render(request, 'cv/bekzod.html')
-
-def Dilshod(request):
-    return render(request, 'cv/dilshod.html')
-
-
-
-def Jasur(request):
-    return render(request, 'cv/jasur.html')
-
-def Akmal_(request):
-    return render(request, 'pages2/cv/akmal.html')
-
-def Bekmatov_(request):
-    return render(request, 'pages2/cv/bekmatov.html')
-
-def Bekzod_(request):
-    return render(request, 'pages2/cv/bekzod.html')
-
-def Dilshod_(request):
-    return render(request, 'pages2/cv/dilshod.html')
-
-def Jasur_(request):
-    return render(request, 'pages2/cv/jasur.html')
 
 def AllDistricts(request):
     all_d = TumanVaShahar.objects.all().order_by('name')
@@ -235,6 +209,78 @@ def MaktabAdd(request):
     form = MaktabForm
     return render(request, 'forms/add/maktabAdd.html', {"form":form})
 
+def KollejAdd(request):
+    if request.method == "POST":
+        form = KollejForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("KBA")
+    form = KollejForm
+    return render(request, 'forms/add/kollejAdd.html', {"form":form})
+
+def UniversitetAdd(request):
+    if request.method == "POST":
+        form = UniversitetForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("UBA")
+    form = UniversitetForm
+    return render(request, 'forms/add/universitetAdd.html', {"form":form})
+
+class MaktabNameAddView(CreateView):
+    model = MK
+    template_name = 'forms/sections/add/maktabnameadd.html'
+    form_class = MaktabNameForm
+    success_url = reverse_lazy("MNAV")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['name'] = 'Maktab'
+        return context
+        
+class KollejNameAddView(CreateView):
+    model = KJ
+    template_name = 'forms/sections/add/kollejnameadd.html'
+    form_class = KollejNameForm
+    success_url = reverse_lazy("KNAV")
+
+class UniversitetNameAddView(CreateView):
+    model = Universitet
+    template_name = 'forms/sections/add/universitetnameadd.html'
+    form_class = UniversitetNameForm
+    success_url = reverse_lazy("UNAV")
+
+class QiziqishNameAddView(CreateView):
+    model = Qiziqish
+    fields = '__all__'
+    success_url = reverse_lazy("QNAV")
+    template_name = 'forms/sections/add/qiziqishnameadd.html'
+
+class ImkonyatNameAddView(CreateView):
+    model = Imkonyat
+    fields = '__all__'
+    success_url = reverse_lazy("INAV")
+    template_name = 'forms/sections/add/imkonyatnameadd.html'
+
+class ChetTiliNameAddView(CreateView):
+    model = ChetTili
+    fields = '__all__'
+    success_url = reverse_lazy("FNAV")
+    template_name = 'forms/sections/add/f_langnameadd.html'
+
+class MahallaNameAddView(CreateView):
+    model = Mahalla
+    fields = '__all__'
+    success_url = reverse_lazy("MNAV")
+    template_name = 'forms/sections/add/mahallanameadd.html'
+
+# AJAX SECTION
+
+def load_kollej(request):
+    tuman_id = request.GET.get("tuman_id")
+    kollej = KJ.objects.filter(tuman_id=tuman_id).order_by('name')
+    return render(request, 'loads/load_kollej_list.html', {"kollej":kollej})
+
 def load_mahalla(request):
     tuman_id = request.GET.get('tuman_id')
     mahalla = Mahalla.objects.filter(tuman_id=tuman_id).order_by('name')
@@ -245,25 +291,6 @@ def load_maktab(request):
     maktab = MK.objects.filter(tuman_id=tuman_id).order_by("name")
     return render(request, 'loads/load_maktab_list.html', {"maktab" : maktab})
 
-def KollejAdd(request):
-    if request.method == "POST":
-        form = KollejForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect("KBA")
-    form = KollejForm
-    return render(request, 'forms/add/kollejAdd.html', {"form":form})
 
-def load_kollej(request):
-    tuman_id = request.GET.get("tuman_id")
-    kollej = KJ.objects.filter(tuman_id=tuman_id).order_by('name')
-    return render(request, 'loads/load_kollej_list.html', {"kollej":kollej})
 
-def UniversitetAdd(request):
-    if request.method == "POST":
-        form = UniversitetForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect("UBA")
-    form = UniversitetForm
-    return render(request, 'forms/add/universitetAdd.html', {"form":form})
+

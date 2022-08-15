@@ -1,6 +1,9 @@
 body{
     overflow-x: hidden;
 }
+.hidden-over{
+    overflow-y: hidden;
+}
 nav{
     box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
 }
@@ -240,6 +243,7 @@ thead tr th{
 
 .mn{
     width: 100%;
+    overflow: hidden;
     display: inline-flex;
     justify-content: space-between;
 }
