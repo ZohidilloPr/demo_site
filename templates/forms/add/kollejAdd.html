@@ -1,0 +1,34 @@
+{% extends '../../main.html' %}
+{% load django_bootstrap5 %}
+{% block title %}
+    Kollej Bitiruvchisi qo'shish
+{% endblock title %}
+
+{% block content %}
+{% include "../../widgets/breadcrumb.html" %}
+    <div class="container my-5">
+        <h2 class="my-5">Kollej Bitiruvchisini qo'shish</h2>
+        <form action="" method="post" id="kollejBForm" enctype="multipart/form-data" novalidate>
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            <input type="submit" class="btn btn-outline-primary mb-5" value="Bitiruvchi qo'shish">
+        </form>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script>
+        $("#id_tuman").change(function(){
+            const url1 = $("#mahalla").attr("mahalla-queries-url");
+            const tumanId = $(this).val();
+
+            $.ajax({
+                url : url1,
+                data:{
+                    'tuman_id':tumanId,
+                },
+                success: function(data){
+                    $("#mahalla").html(data);
+                },
+            });
+        });
+    </script>
+{% endblock content %}

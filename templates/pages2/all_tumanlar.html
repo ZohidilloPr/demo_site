@@ -1,0 +1,21 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block title %}
+    Barcha Tumanlar
+{% endblock %}
+{% block content %}
+    <div class="background data-bg">
+        {% include "../widgets/sidebar.html" %}
+        <div class="main">
+            <div class="tumanlar">
+                <h1>Toshkent viloyatidagi barcha tumanlar</h1>
+                <ul id="tuman">
+                    {% for i in all_d %}
+                        <li><a href="{% url 'D' pk=i.pk %}">{{ i }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

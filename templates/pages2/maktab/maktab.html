@@ -1,41 +1,15 @@
 {% extends 'main.html' %}
 {% load static %}
 {% block title %}
-    Schools
+    {{ mk }}
 {% endblock %}
 {% block content %}
     <div class="background">
-        <div id="sidebar">
-            <div id="bar">
-                <ul>
-                    <li>
-                        <a href="{% url 'H' %}">Bosh sahifa</a>
-                    </li>
-                    <li>
-                        <a href="#tuman" class="active-sidebar text-dark">Tumanlar</a>
-                    </li>
-                    <li>
-                        <ol class="tm">
-                            <li><a href="{% url 'D' %}" class="text-dark">Angeren sh</a></li>
-                            <li><a href="#">Nurafshon sh</a></li>
-                            <li><a href="#">Ohangoron sh</a></li>
-                            <li><a href="#">Piskent tuman</a></li>
-                            <li><a href="#">Bo'ka tuman</a></li>
-                            <li><a href="#">Olmaliq sh</a></li>
-                            <li><a href="#">Bekobod sh</a></li>
-                            <li><a href="#">O'rta chirchiq tuman</a></li>
-                        </ol>
-                    </li>
-                    <li>
-                        <a href="{% url 'T' %}">Jadvallarda ko'rish</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
+        {% include "../../widgets/sidebar.html" %}
         <div class="main">
             <div class="chart">
-                <h1>Bu yilgi bitiruvchilar raqamlarda</h1>
-                <img src="{% static 'images/maktabchart.png' %}" height="500" alt="">
+                <h1>Bu yilgi  bitiruvchilar {{ mk }} misolida</h1>
+                <canvas id="maktab"></canvas>
             </div>
             <div class="jadval my-5">
                 <table class="table table-gray ">
@@ -49,52 +23,69 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for i in list %}
+                        {% for i in student %}
                             <tr>
-                                <td>1</td>
-                                <td><a href="{% url 'ACV_' %}">Akmal Azamov</a></td>
-                                <td>(+998) 33 235-45-45</td>
-                                <td>Bobur MFY</td>
+                                <td>{{ forloop.counter }}</td>
+                                <td><a href="{% url 'RM' pk=i.pk %}">{{ i.f_name }}</a></td>
+                                <td>(+998) {{ i.phone }}</td>
+                                <td>{{ i.mahalla }}</td>
                                 <td>O’zbekiston milliy universiteti</td>
                             </tr>
+                        {% empty %}
                             <tr>
-                                <td>2</td>
-                                <td><a href="{% url 'DCV_' %}">Dilshod Bekzodov</a></td>
-                                <td>(+998) 88 235-56-45</td>
-                                <td>Bobur MFY</td>
-                                <td>O’zbekiston milliy universiteti</td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td><a href="{% url 'JCV_' %}">Jasur Umarov</a></td>
-                                <td>(+998) 33 235-17-56</td>
-                                <td>Uchqun MFY</td>
-                                <td>O’zbekiston milliy universiteti</td>
-                            </tr>
-                            <tr>
-                                <td>4</td>
-                                <td><a href="{% url 'BeCV_' %}">Bekzod Umarov</a></td>
-                                <td>(+998) 99 456-56-45</td>
-                                <td>Uchqun MFY</td>
-                                <td>O’zbekiston milliy universiteti</td>
+                                <th>Hozirda talabalar yoq! Malumotlarni to'ldirish kerak <a href="{% url 'MBA' %}">link</a></th>
                             </tr>
                         {% endfor %}
                     </tbody>
                 </table>
             </div>
             <div class="tumanlar">
-                <h1>Tumandagi barcha ta'lim muassasalari</h1>
+                <h1>Barcha ta'lim muassasalari</h1>
                 <ul id="tuman">
-                    <li><a href="#">26-umumiy o'rta ta'lim maktabi </a></li>
-                    <li><a href="#">27-umumiy o'rta ta'lim maktabi </a></li>
-                    <li><a href="#">49-umumiy o'rta ta'lim maktabi </a></li>
-                    <li><a href="#">Angren kimyo sanoati kasb-hunar kolleji</a></li>
-                    <li><a href="#">Angren ko‘mir sanoati kasb-hunar kolleji</a></li>
-                    <li><a href="#">Angren avtomatika va servis kasb-hunar kolleji (Angren sanoat va xizmat ko‘rsatish KXK)</a></li>
-                    <li><a href="#">Angren iqtisodiyot va tadbirkorlik kasb-hunar kolleji (Angren xizmat ko‘rsatish KXK)</a></li>
-                    <li><a href="#">Angren politexnika kasb-hunar kolleji</a></li>
+                    {% for i in all_mk %}
+                        <li><a href="{% url 'S' pk=i.pk %}">{{ i }}</a></li>
+                    {% endfor %}
+                    {% for i in all_kj %}
+                        <li><a href="{% url 'KD' pk=i.pk %}">{{ i }}</a></li>
+                    {% endfor %}
                 </ul>
+                
             </div>
         </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <script>
+        const maktab = document.getElementById("maktab").getContext("2d");
+        const maktabChart = new Chart(maktab, {
+            type: 'bar',
+            data: {
+                labels : ['9-sinf bitiruvchilari', '11-sinf bitiruvchilari', 'O\'g\'il bolalar', 'qiz bolalar'],
+                datasets : [{
+                    label: '',
+                    data: ['{{ gra_11 }}', '{{ gra_9 }}', '{{ boys }}', '{{ grils }}'],
+                    backgroundColor: [
+                        'rgba(5, 140, 145, 0.47)', 
+                        'rgba(9, 57, 142, 0.45)',
+                        'rgba(8, 140, 78, 0.5)',
+                        'rgba(8, 140, 78, 0.5)',
+                    ],
+                    borderColor: [
+                        'rgba(5, 140, 145, 1)',
+                        'rgba(9, 57, 142, 1)',
+                        'rgba(8, 140, 78, 1)',
+                        'rgba(8, 140, 78, 1)',
+                    ],
+                    borderWidth: 1,
+                    hoverOffset: 10,
+                }]
+            },
+            options: {
+                scales:{
+                    y:{
+                        beginAtZone :true
+                    }
+                }
+            }
+        })
+    </script>
 {% endblock %}

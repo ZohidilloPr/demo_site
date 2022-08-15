@@ -1,6 +1,9 @@
 body{
     overflow-x: hidden;
 }
+.hidden-over{
+    overflow-y: hidden;
+}
 nav{
     box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
 }
@@ -84,7 +87,8 @@ thead tr th{
     font-size: 25px;
     font-family: serif;
 }
-.background, .background-table{
+.background, .background-table, .data-bg{
+    height: auto;
     padding: 50px 0;
     scrollbar-width: none;
     background-size: cover;
@@ -93,6 +97,9 @@ thead tr th{
     background-image: url("https://img.freepik.com/premium-vector/white-abstract-background-in-3d-paper-style_23-2148403778.jpg?w=2000");
     /* background: linear-gradient(rgba(255, 255, 255, 0.1), rgba(0,0, 0, 0.4)), url(""); */
 }
+.data-bg{
+    height: 100vh;
+}
 .background-table{
     height: 100vh;
     background-image: url("https://catherineasquithgallery.com/uploads/posts/2021-03/1614603227_28-p-fon-dlya-prezentatsii-s-belim-fonom-33.png");
@@ -100,7 +107,7 @@ thead tr th{
 #sidebar{
     top: 0;
     left: 0;
-    width: 23%;
+    width: 20%;
     height: 100vh;
     position: fixed;
     background-color: #3F4C5C;
@@ -128,8 +135,8 @@ thead tr th{
     background-color: white;
 }
 .main{
-    width: 65%;
-    margin-left: 27%;
+    width: 70%;
+    margin-left: 25%;
 }
 .main .chart{
     /* margin-top: 25px; */
@@ -139,7 +146,15 @@ thead tr th{
     animation-direction: alternate;
     /* border: 1px solid darkcyan; */
 }
+.chart{
+    width: 100%;
+    height: 100vh;
+    margin: auto;
+    /* height: 50vh; */
+}
 .main .chart img{
+    width: 1000px;
+    height: 600px;
     transition: 1s ease-in;
     border: 1px solid #3F4C5C;
     box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
@@ -160,9 +175,9 @@ thead tr th{
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 
 }
-.tumanlar{
+/* .tumanlar{
     padding-top: 50px;
-}
+} */
 .tumanlar h1{
     padding: 20px;
     font-size: 45px;
@@ -170,9 +185,16 @@ thead tr th{
     text-align: center;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
+
 .tumanlar ul {
     display: grid;
-    grid-template-columns: auto auto auto;
+    grid-template-columns: auto auto auto auto;
+}
+.tumanlar #data{
+    display: inline-flex;
+}
+#data li{
+    margin-right: 45px;
 }
 .tumanlar ul li{
     margin-top: 25px;
@@ -184,6 +206,7 @@ thead tr th{
     height: 250px;
     display: flex;
     padding: 10px;
+    border-radius: 15px;
     transition: 0.5s;
     color: aliceblue;
     text-align: center;
@@ -205,10 +228,70 @@ thead tr th{
     box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
 
 }
+.bg-shadow-a{
+    box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+}
 .jadval::-webkit-scrollbar{
     display: none;
 }
 .table-gray, .table-gray tr{
     color: white;
     background-color: #3F4C5C;
+}
+
+/* users sections */
+
+.mn{
+    width: 100%;
+    overflow: hidden;
+    display: inline-flex;
+    justify-content: space-between;
+}
+
+.bg-fon{
+    width: 75%;
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+    background-image: url("https://cdn.newswire.com/files/x/d9/c4/0f4be68db865a39175229f5442c5.jpg");
+}
+.center-page{
+    left: 75%;
+    width: 25%;
+    width: 25%;
+    height: 100vh;
+    padding: 50px;
+    display: inline-flex;
+    background-color: #3F4C5C;
+    justify-content: space-between;
+    /* border: 1px solid red; */
+}
+.user-form{
+    width: 100%;
+}
+.user-form form input, .user-form form label{
+    width: 80%;
+    margin: auto;
+    padding: 10px;
+    outline: none;
+    display: block;
+    margin-bottom: 15px;
+    
+}
+.user-form form input{
+    border: 1px solid white;
+    box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+}
+.user-form form label{
+    color: white;
+    margin-bottom: 0;
+    
+}
+.user-form form input[type='submit']{
+    border: none;
+    font-weight: bold;
+    box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+}
+.user-form form input[type='submit']:hover{
+    background-color: aliceblue;
 }

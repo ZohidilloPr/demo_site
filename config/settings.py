@@ -24,6 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-+g_r4a1yr_phu^4=8w8^_tcu$g9@l(!glw($axcajrx_jxbrta'
 
 # SECURITY WARNING: don't run with debug turned on in production!
+
 DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
@@ -38,7 +39,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # local apps
     'main.apps.MainConfig',
+    'users.apps.UsersConfig',
+
+    #global apps
+    'widget_tweaks',
+    'django_filters',
+    "django_bootstrap5",
 ]
 
 MIDDLEWARE = [
@@ -64,6 +73,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'main.custom_context_processor.data_avalible',
             ],
         },
     },
@@ -105,7 +115,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'uz'
 
 TIME_ZONE = 'Asia/Tashkent'
 

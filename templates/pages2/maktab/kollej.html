@@ -1,0 +1,96 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block title %}
+    {{ kj }}
+{% endblock %}
+{% block content %}
+    <div class="background">
+        {% include "../../widgets/sidebar.html" %}
+        <div class="main">
+            <div class="chart">
+                <h1>Bu yilgi  bitiruvchilar " {{ kj }} " misolida</h1>
+                <canvas id="maktab"></canvas>
+            </div>
+            <div class="jadval my-5">
+                <table class="table table-gray ">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>№</th>
+                            <th>F.I.SH</th>
+                            <th>Telefon raqami</th>
+                            <th>Yashash manzili</th>
+                            <th>Topshirgan OTM nomi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in student %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td><a href="">{{ i.f_name }}</a></td>
+                                <td>(+998) {{ i.phone }}</td>
+                                <td>{{ i.mahalla }}</td>
+                                <td>O’zbekiston milliy universiteti</td>
+                            </tr>
+                        {% empty %}
+                            <tr>
+                                <th>Hozirda talabalar yoq! Malumotlarni to'ldirish kerak <a href="{% url 'KBA' %}">link</a></th>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="tumanlar">
+                <h1>Barcha ta'lim muassasalari</h1>
+                <ul id="tuman">
+                    {% for i in all_mk %}
+                        <li><a href="{% url 'S' pk=i.pk %}">{{ i }}</a></li>
+                    {% endfor %}
+                    {% for i in all_kj %}
+                        <li><a href="{% url 'KD' pk=i.pk %}">{{ i }}</a></li>
+                    {% endfor %}
+                    {% for i in all_un %}
+                        <li><a href="{% url 'UB' pk=i.pk %}">{{ i }}</a></li>
+                    {% endfor %}
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <script>
+        const maktab = document.getElementById("maktab").getContext("2d");
+        const maktabChart = new Chart(maktab, {
+            type: 'bar',
+            data: {
+                labels : ['O\'g\'il bolalar', 'qiz bolalar'],
+                datasets : [{
+                    label: '',
+                    data: ['{{ boys }}', '{{ grils }}'],
+                    fill: false,
+                    backgroundColor: [
+                        'rgba(5, 140, 145, 0.47)', 
+                        'rgba(9, 57, 142, 0.45)',
+                        // 'rgba(8, 140, 78, 0.5)',
+                        // 'rgba(8, 140, 78, 0.5)',
+                    ],
+                    borderColor: [
+                        'rgba(5, 140, 145, 1)',
+                        'rgba(9, 57, 142, 1)',
+                        // 'rgba(8, 140, 78, 1)',
+                        // 'rgba(8, 140, 78, 1)',
+                    ],
+                    borderWidth: 1,
+                    hoverOffset: 10,
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                scales:{
+                    y:{
+                        beginAtZone :true
+                    }
+                }
+            }
+        })
+    </script>
+{% endblock %}

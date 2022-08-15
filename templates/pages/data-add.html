@@ -1,0 +1,49 @@
+{% extends "../main.html" %}
+
+{% block title %}
+    Malumot qo'shish
+{% endblock title %}
+
+{% block content %}
+
+    <div class="background">
+        {% include '../widgets/sidebar.html' %}              
+        <div class="main">
+            <div class="tumanlar">
+                <br>
+                <hr>
+                <br>
+                <ul id="data">
+                    <li><a href="{% url 'MNAV' %}">Maktab</a></li>
+                    <li><a href="{% url 'KNAV' %}">Kollej</a></li>
+                    <li><a href="{% url 'UNAV' %}">Universitet</a></li>
+                </ul>
+                <br>
+                <hr>
+                <br>
+                <ul id="data">
+                    <li><a href="{% url 'QNAV' %}">Qiziqishlar</a></li>
+                    <li><a href="{% url 'INAV' %}">Imkonyatlar</a></li>
+                    <li><a href="{% url 'FNAV' %}">Chet tili</a></li>
+                </ul>
+                <ul>
+                    <li><a href="{% url 'MNAV' %}">Mahalla</a></li>
+                </ul>
+                <br>
+                <hr>
+                <br>
+                <ul id="data">
+                    <li><a href="{% url 'MBA' %}">Maktab Bitiruvchilari</a></li>
+                    <li><a href="{% url 'KBA' %}">Kollej Bitiruvchilari</a></li>
+                </ul>
+                <ul>
+                    <li><a href="{% url 'UBA' %}">Universitet Bitiruvchilari</a></li>
+                </ul>
+                <br>
+                <hr>
+                <br>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}

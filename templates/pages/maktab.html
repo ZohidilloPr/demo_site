@@ -1,88 +1,72 @@
 {% extends 'main.html' %}
 
 {% block title %}
-    School
+    Maktab
 {% endblock %}
 
 {% block content %}
     <div class="background-table" >
             <div class="row mt-5">
             <div class="col-10 m-auto">
-                {% include 'widgets/navbar.html' %}                
+                {% include 'widgets/navbar.html' %}
+                {% include "../widgets/filters.html" %}                
                 <div class="table-box">
                     <table class="table">
-                        <thead class="border-info">
-                            <tr>
-                            <th>#</th>
-                            <th>F.I.SH</th>
-                            <th>
-                                    <div class="btn-group">
-                                        <button class="btn btn-light btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        Tuman & Shaxar
-                                        </button>
-                                        <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item" href="#">Nurafshon sh</a></li>
-                                        </ul>
-                                    </div>
+                            <thead class="border-info">
+                                <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">F.I.SH</th>
+                                <th scope="col">
+                                    Tuman&Shahar
                                 </th>
-                                <th>
-                                    <div class="btn-group">
-                                        <button class="btn btn-light btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        Mahalalar
-                                        </button>
-                                        <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item" href="#">Bobur MFY</a></li>
-                                        </ul>
-                                    </div>
+                                <th scope="col">
+                                    Mahalla
                                 </th>
-                                <th>
-                                    <div class="btn-group">
-                                        <button class="btn btn-light btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        Maktablar №
-                                        </button>
-                                        <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item" href="#">26-maktab</a></li>
-                                        </ul>
-                                    </div>
+                                <th scope="col">
+                                    Maktab №
                                 </th>
-                                <th>
-                                    <div class="btn-group">
-                                        <button class="btn btn-light btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        Kollej №
-                                        </button>
-                                        <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item" href="#">Qibray moliya-iqtisodiyot kolleji</a></li>
-                                        </ul>
-                                    </div>
-                                </th>
-                                <th>
-                                    <div class="btn-group">
-                                        <button class="btn btn-light btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        Topshirgan OTM nomi
-                                        </button>
-                                        <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item" href="#">O’zbekiston milliy universiteti</a></li>
-                                        </ul>
-                                    </div>
-                                </th>
-                                <th>Passport Id</th>
-                                <th>Telefon raqam</th>
-                                <th>Kun/Oy/Yil</th>
-                            </tr>
-                        </thead>
+                                <!-- <th><input type="submit" value="Qidirish" class="btn btn-outline-light text- btn-sm"> </th> -->
+                                <!-- <th>
+                                        <div class="btn-group">
+                                            <button class="btn btn-light btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Kollej №
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <li><a class="dropdown-item" href="#">Qibray moliya-iqtisodiyot kolleji</a></li>
+                                            </ul>
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="btn-group">
+                                            <button class="btn btn-light btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            OTM nomi
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <li><a class="dropdown-item" href="#">O’zbekiston milliy universiteti</a></li>
+                                            </ul>
+                                        </div>
+                                    </th> -->
+                                    <!-- <th>Ish Joyi</th> -->
+                                    <th scope="col">Telefon raqam</th>
+                                    <th scope="col">Kun/Oy/Yil</th>
+                                </tr>
+                            </thead>
+                        </form>
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td><a href="{% url 'ACV' %}">Akmal Azamov</a></td>
-                                <td>Nurafshon sh</td>
-                                <td>Bobur MFY</td>
-                                <td>26-maktab</td>
-                                <td></td>
-                                <td>O’zbekiston milliy universiteti</td>
-                                <td></td>
-                                <td>(+998) 33 235-45-45</td>
-                                <td>04/01/2004</td>
-                            </tr>
+                            {% for i in mk %}
+                                <tr>
+                                    <td>{{ i.pk }}</td>
+                                    <td><a href="{% url 'RMT' pk=i.pk %}">{{ i.f_name }}</a></td>
+                                    <td>{{ i.tuman }}</td>
+                                    <td>{{ i.mahalla }}</td>
+                                    <td>{{ i.maktab }}</td>
+                                    <!-- <td></td> -->
+                                    <!-- <td>O’zbekiston milliy universiteti</td>
+                                    <td></td> -->
+                                    <td>{{ i.phone }}</td>
+                                    <td>{{ i.t_sana }}</td>
+                                </tr>
+                            {% endfor %}
                         </tbody>
                     </table>
                 </div>
@@ -90,5 +74,37 @@
             </div>
         </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script>
+        $("#id_tuman").change(function(){
+            $("#id_maktab").attr("maktab-queries-url", "{% url 'ALMa' %}")
+            $("#id_mahalla").attr("mahalla-queries-url", "{% url 'ALM' %}")
+            const url1 = $("#id_mahalla").attr("mahalla-queries-url");
+            const url2 = $("#id_maktab").attr("maktab-queries-url");
+            const tumanId = $(this).val();
+
+            $.ajax({
+                url : url1,
+                data:{
+                    'tuman_id':tumanId,
+                },
+                success: function(data){ 
+                    $("#id_mahalla").html(data);
+                    console.log(data)
+                },
+            });
+            $.ajax({
+                url : url2,
+                data:{
+                    'tuman_id':tumanId,
+                },
+                success: function(data){
+                    $("#id_maktab").html(data);
+                    console.log(data)
+                },
+            });
+        });
+    </script>
+
 {% endblock %}
 
