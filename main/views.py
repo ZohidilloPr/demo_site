@@ -53,6 +53,7 @@ def Districts(request, pk):
     d = TumanVaShahar.objects.get(pk=pk)
     maktab = MK.objects.filter(tuman=pk).all()
     kollej_all = KJ.objects.filter(tuman_id=pk)
+    uni_all = Universitet.objects.filter(tuman_id=pk)
     all_d = TumanVaShahar.objects.all().order_by('name')
     mkb = MaktabBitiruvchisi.objects.filter(tuman_id=pk).count()
     kjb = KollejBitiruvchisi.objects.filter(tuman_id=pk).count()
@@ -60,11 +61,12 @@ def Districts(request, pk):
     return render(request, "pages2/tumanlar.html", {
         'd':d,
         'pk':pk,
-        'maktab':maktab,
-        'all_d':all_d,
-        'mkb':mkb,
         'kjb':kjb,
         'unb':unb,
+        'mkb':mkb,
+        'all_d':all_d,
+        'maktab':maktab,
+        'all_un':uni_all,
         'all_kj':kollej_all,
     })    
 
@@ -97,6 +99,7 @@ def KollejD(request, pk):
     tuman_pk = kollej.tuman.pk
     maktab_all = MK.objects.filter(tuman_id=tuman_pk)
     kollej_all = KJ.objects.filter(tuman_id=tuman_pk)
+    univer_all = Universitet.objects.filter(tuman_id=tuman_pk)
     all_d = TumanVaShahar.objects.all().order_by('name')
     student = KollejBitiruvchisi.objects.filter(kollej=kollej.pk)
     grils = KollejBitiruvchisi.objects.filter(kollej=pk, jins="qiz bola").count()
@@ -110,6 +113,30 @@ def KollejD(request, pk):
         'student':student,
         'all_mk':maktab_all,
         'all_kj':kollej_all,
+        'all_un':univer_all,
+
+    })
+
+def UniversitetB(request, pk):
+    un = Universitet.objects.get(pk=pk)
+    tuman_pk = un.tuman.pk
+    all_d = TumanVaShahar.objects.all().order_by('name')
+    students = UniversitetBitiruvchisi.objects.filter(universitet=un.pk)
+    maktab_all = MK.objects.filter(tuman_id=tuman_pk)
+    kollej_all = KJ.objects.filter(tuman_id=tuman_pk)
+    univer_all = Universitet.objects.filter(tuman_id=tuman_pk)
+    grils = KollejBitiruvchisi.objects.filter(kollej=pk, jins="qiz bola").count()
+    boys = KollejBitiruvchisi.objects.filter(kollej=pk, jins="o'g'il bola").count()
+    return render(request, 'pages2/universitet.html', {
+        'pk':pk,
+        'un':un,
+        'all_d':all_d,
+        'student':students,
+        'all_mk':maktab_all,
+        'all_kj':kollej_all,
+        'all_un':univer_all,
+        'boys':boys,
+        'grils':grils,
 
     })
 
