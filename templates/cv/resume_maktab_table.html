@@ -8,7 +8,7 @@
 
 <nav aria-label="breadcrumb" class="sticky-top bg-light">
     <ol class="breadcrumb p-3">
-      <li class="breadcrumb-item"><a href="{% url 'S' pk=object.maktab.pk %}">Ortga qaytish</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'M' %}">Ortga qaytish</a></li>
       <li class="breadcrumb-item active" aria-current="page">{{ object }}ning Resumesi</li>
     </ol>
 </nav>
@@ -71,21 +71,21 @@
                             Ta'lim
                         </h3>
                         <p>
-                            Toshkent viloyati {{ object.maktab.tuman }} {{ object.maktab }}
+                        Toshkent viloyati {{ object.maktab.tuman }} {{ object.maktab }}
                             <!-- <small class="text-warning">2011/09/3 --- 2022/05/25</small> -->
                         </p>
                         <h3>Topshirgan OTM nomi</h3>
                         {% if object.univer_sity %}   
                             <p>
-                                O’zbekiston milliy universiteti
+                                {{object.univer_sity}}
                             </p>
                         {% else %}
                             <p>
                                 --------------
                             </p>
                         {% endif %}
-                        <h3>Qiziqishlari</h3>
-                        <ul>
+                         <h3>Qiziqishlari</h3>
+                         <ul>
                             {% for i in object.qiziqish.all %}  
                                 <li>{{ i }}</li>
                             {% endfor %}

@@ -5,6 +5,7 @@ from .views import (
     KollejD,
     Other,
     ResumeMaktab,
+    ResumeMaktabTable,
     Table,
     Maktab,
     Kollej,
@@ -32,7 +33,6 @@ from .views import (
     AllDistricts,
 )
 urlpatterns = [
-    path("", Home, name="H"),
     path("ish/", Ish, name="I"),
     path("other/", Other, name="O"),
     path("kollej/", Kollej, name="K"),
@@ -50,9 +50,11 @@ urlpatterns = [
     path("jasur_/", Jasur_, name="JCV_"),
 
     # new 
+    path("", Home, name="H"),
     path("maktab/", Maktab, name="M"),
 
     path("tuman/maktab/bitiruvchi/<pk>/", ResumeMaktab, name="RM"),
+    path("jadval/maktab/bitiruvchi/<pk>/", ResumeMaktabTable, name="RMT"),
     path("tuman/<pk>/", Districts, name="D"),
     path("tumanlar/all/", AllDistricts, name="AD"),
     path("tumanlar/maktablar/<pk>/", Schools, name="S"),

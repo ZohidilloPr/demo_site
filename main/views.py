@@ -107,6 +107,12 @@ def ResumeMaktab(request, pk):
         'object': maktab_b,
     })
 
+def ResumeMaktabTable(request, pk):
+    maktab_b = MaktabBitiruvchisi.objects.get(pk=pk)
+    return render(request, 'cv/resume_maktab_table.html', {
+        'object': maktab_b,
+    })
+
 # tables section
 
 def Table(request):
@@ -153,13 +159,24 @@ def OTM_Finish(request):
     })
 
 
+def OTM_Enter(request):
+    mk = MaktabBitiruvchisi.objects.all()
+    kj = KollejBitiruvchisi.objects.all()
+    all_list = []
+    for i in mk:
+        if not i.univer_sity:
+            pass
+        else:
+            all_list.append(i)
+    return render(request, "pages/otm_topshirganlar.html", context={
+        'all_list':all_list,
+    })
     
+
 def Ish(request):
     return render(request, "pages/ish_.html")
 
 
-def OTM_Enter(request):
-    return render(request, "pages/otm_topshirganlar.html")
 
 
 def Other(request):

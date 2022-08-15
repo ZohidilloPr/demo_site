@@ -42,6 +42,7 @@ INSTALLED_APPS = [
 
     # local apps
     'main.apps.MainConfig',
+    'users.apps.UsersConfig',
 
     #global apps
     'widget_tweaks',
@@ -114,7 +115,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'uz'
 
 TIME_ZONE = 'Asia/Tashkent'
 

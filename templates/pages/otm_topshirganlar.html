@@ -13,88 +13,41 @@
                     <table class="table">
                         <thead class="border-info">
                             <tr>
-                            <th>#</th>
-                            <th>F.I.SH</th>
-                            <th>
-                                    <div class="btn-group">
-                                        <button class="btn btn-light btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        Tuman & Shaxar
-                                        </button>
-                                        <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item" href="#">Nurafshon sh</a></li>
-                                        </ul>
-                                    </div>
+                                <th>#</th>
+                                <th>F.I.SH</th>
+                                <th>
+                                    Tuman & Shaxar
                                 </th>
                                 <th>
-                                    <div class="btn-group">
-                                        <button class="btn btn-light btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        Mahalalar
-                                        </button>
-                                        <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item" href="#">Bobur MFY</a></li>
-                                        </ul>
-                                    </div>
+                                    Mahalalar
                                 </th>
                                 <th>
-                                    <div class="btn-group">
-                                        <button class="btn btn-light btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        Maktablar №
-                                        </button>
-                                        <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item" href="#">26-maktab</a></li>
-                                        </ul>
-                                    </div>
+                                    Maktablar №
                                 </th>
                                 <th>
-                                    <div class="btn-group">
-                                        <button class="btn btn-light btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        Kollej №
-                                        </button>
-                                        <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item" href="#">Qibray moliya-iqtisodiyot kolleji</a></li>
-                                        </ul>
-                                    </div>
+                                    Kollej №
                                 </th>
                                 <th>
-                                    <div class="btn-group">
-                                        <button class="btn btn-light btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        Topshirgan OTM nomi
-                                        </button>
-                                        <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item" href="#">O’zbekiston milliy universiteti</a></li>
-                                        </ul>
-                                    </div>
+                                    Topshirgan OTM nomi
                                 </th>
-                                <th>Ish Joyi</th>
                                 <th>Telefon raqam</th>
                                 <th>Kun/Oy/Yil</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td><a href="{% url 'ACV' %}">Akmal Azamov</a></td>
-                                <td>Nurafshon sh</td>
-                                <td>Bobur MFY</td>
-                                <td>26-maktab</td>
-                                <td></td>
-                                <td>O’zbekiston milliy universiteti</td>
-                                <td></td>
-                                <td>(+998) 33 235-45-45</td>
-                                <td>04/01/2004</td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td><a href="{% url 'BeCV' %}">Bekzod Umarov</a></td>
-                                <td>Angeren sh</td>
-                                <td>Ziyolilar MFY</td>
-                                <td></td>
-                                <td>Qibray moliya-iqtisodiyot kolleji</td>
-                                <td>O’zbekiston milliy universiteti</td>
-                                <td></td>
-                                <td>(+998) 33 265-65-65</td>
-                                <td>04/04/2004</td>
-                            </tr>
+                            {% for i in all_list %}                              
+                                <tr>
+                                    <td>{{ forloop.counter }}</td>
+                                    <td><a href="{% url 'RMT' pk=i.pk %}">{{i.f_name}}</a></td>
+                                    <td>{{ i.tuman }}</td>
+                                    <td>{{ i.mahalla }}</td>
+                                    <td>{{ i.maktab }}</td>
+                                    <td>{{ i.kollej }}</td>
+                                    <td>{{ i.univer_sity }}</td>
+                                    <td>(+998) {{ i.phone }}</td>
+                                    <td>{{ i.t_sana }}</td>
+                                </tr>
+                            {% endfor %}
                         </tbody>
                     </table>
                 </div>

@@ -16,7 +16,7 @@
                         {% for i in mk %}
                             <tr>
                                 <td>{{ forloop.counter }}</td>
-                                <td><a href="{% url 'ACV' %}">{{ i.f_name }}</a></td>
+                                <td><a href="{% url 'RMT' pk=i.pk %}">{{ i.f_name }}</a></td>
                                 <td>{{ i.tuman }}</td>
                                 <td>{{ i.mahalla }}</td>
                                 <td>{{ i.maktab }}</td>

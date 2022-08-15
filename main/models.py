@@ -103,7 +103,7 @@ class Bitiruvchi(models.Model):
 class MaktabBitiruvchisi(Bitiruvchi):
     maktab = models.ForeignKey(Maktab, on_delete=models.CASCADE, verbose_name="Bitirayotgan maktab")
     sinf = models.CharField(max_length=l, choices=sinf, default='9-sinf', verbose_name="Sinf")
-    univer_sity = models.CharField(max_length=l, verbose_name="Topshirmoqchi bo'lgan universitet")
+    univer_sity = models.CharField(max_length=l, verbose_name="Topshirmoqchi bo'lgan universitet", null=True, blank=True)
 
     def __str__(self):
         return super().__str__()
