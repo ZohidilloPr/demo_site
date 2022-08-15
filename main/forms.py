@@ -9,6 +9,7 @@ from .models import (
     MaktabBitiruvchisi, 
     Maktab, 
     Kollej,
+    Universitet,
     UniversitetBitiruvchisi,
 )
 
@@ -142,5 +143,17 @@ class KollejFilterForm(forms.Form):
                 tuman_id = int(self.data.get('tuman'))
                 self.fields['mahalla'].queryset = Mahalla.objects.filter(tuman_id=tuman_id).all()
                 self.fields['kollej'].queryset = Kollej.objects.filter(tuman_id=tuman_id).all()
+            except (ValueError, TypeError):
+                pass
+
+class UniversiterFilterForm(forms.Form):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['mahalla'].queryset = Mahalla.objects.none()
+
+        if 'tuman' in self.data:
+            try:
+                tuman_id = int(self.data.get("tuman"))
+                self.fields['mahalla'].queryset = Mahalla.objects.filter(tuman_id=tuman_id).all()
             except (ValueError, TypeError):
                 pass

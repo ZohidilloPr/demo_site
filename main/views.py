@@ -19,6 +19,7 @@ from .forms import (
 from .filters import (
     KollejFilter,
     MaktabFilter,
+    UniversitetFilter,
 )
 
 # Create your views here.
@@ -142,6 +143,17 @@ def Kollej(request):
         'mkFil':kjFilter,
     })
 
+def OTM_Finish(request):
+    un = UniversitetBitiruvchisi.objects.all()
+    unFilters = UniversitetFilter(request.GET, queryset=un)
+    un = unFilters.qs
+    return render(request, "pages/otm_bitiruvchilari.html", {
+        'un':un,
+        'mkFil':unFilters,
+    })
+
+
+    
 def Ish(request):
     return render(request, "pages/ish_.html")
 
@@ -149,11 +161,6 @@ def Ish(request):
 def OTM_Enter(request):
     return render(request, "pages/otm_topshirganlar.html")
 
-def OTM_Finish(request):
-    un = UniversitetBitiruvchisi.objects.all()
-    return render(request, "pages/otm_bitiruvchilari.html", {
-        'un':un,
-    })
 
 def Other(request):
     return render(request, "pages/boshqa.html")

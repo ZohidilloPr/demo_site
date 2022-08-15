@@ -8,6 +8,7 @@ from .models import (
 from .forms import (
     KollejFilterForm,
     MaktabFilterForm,
+    UniversiterFilterForm,
 )
 class MaktabFilter(django_filters.FilterSet):
     class Meta:
@@ -20,3 +21,9 @@ class KollejFilter(django_filters.FilterSet):
         model = KollejBitiruvchisi
         fields = ('tuman', 'mahalla', 'kollej')
         form = KollejFilterForm
+
+class UniversitetFilter(django_filters.FilterSet):
+    class Meta:
+        model = UniversitetBitiruvchisi
+        fields = ('tuman', 'mahalla', 'universitet')
+        form = UniversiterFilterForm
