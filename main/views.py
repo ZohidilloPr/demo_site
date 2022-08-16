@@ -360,6 +360,13 @@ class MahallaNameAddView(SuccessMessageMixin, CreateView):
     template_name = 'forms/sections/add/mahallanameadd.html'
     success_message = 'Yangi mahalla muaffaqiyatli qo\'shildi!'
 
+class TumanVaShaharNameAddView(SuccessMessageMixin, CreateView):
+    model = TumanVaShahar
+    fields = '__all__'
+    success_url = reverse_lazy("TvSNAV")
+    template_name = 'forms/sections/add/tumannameadd.html'
+    success_message = 'Yangi Malumot muaffaqiyatli qo\'shildi!'
+
 
 # AJAX SECTION
 
