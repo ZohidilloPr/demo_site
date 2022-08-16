@@ -49,7 +49,7 @@
                         <li><a href="{% url 'KD' pk=i.pk %}">{{ i }}</a></li>
                     {% endfor %}
                 </ul>
-                
+
             </div>
         </div>
     </div>
@@ -62,9 +62,9 @@
                 labels : ['9-sinf bitiruvchilari', '11-sinf bitiruvchilari', 'O\'g\'il bolalar', 'qiz bolalar'],
                 datasets : [{
                     label: '',
-                    data: ['{{ gra_11 }}', '{{ gra_9 }}', '{{ boys }}', '{{ grils }}'],
+                    data: ['{{ gra_9 }}', '{{ gra_11 }}', '{{ boys }}', '{{ grils }}'],
                     backgroundColor: [
-                        'rgba(5, 140, 145, 0.47)', 
+                        'rgba(5, 140, 145, 0.47)',
                         'rgba(9, 57, 142, 0.45)',
                         'rgba(8, 140, 78, 0.5)',
                         'rgba(8, 140, 78, 0.5)',

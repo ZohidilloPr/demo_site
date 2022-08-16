@@ -8,9 +8,9 @@
     <div class="background-table" >
             <div class="row mt-5">
             <div class="col-10 m-auto">
-                
+
                 <h1 class="text-center my-3">Bitiruvchilar haqida malumotlar</h1>
-                <nav class="navbar navbar-expand-lg my-5 bg-light"> 
+                <nav class="navbar navbar-expand-lg my-5 bg-light">
                     <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav w-100 justify-content-center top-nav">
                         <li class="nav-item">
@@ -20,7 +20,7 @@
                             <a href="{% url 'T' %}" class="nav-link ">Hammasi</a>
                         </li>
                         <li class="nav-item active-li">
-                        <a class="nav-link active" href="{% url 'M' %}">Matab</a>
+                        <a class="nav-link active" href="{% url 'M' %}">Maktab</a>
                         </li>
                         <li class="nav-item">
                         <a class="nav-link" href="{% url 'K' %}">Professional ta'lim</a>
@@ -36,14 +36,14 @@
                         </li> -->
                         <!-- <li class="nav-item">
                             <a href="{% url 'O' %}" class="nav-link">
-                                Boshqalar        
+                                Boshqalar
                             </a>
                         </li> -->
                     </ul>
                     </div>
-                </nav> 
-                
-                {% include "../widgets/filters.html" %}                
+                </nav>
+
+                {% include "../widgets/filters.html" %}
                 <div class="table-box">
                     <table class="table">
                             <thead class="border-info">
@@ -89,7 +89,7 @@
                         <tbody>
                             {% for i in mk %}
                                 <tr>
-                                    <td>{{ i.pk }}</td>
+                                    <td>{{ forloop.counter }}</td>
                                     <td><a href="{% url 'RMT' pk=i.pk %}">{{ i.f_name }}</a></td>
                                     <td>{{ i.tuman }}</td>
                                     <td>{{ i.mahalla }}</td>
@@ -104,7 +104,7 @@
                         </tbody>
                     </table>
                 </div>
-                
+
             </div>
         </div>
     </div>
@@ -122,7 +122,7 @@
                 data:{
                     'tuman_id':tumanId,
                 },
-                success: function(data){ 
+                success: function(data){
                     $("#id_mahalla").html(data);
                     console.log(data)
                 },
