@@ -306,7 +306,7 @@ class MaktabNameAddView(SuccessMessageMixin, CreateView):
     template_name = 'forms/sections/add/maktabnameadd.html'
     form_class = MaktabNameForm
     success_message = 'Yangi maktab muaffaqiyatli qo\'shildi!'
-    success_url = reverse_lazy("MNAV")
+    success_url = reverse_lazy("MaNAV")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
