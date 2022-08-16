@@ -98,8 +98,10 @@ class Bitiruvchi(models.Model):
     qiziqish = models.ForeignKey(Qiziqish, related_name="interest", on_delete=models.CASCADE, verbose_name="Qiziqish")
     chettili = models.ManyToManyField(ChetTili, related_name="f_lang")
     guvohnoma = models.CharField(verbose_name="Haydovchilik Guvohnomasi", max_length=l, choices=yesNo, default="Yoq")
-    idea = models.CharField(verbose_name="Biznes g'oya", max_length=l, choices=yesNo, default="Yoq")
+    idea = models.CharField(verbose_name="Biznes g'oya", max_length=l, choices=yesNo, default="Bor")
+    short_f = models.CharField(max_length=10000, verbose_name="Bizness g'oya haqqida qisqacha (agar bor bo'lsa)", null=True, blank=True)
     jins = models.CharField(max_length=l, choices=jins, verbose_name="Jinsi", default="o'g'il bola")
+    add_time = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.f_name
