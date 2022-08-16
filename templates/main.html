@@ -17,6 +17,7 @@
   </head>
   <body>
     {% if user.is_authenticated %}
+      {% include 'widgets/messages.html' %}
       {% block content %}
       
       {% endblock %}

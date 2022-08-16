@@ -7,9 +7,49 @@
 {% block content %}
 
     <div class="background">
-        {% include '../widgets/sidebar.html' %}              
+        <div id="sidebar">
+            <div id="bar">
+                <ul>
+                    <li>
+                        <a href="{% url 'H' %}" class="a-link ">Bosh sahifa</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'AD' %}" class="a-link ">Tumanlar</a>
+                    </li>
+                    <!-- {% if all_d %}
+                        <li>
+                            <ol class="tm">
+                                {% for i in all_d %}
+                                    <li><a href="{% url 'D' pk=i.pk %}" class="text-info">{{ i }}</a></li>
+                                {% endfor %}
+                            </ol>
+                        </li>  
+                    {% endif %} -->
+                    <li>
+                        <a href="{% url 'DA' %}" class="a-link active-sidebar">Malumot Qo'shish</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'T' %}" class="a-link">Jadvallarda ko'rish</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'users:LO' %}" class="a-link border border-danger text-danger">Accountdan chiqish</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+                     
         <div class="main">
             <div class="tumanlar">
+                <br>
+                <hr>
+                <br>
+                <ul id="data">
+                    <li><a href="{% url 'MBA' %}">Maktab Bitiruvchilari</a></li>
+                    <li><a href="{% url 'KBA' %}">Kollej Bitiruvchilari</a></li>
+                </ul>
+                <ul>
+                    <li><a href="{% url 'UBA' %}">Universitet Bitiruvchilari</a></li>
+                </ul>
                 <br>
                 <hr>
                 <br>
@@ -28,16 +68,6 @@
                 </ul>
                 <ul>
                     <li><a href="{% url 'MNAV' %}">Mahalla</a></li>
-                </ul>
-                <br>
-                <hr>
-                <br>
-                <ul id="data">
-                    <li><a href="{% url 'MBA' %}">Maktab Bitiruvchilari</a></li>
-                    <li><a href="{% url 'KBA' %}">Kollej Bitiruvchilari</a></li>
-                </ul>
-                <ul>
-                    <li><a href="{% url 'UBA' %}">Universitet Bitiruvchilari</a></li>
                 </ul>
                 <br>
                 <hr>

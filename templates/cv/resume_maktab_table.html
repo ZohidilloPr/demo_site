@@ -16,7 +16,7 @@
      <div class="col-xxl-5 m-auto p-5 border border-info">
          <div class="img-name">
              <div class="img border-end border-info pt-3">
-                 <img src="https://media.bizj.us/view/img/12180742/hannan-justin-print-3x4-hi-res*1500xx900-1200-0-0.jpg" width="100" alt="">
+                 <img src="{{ object.img.url }}" width="100" alt="">
                  <div class="my-5"></div>
                  <div class="imkonyat">
                         <h3>Imkonyatlari</h3>
@@ -93,7 +93,12 @@
                          <h3>Fuqoro xaqida</h3>
                          <p>
                             {{ object.f_name }} Toshkent vilotati {{ object.tuman }}da tug'ulgan.
-                            {{ object.maktab }}ning {{ object.sinf }} bituruvchisi. Hozirda "O'zbekiston milliy universiteti" ga topshirgan. 
+                            {{ object.maktab }}ning {{ object.sinf }} bituruvchisi. 
+                            {% if object.univer_sity %}  
+                                Hozirda "{{ object.univer_sity }}" ga topshirgan.
+                            {% else %}
+                                Hech qaysi OTMga topshirmagan 
+                            {% endif %}  
                             {% if object.idea == 'Bor' %}  
                                 O'zini biznes g'oyasi bor
                             {% endif %}

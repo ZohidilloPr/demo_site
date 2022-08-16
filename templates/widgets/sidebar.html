@@ -5,9 +5,9 @@
                 <a href="{% url 'H' %}" class="a-link ">Bosh sahifa</a>
             </li>
             <li>
-                <a href="{% url 'AD' %}" class="a-link">Tumanlar</a>
+                <a href="{% url 'AD' %}" class="a-link active-sidebar">Tumanlar</a>
             </li>
-            {% if all_d %}
+            <!-- {% if all_d %}
                 <li>
                     <ol class="tm">
                         {% for i in all_d %}
@@ -15,7 +15,7 @@
                         {% endfor %}
                     </ol>
                 </li>  
-            {% endif %}
+            {% endif %} -->
             <li>
                 <a href="{% url 'DA' %}" class="a-link">Malumot Qo'shish</a>
             </li>
@@ -28,14 +28,3 @@
         </ul>
     </div>
 </div>
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-<script>
-    $(document).ready(function(){
-        let $li_a = $(".bar ul li a");
-        $li_a.click(function () {
-            $(this).addClass("active-sidebar").siblings().removeClass("active-sidebar");
-            let index = $(this).index();
-            $(".bar ul li a").eq(index).addClass("active-sidebar");
-        })
-    });
-</script>

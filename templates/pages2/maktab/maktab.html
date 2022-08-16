@@ -28,8 +28,8 @@
                                 <td>{{ forloop.counter }}</td>
                                 <td><a href="{% url 'RM' pk=i.pk %}">{{ i.f_name }}</a></td>
                                 <td>(+998) {{ i.phone }}</td>
-                                <td>{{ i.mahalla }}</td>
-                                <td>O’zbekiston milliy universiteti</td>
+                                <td>{{ i.tuman }} {{ i.mahalla }}</td>
+                                <td>{{ i.univer_sity }}</td>
                             </tr>
                         {% empty %}
                             <tr>

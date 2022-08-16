@@ -1,3 +1,4 @@
+from email.policy import default
 from django.db import models
 # Create your models here.
 
@@ -22,6 +23,10 @@ sinf = (
 jins = (
     ("o'g'il bola", "o'g'il bola"),
     ("qiz bola", "qiz bola"),
+)
+aim = (
+    ("O'qishni davom etirmoqchi", "O'qishni davom etirmoqchi"),
+    ("Ishlamoqchi", "Ishlamoqchi"),
 )
 
 class AutoTime(models.Model):
@@ -83,13 +88,14 @@ class ChetTili(AutoTime):
 
 class Bitiruvchi(models.Model):
     f_name = models.CharField(max_length=l, verbose_name="F.I.Sh")
+    img = models.ImageField(default='default/default.png', upload_to='bitiruvchilar-foto/')
     t_sana = models.DateField(verbose_name="Tug'ulgan sana")
     phone = models.CharField(max_length=9, verbose_name="(+998) ")
     email = models.EmailField(max_length=l, verbose_name="E-Pochta", null=True)
     tuman = models.ForeignKey(TumanVaShahar, on_delete=models.CASCADE, verbose_name="Yashaydigan tuman(shahar)")
     mahalla = models.ForeignKey(Mahalla, on_delete=models.CASCADE, verbose_name="Mahalla Nomi")
     imkonyat = models.ManyToManyField(Imkonyat, related_name="abilty", verbose_name="Qoshimcha bilimi")
-    qiziqish = models.ManyToManyField(Qiziqish, related_name="interest")
+    qiziqish = models.ForeignKey(Qiziqish, related_name="interest", on_delete=models.CASCADE, verbose_name="Qiziqish")
     chettili = models.ManyToManyField(ChetTili, related_name="f_lang")
     guvohnoma = models.CharField(verbose_name="Haydovchilik Guvohnomasi", max_length=l, choices=yesNo, default="Yoq")
     idea = models.CharField(verbose_name="Biznes g'oya", max_length=l, choices=yesNo, default="Yoq")
@@ -110,12 +116,14 @@ class MaktabBitiruvchisi(Bitiruvchi):
 
 class KollejBitiruvchisi(Bitiruvchi):
     kollej = models.ForeignKey(Kollej, on_delete=models.CASCADE, verbose_name="Bitirayotgan Kollej")
+    maqsad = models.CharField(max_length=l, choices=aim, default="Ishlamoqchi", verbose_name="Maqsadi")
     univer_sity = models.CharField(max_length=l, verbose_name="Topshirmoqchi bo'lgan universitet", null=True, blank=True)
 
     def __str__(self):
         return super().__str__()
 
 class UniversitetBitiruvchisi(Bitiruvchi):
+    maqsad = models.CharField(max_length=l, choices=aim, default="Ishlamoqchi", verbose_name="Maqsadi")
     universitet = models.ForeignKey(Universitet, on_delete=models.CASCADE, verbose_name="Bitirayotgan OTM", null=True, blank=True)
 
     def __str__(self):
