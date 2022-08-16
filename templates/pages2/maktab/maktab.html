@@ -7,6 +7,16 @@
     <div class="background">
         {% include "../../widgets/sidebar.html" %}
         <div class="main">
+            <div class="dropdown">
+                <a class="btn dropdown-toggle" href="{% url 'AD' %}" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Tuman Va Shahar
+                </a>
+                <ol class="dropdown-menu">
+                    {% for i in all_d %}
+                        <li><a class="dropdown-item a-link" href="{% url 'D' pk=i.pk %}">{{ i.name }}</a></li>
+                    {% endfor %}
+                </ol>
+             </div>
             <div class="chart">
                 <h1>Bu yilgi  bitiruvchilar {{ mk }} misolida</h1>
                 <canvas id="maktab"></canvas>

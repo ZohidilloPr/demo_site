@@ -12,7 +12,7 @@
                   Tuman Va Shahar
                 </a>
                 <ol class="dropdown-menu">
-                    {% for i in all_d %}  
+                    {% for i in all_d %}
                         <li><a class="dropdown-item a-link" href="{% url 'D' pk=i.pk %}">{{ i.name }}</a></li>
                     {% endfor %}
                 </ol>
@@ -24,7 +24,7 @@
             <div class="tumanlar">
                 <h1>{{ d }}dagi barcha ta'lim muassasalari</h1>
                 <ul id="tuman">
-                    {% for i in maktab %}  
+                    {% for i in maktab %}
                         <li><a href="{% url 'S' pk=i.pk %}">{{ i }}</a></li>
                     {% endfor %}
                     {% for i in all_kj %}
@@ -48,7 +48,7 @@
                     label: '',
                     data: ['{{ unb }}', '{{ kjb }}', '{{ mkb }}'],
                     backgroundColor: [
-                        'rgba(5, 140, 145, 0.47)', 
+                        'rgba(5, 140, 145, 0.47)',
                         'rgba(9, 57, 142, 0.45)',
                         'rgba(8, 140, 78, 0.5)',
                     ],
