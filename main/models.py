@@ -89,9 +89,9 @@ class ChetTili(AutoTime):
 class Bitiruvchi(models.Model):
     f_name = models.CharField(max_length=l, verbose_name="F.I.Sh")
     img = models.ImageField(default='default/default.png', upload_to='bitiruvchilar-foto/')
-    t_sana = models.DateField(verbose_name="Tug'ulgan sana")
+    t_sana = models.DateField(verbose_name="Tug'ulgan sana", null=True, blank=True)
     phone = models.CharField(max_length=9, verbose_name="(+998) ")
-    email = models.EmailField(max_length=l, verbose_name="E-Pochta", null=True)
+    email = models.EmailField(max_length=l, verbose_name="E-Pochta", null=True, blank=True)
     tuman = models.ForeignKey(TumanVaShahar, on_delete=models.CASCADE, verbose_name="Yashaydigan tuman(shahar)")
     mahalla = models.ForeignKey(Mahalla, on_delete=models.CASCADE, verbose_name="Mahalla Nomi")
     imkonyat = models.ManyToManyField(Imkonyat, related_name="abilty", verbose_name="Qoshimcha bilimi")
