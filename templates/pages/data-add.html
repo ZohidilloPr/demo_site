@@ -1,7 +1,7 @@
 {% extends "../main.html" %}
 
 {% block title %}
-    Malumot qo'shish
+    Ma'lumot qo'shish
 {% endblock title %}
 
 {% block content %}
@@ -23,10 +23,10 @@
                                     <li><a href="{% url 'D' pk=i.pk %}" class="text-info">{{ i }}</a></li>
                                 {% endfor %}
                             </ol>
-                        </li>  
+                        </li>
                     {% endif %} -->
                     <li>
-                        <a href="{% url 'DA' %}" class="a-link active-sidebar">Malumot Qo'shish</a>
+                        <a href="{% url 'DA' %}" class="a-link active-sidebar">Ma'lumot qo'shish</a>
                     </li>
                     <li>
                         <a href="{% url 'T' %}" class="a-link">Jadvallarda ko'rish</a>
@@ -37,7 +37,7 @@
                 </ul>
             </div>
         </div>
-                      
+
         <div class="main">
             <div class="tumanlar">
                 <br>
