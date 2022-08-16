@@ -28,7 +28,7 @@
                         <li><a href="{% url 'S' pk=i.pk %}">{{ i }}</a></li>
                     {% endfor %}
                     {% for i in all_kj %}
-                        <li><a href="{% url 'KD' pk=i.pk %}">{{ i }}</a></li>
+                        <li><a href="{% url 'KD' pk=i.pk %}">{{ i.kolleJ }}</a></li>
                     {% endfor %}
                     {% for i in all_un %}
                         <li><a href="{% url 'UB' pk=i.pk %}">{{ i }}</a></li>

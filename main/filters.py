@@ -19,11 +19,11 @@ class MaktabFilter(django_filters.FilterSet):
 class KollejFilter(django_filters.FilterSet):
     class Meta:
         model = KollejBitiruvchisi
-        fields = ('tuman', 'mahalla', 'kollej')
+        fields = ('tuman', 'mahalla')
         form = KollejFilterForm
 
 class UniversitetFilter(django_filters.FilterSet):
     class Meta:
         model = UniversitetBitiruvchisi
-        fields = ('tuman', 'mahalla', 'universitet')
+        fields = ('tuman', 'mahalla')
         form = UniversiterFilterForm

@@ -9,11 +9,13 @@
         {% if mkFil.form.maktab %}
             <label for="id_maktab" class="mx-3">Maktab №</label>  
             {{ mkFil.form.maktab|add_class:"btn btn-outline-secondary btn-sm"}}
-        {% endif %}        
-        {% if mkfil.form.kollej %}
+        {% endif %} 
+        {% comment %}          
+            {% if mkfil.form.kollej %}
             <label for="id_kollej" class="mx-3">Kollej №</label>  
             {{ mkFil.form.kollej|add_class:"btn btn-outline-secondary btn-sm"}}
-        {% endif %}
+            {% endif %}
+        {% endcomment %}       
         <input type="submit" value="Qidirish" class="mx-3 btn btn-outline-dark text- btn-sm">
     </form>
 </div>
