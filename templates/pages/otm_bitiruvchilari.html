@@ -9,7 +9,39 @@
     <div class="background-table" >
                 <div class="row mt-5">
             <div class="col-10 m-auto">
-                {% include 'widgets/navbar.html' %}              
+                <h1 class="text-center my-3">Bitiruvchilar haqida malumotlar</h1>
+                <nav class="navbar navbar-expand-lg my-5 bg-light"> 
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav w-100 justify-content-center top-nav">
+                        <li class="nav-item">
+                            <a href="{% url 'H' %}" class="btn btn-outline-primary">Diagrammada ko'rish</a>
+                        </li>
+                        <li class="nav-item ">
+                            <a href="{% url 'T' %}" class="nav-link ">Hammasi</a>
+                        </li>
+                        <li class="nav-item">
+                        <a class="nav-link" href="{% url 'M' %}">Matab</a>
+                        </li>
+                        <li class="nav-item">
+                        <a class="nav-link" href="{% url 'K' %}">Professional ta'lim</a>
+                        </li>
+                        <li class="nav-item active-li">
+                        <a class="nav-link active" href="{% url 'F' %}">OTM Bitiruvchilari</a>
+                        </li>
+                        <li class="nav-item">
+                        <a href="{% url 'E' %}" class="nav-link">OTMga topshirganlar</a>
+                        </li>
+                        <!-- <li class="nav-item">
+                            <a href="{% url 'I' %}" class="nav-link">Ish bilan taminlanganlar</a>
+                        </li> -->
+                        <!-- <li class="nav-item">
+                            <a href="{% url 'O' %}" class="nav-link">
+                                Boshqalar        
+                            </a>
+                        </li> -->
+                    </ul>
+                    </div>
+                </nav>             
                 <div class="my-4 p-3 bg-shadow-a bg-light">
                     <form action="" method="get" novalidate>
                         <label for="id_tuman" class="mx-3">Tuman&Shahar</label>
@@ -65,16 +97,16 @@
                             {% for i in un %}
                                 <tr>
                                     <td>{{ i.pk }}</td>
-                                    <td><a href="{% url 'ACV' %}">{{ i.f_name }}</a></td>
+                                    <td><a href="{% url 'RUT' pk=i.pk %}">{{ i.f_name }}</a></td>
                                     <td>{{ i.tuman }}</td>
                                     <td>{{ i.mahalla }}</td>
-                                    <td></td>
-                                    <td></td>
+                                    <!-- <td></td> -->
+                                    <!-- <td></td> -->
                                     <td>{{ i.universitet }}</td>
                                     <!-- <td>O’zbekiston milliy universiteti</td>
                                     <td></td> -->
                                     <td>{{ i.phone }}</td>
-                                    <td>{{ t.sana }}</td>
+                                    <td>{{ i.t_sana }}</td>
                                 </tr>
                             {% endfor %}
                         </tbody>

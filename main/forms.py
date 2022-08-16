@@ -1,4 +1,5 @@
 from django import forms
+from .widget import DatePicker
 from django.urls import reverse_lazy
 
 from .models import (
@@ -29,8 +30,11 @@ class MaktabForm(forms.ModelForm):
                 'maktab-queries-url':reverse_lazy("ALMa"),
             }),
             'imkonyat':forms.CheckboxSelectMultiple(),
-            'qiziqish':forms.CheckboxSelectMultiple(),
+            'qiziqish':forms.Select(),
             'chettili':forms.CheckboxSelectMultiple(),
+            't_sana': DatePicker(attrs={
+                'id':"datepicker",
+            }),
         }
 
     def __init__(self, *args, **kwargs):
@@ -63,9 +67,11 @@ class KollejForm(forms.ModelForm):
                 'id':'kollej',
                 'kollej-queries-url': reverse_lazy("ALK"),
             }),
+            'qiziqish':forms.Select(),
             'imkonyat':forms.CheckboxSelectMultiple(),
-            'qiziqish':forms.CheckboxSelectMultiple(),
             'chettili':forms.CheckboxSelectMultiple(),
+            't_sana':DatePicker(),
+
         }
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -98,8 +104,9 @@ class UniversitetForm(forms.ModelForm):
                 # 'universitet-queries-url': reverse_lazy("ALK"),
             }),
             'imkonyat':forms.CheckboxSelectMultiple(),
-            'qiziqish':forms.CheckboxSelectMultiple(),
+            'qiziqish':forms.Select(),
             'chettili':forms.CheckboxSelectMultiple(),
+            't_sana':DatePicker(),
         }
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

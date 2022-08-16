@@ -8,7 +8,7 @@
 
 <nav aria-label="breadcrumb" class="sticky-top bg-light">
     <ol class="breadcrumb p-3">
-      <li class="breadcrumb-item"><a href="{% url 'S' pk=object.maktab.pk %}">Ortga qaytish</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'UB' pk=object.universitet.pk %}">Ortga qaytish</a></li>
       <li class="breadcrumb-item active" aria-current="page">{{ object }}ning Resumesi</li>
     </ol>
 </nav>
@@ -71,10 +71,10 @@
                             Ta'lim
                         </h3>
                         <p>
-                            Toshkent viloyati {{ object.maktab.tuman }} {{ object.maktab }}
+                            Toshkent viloyati {{ object.universitet.tuman }} {{ object.universitet }}
                             <!-- <small class="text-warning">2011/09/3 --- 2022/05/25</small> -->
                         </p>
-                        <h3>Topshirgan OTM nomi</h3>
+                        <!-- <h3>Topshirgan OTM nomi</h3>
                         {% if object.univer_sity %}   
                             <p>
                                 {{ object.univer_sity }}
@@ -83,7 +83,11 @@
                             <p>
                                 --------------
                             </p>
-                        {% endif %}
+                        {% endif %} -->
+                        <h3>Maqsadi</h3>
+                        <p>
+                            {{ object.maqsad }}
+                        </p>
                         <h3>Qiziqishlari</h3>
                         <ul>
                             {% for i in object.qiziqish.all %}  
@@ -93,12 +97,7 @@
                          <h3>Fuqoro xaqida</h3>
                          <p>
                             {{ object.f_name }} Toshkent vilotati {{ object.tuman }}da tug'ulgan.
-                            {{ object.maktab }}ning {{ object.sinf }} bituruvchisi. 
-                            {% if object.univer_sity %}  
-                                Hozirda "{{ object.univer_sity }}" ga topshirgan.
-                            {% else %}
-                                Hech qaysi OTMga topshirmagan 
-                            {% endif %} 
+                            {{ object.universitet }}ning {{ object.sinf }} bituruvchisi.  
                             {% if object.idea == 'Bor' %}  
                                 O'zini biznes g'oyasi bor
                             {% endif %}

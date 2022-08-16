@@ -3,7 +3,7 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav w-100 justify-content-center top-nav">
         <li class="nav-item">
-            <a href="{% url 'H' %}" class="btn btn-outline-primary">Diagramma</a>
+            <a href="{% url 'H' %}" class="btn btn-outline-primary">Diagrammada ko'rish</a>
         </li>
         <li class="nav-item">
             <a href="{% url 'T' %}" class="nav-link active">Hammasi</a>
@@ -12,7 +12,7 @@
           <a class="nav-link" href="{% url 'M' %}">Matab</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'K' %}">Profesinal ta'lim</a>
+          <a class="nav-link" href="{% url 'K' %}">Professional ta'lim</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{% url 'F' %}">OTM Bitiruvchilari</a>
@@ -31,9 +31,11 @@
       </ul>
     </div>
 </nav>
-<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<!-- <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script>
-    $(document).on("click", " ul li", function(){
-        $(this).addClass("active").siblings().removeClass("active");
+    $(function(){
+        $("li").click(function(){
+            $(this).addClass('active-li').siblings().removeClass('active-li')
+        });
     })
-</script>
+</script> -->

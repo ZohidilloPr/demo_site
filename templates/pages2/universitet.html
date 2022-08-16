@@ -18,18 +18,18 @@
                             <th>№</th>
                             <th>F.I.SH</th>
                             <th>Telefon raqami</th>
-                            <th>Yashash manzili</th>
-                            <th>Topshirgan OTM nomi</th>
+                            <th>Tug'ulgan joyi</th>
+                            <th>Tug'ulgan sana</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for i in student %}
                             <tr>
                                 <td>{{ forloop.counter }}</td>
-                                <td><a href="">{{ i.f_name }}</a></td>
+                                <td><a href="{% url 'RU' pk=i.pk %}">{{ i.f_name }}</a></td>
                                 <td>(+998) {{ i.phone }}</td>
-                                <td>{{ i.mahalla }}</td>
-                                <td></td>
+                                <td>{{ i.tuman }}  {{ i.mahalla }}</td>
+                                <td>{{ i.t_sana }}</td>
                             </tr>
                         {% empty %}
                             <tr>

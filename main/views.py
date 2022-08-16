@@ -1,6 +1,7 @@
-from multiprocessing import get_context
-from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
+from django.contrib import messages
+from django.shortcuts import redirect, render
+from django.contrib.messages.views import SuccessMessageMixin
 
 from .models import (
     ChetTili,
@@ -125,8 +126,8 @@ def UniversitetB(request, pk):
     maktab_all = MK.objects.filter(tuman_id=tuman_pk)
     kollej_all = KJ.objects.filter(tuman_id=tuman_pk)
     univer_all = Universitet.objects.filter(tuman_id=tuman_pk)
-    grils = KollejBitiruvchisi.objects.filter(kollej=pk, jins="qiz bola").count()
-    boys = KollejBitiruvchisi.objects.filter(kollej=pk, jins="o'g'il bola").count()
+    grils = UniversitetBitiruvchisi.objects.filter(universitet=pk, jins="qiz bola").count()
+    boys = UniversitetBitiruvchisi.objects.filter(universitet=pk, jins="o'g'il bola").count()
     return render(request, 'pages2/universitet.html', {
         'pk':pk,
         'un':un,
@@ -140,6 +141,8 @@ def UniversitetB(request, pk):
 
     })
 
+# RESUME SECTIONS
+
 def ResumeMaktab(request, pk):
     maktab_b = MaktabBitiruvchisi.objects.get(pk=pk)
     return render(request, 'cv/resume_maktab.html', {
@@ -150,6 +153,30 @@ def ResumeMaktabTable(request, pk):
     maktab_b = MaktabBitiruvchisi.objects.get(pk=pk)
     return render(request, 'cv/resume_maktab_table.html', {
         'object': maktab_b,
+    })
+
+def ResumeKollej(request, pk):
+    kollej_b = KollejBitiruvchisi.objects.get(pk=pk)
+    return render(request, 'cv/resume_kollej.html', {
+        'object': kollej_b,
+    })
+
+def ResumeKollejTable(request, pk):
+    kollej_b = KollejBitiruvchisi.objects.get(pk=pk)
+    return render(request, 'cv/resume_kollej_table.html', {
+        'object': kollej_b,
+    })
+
+def ResumeUniversitet(request, pk):
+    univer_b = UniversitetBitiruvchisi.objects.get(pk=pk)
+    return render(request, 'cv/resume_univer.html', {
+        'object': univer_b,
+    })
+
+def ResumeUniversitetTable(request, pk):
+    univer_b = UniversitetBitiruvchisi.objects.get(pk=pk)
+    return render(request, 'cv/resume_univer_table.html', {
+        'object': univer_b,
     })
 
 # tables section
@@ -207,10 +234,19 @@ def OTM_Enter(request):
             pass
         else:
             all_list.append(i)
+    for i in kj:
+        if not i.univer_sity:
+            pass
+        else:
+            all_list.append(i)
     return render(request, "pages/otm_topshirganlar.html", context={
         'all_list':all_list,
     })
     
+def AllDistricts(request):
+    all_d = TumanVaShahar.objects.all().order_by('name')
+    return render(request, 'pages2/all_tumanlar.html', {"all_d": all_d })
+
 
 def Ish(request):
     return render(request, "pages/ish_.html")
@@ -218,9 +254,6 @@ def Ish(request):
 def Other(request):
     return render(request, "pages/boshqa.html")
 
-def AllDistricts(request):
-    all_d = TumanVaShahar.objects.all().order_by('name')
-    return render(request, 'pages2/all_tumanlar.html', {"all_d": all_d })
 
 # Add Sections
 
@@ -232,32 +265,47 @@ def MaktabAdd(request):
         form = MaktabForm(request.POST)
         if form.is_valid():
             form.save()
+            messages.success(request, "Maktab Muafaqiyatli qo'shildi")
             return redirect("MBA")
+        messages.error(request, "Malumot kiritishda xatolik")
+        
     form = MaktabForm
     return render(request, 'forms/add/maktabAdd.html', {"form":form})
 
-def KollejAdd(request):
-    if request.method == "POST":
-        form = KollejForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect("KBA")
-    form = KollejForm
-    return render(request, 'forms/add/kollejAdd.html', {"form":form})
+class KollejAdd(SuccessMessageMixin, CreateView):
+    model = KollejBitiruvchisi
+    form_class = KollejForm
+    template_name = 'forms/add/kollejAdd.html'
+    success_url = reverse_lazy("KBA")
+    success_message = 'Kollej muaffaqiyatli qo\'shildi!'
+
+# def KollejAdd(request):
+#     if request.method == "POST":
+#         form = KollejForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#             return redirect("KBA")
+#     form = KollejForm
+#     return render(request, 'forms/add/kollejAdd.html', {"form":form})
 
 def UniversitetAdd(request):
     if request.method == "POST":
         form = UniversitetForm(request.POST)
         if form.is_valid():
             form.save()
+            messages.success(request, "Universitet Muafaqiyatli qo'shildi")
             return redirect("UBA")
+        messages.error(request, "Malumot kiritishda xatolik")
+        
+        
     form = UniversitetForm
     return render(request, 'forms/add/universitetAdd.html', {"form":form})
 
-class MaktabNameAddView(CreateView):
+class MaktabNameAddView(SuccessMessageMixin, CreateView):
     model = MK
     template_name = 'forms/sections/add/maktabnameadd.html'
     form_class = MaktabNameForm
+    success_message = 'Yangi maktab muaffaqiyatli qo\'shildi!'
     success_url = reverse_lazy("MNAV")
 
     def get_context_data(self, **kwargs):
@@ -265,41 +313,53 @@ class MaktabNameAddView(CreateView):
         context['name'] = 'Maktab'
         return context
         
-class KollejNameAddView(CreateView):
+class KollejNameAddView(SuccessMessageMixin, CreateView):
     model = KJ
     template_name = 'forms/sections/add/kollejnameadd.html'
     form_class = KollejNameForm
     success_url = reverse_lazy("KNAV")
+    success_message = 'Yangi kollej muaffaqiyatli qo\'shildi!'
 
-class UniversitetNameAddView(CreateView):
+
+class UniversitetNameAddView(SuccessMessageMixin, CreateView):
     model = Universitet
     template_name = 'forms/sections/add/universitetnameadd.html'
     form_class = UniversitetNameForm
     success_url = reverse_lazy("UNAV")
+    success_message = 'Yangi universitet muaffaqiyatli qo\'shildi!'
 
-class QiziqishNameAddView(CreateView):
+
+class QiziqishNameAddView(SuccessMessageMixin, CreateView):
     model = Qiziqish
     fields = '__all__'
     success_url = reverse_lazy("QNAV")
     template_name = 'forms/sections/add/qiziqishnameadd.html'
+    success_message = 'Yangi qiziqish muaffaqiyatli qo\'shildi!'
 
-class ImkonyatNameAddView(CreateView):
+
+class ImkonyatNameAddView(SuccessMessageMixin, CreateView):
     model = Imkonyat
     fields = '__all__'
     success_url = reverse_lazy("INAV")
     template_name = 'forms/sections/add/imkonyatnameadd.html'
+    success_message = 'Yangi imkonyat muaffaqiyatli qo\'shildi!'
 
-class ChetTiliNameAddView(CreateView):
+
+class ChetTiliNameAddView(SuccessMessageMixin, CreateView):
     model = ChetTili
     fields = '__all__'
     success_url = reverse_lazy("FNAV")
     template_name = 'forms/sections/add/f_langnameadd.html'
+    success_message = 'Yangi chet tili muaffaqiyatli qo\'shildi!'
+    
 
-class MahallaNameAddView(CreateView):
+class MahallaNameAddView(SuccessMessageMixin, CreateView):
     model = Mahalla
     fields = '__all__'
     success_url = reverse_lazy("MNAV")
     template_name = 'forms/sections/add/mahallanameadd.html'
+    success_message = 'Yangi mahalla muaffaqiyatli qo\'shildi!'
+
 
 # AJAX SECTION
 
