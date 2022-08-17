@@ -22,10 +22,10 @@
                                     <li><a href="{% url 'D' pk=i.pk %}" class="text-info">{{ i }}</a></li>
                                 {% endfor %}
                             </ol>
-                        </li>  
+                        </li>
                     {% endif %} -->
                     <li>
-                        <a href="{% url 'DA' %}" class="a-link">Malumot Qo'shish</a>
+                        <a href="{% url 'DA' %}" class="a-link">Ma'lumot qo'shish</a>
                     </li>
                     <li>
                         <a href="{% url 'T' %}" class="a-link">Jadvallarda ko'rish</a>
@@ -36,7 +36,7 @@
                 </ul>
             </div>
         </div>
-        
+
         <div class="main">
             <div class="chart">
                 <h1>Bu yilgi bitiruvchilar raqamlarda</h1>
@@ -57,7 +57,7 @@
                     data: ['{{ unb }}', '{{ kjb }}', '{{ mkb }}'],
                     fill: false,
                     backgroundColor: [
-                        'rgba(5, 140, 145, 0.47)', 
+                        'rgba(5, 140, 145, 0.47)',
                         'rgba(9, 57, 142, 0.45)',
                         'rgba(8, 140, 78, 0.5)',
                     ],

@@ -89,9 +89,10 @@ class ChetTili(AutoTime):
 class Bitiruvchi(models.Model):
     f_name = models.CharField(max_length=l, verbose_name="F.I.Sh")
     img = models.ImageField(default='default/default.png', upload_to='bitiruvchilar-foto/')
-    t_sana = models.DateField(verbose_name="Tug'ulgan sana")
+    # t_sana = models.DateField(verbose_name="Tug'ulgan sana", null=True, blank=True)
+    t_sana = models.CharField(max_length=l, verbose_name="Tug'ulgan sana", null=True, blank=True)
     phone = models.CharField(max_length=9, verbose_name="(+998) ")
-    email = models.EmailField(max_length=l, verbose_name="E-Pochta", null=True)
+    email = models.EmailField(max_length=l, verbose_name="E-Pochta", null=True, blank=True)
     tuman = models.ForeignKey(TumanVaShahar, on_delete=models.CASCADE, verbose_name="Yashaydigan tuman(shahar)")
     mahalla = models.ForeignKey(Mahalla, on_delete=models.CASCADE, verbose_name="Mahalla Nomi")
     imkonyat = models.ManyToManyField(Imkonyat, related_name="abilty", verbose_name="Qoshimcha bilimi")
@@ -117,7 +118,9 @@ class MaktabBitiruvchisi(Bitiruvchi):
         return super().__str__()
 
 class KollejBitiruvchisi(Bitiruvchi):
-    kollej = models.ForeignKey(Kollej, on_delete=models.CASCADE, verbose_name="Bitirayotgan Kollej")
+    kollej = models.ForeignKey(Kollej, on_delete=models.SET_NULL, verbose_name="Bitirayotgan Kollej", null=True, blank=True)
+    kolleJ = models.CharField(max_length=l, null=True, blank=True, verbose_name="Bitirayotgan kollej")
+    stu_way = models.CharField(max_length=l, null=True, blank=True, verbose_name="Mutaxasislik")
     maqsad = models.CharField(max_length=l, choices=aim, default="Ishlamoqchi", verbose_name="Maqsadi")
     univer_sity = models.CharField(max_length=l, verbose_name="Topshirmoqchi bo'lgan universitet", null=True, blank=True)
 
@@ -126,6 +129,8 @@ class KollejBitiruvchisi(Bitiruvchi):
 
 class UniversitetBitiruvchisi(Bitiruvchi):
     maqsad = models.CharField(max_length=l, choices=aim, default="Ishlamoqchi", verbose_name="Maqsadi")
+    universiteT = models.CharField(max_length=l, null=True, blank=True, verbose_name="Bitirayotgan OTM",)
+    stu_way = models.CharField(max_length=l, null=True, blank=True, verbose_name="Mutaxasislik")
     universitet = models.ForeignKey(Universitet, on_delete=models.CASCADE, verbose_name="Bitirayotgan OTM", null=True, blank=True)
 
     def __str__(self):

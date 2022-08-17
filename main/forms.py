@@ -32,9 +32,9 @@ class MaktabForm(forms.ModelForm):
             'imkonyat':forms.CheckboxSelectMultiple(),
             'qiziqish':forms.Select(),
             'chettili':forms.CheckboxSelectMultiple(),
-            't_sana': DatePicker(attrs={
-                'id':"datepicker",
-            }),
+            # 't_sana': DatePicker(attrs={
+            #     'id':"datepicker",
+            # }),
         }
 
     def __init__(self, *args, **kwargs):
@@ -70,7 +70,7 @@ class KollejForm(forms.ModelForm):
             'qiziqish':forms.Select(),
             'imkonyat':forms.CheckboxSelectMultiple(),
             'chettili':forms.CheckboxSelectMultiple(),
-            't_sana':DatePicker(),
+            # 't_sana':DatePicker(),
 
         }
     def __init__(self, *args, **kwargs):
@@ -106,7 +106,7 @@ class UniversitetForm(forms.ModelForm):
             'imkonyat':forms.CheckboxSelectMultiple(),
             'qiziqish':forms.Select(),
             'chettili':forms.CheckboxSelectMultiple(),
-            't_sana':DatePicker(),
+            # 't_sana':DatePicker(),
         }
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -140,13 +140,11 @@ class KollejFilterForm(forms.Form):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['mahalla'].queryset = Mahalla.objects.none()
-        self.fields['kollej'].queryset = Kollej.objects.none()
 
         if 'tuman' in self.data:
             try:
                 tuman_id = int(self.data.get('tuman'))
                 self.fields['mahalla'].queryset = Mahalla.objects.filter(tuman_id=tuman_id).all()
-                self.fields['kollej'].queryset = Kollej.objects.filter(tuman_id=tuman_id).all()
             except (ValueError, TypeError):
                 pass
 

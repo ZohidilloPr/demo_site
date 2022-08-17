@@ -9,7 +9,7 @@
     <div class="row mt-5">
         <div class="col-10 m-auto">
             <h1 class="text-center my-3">Bitiruvchilar haqida malumotlar</h1>
-                <nav class="navbar navbar-expand-lg my-5 bg-light"> 
+                <nav class="navbar navbar-expand-lg my-5 bg-light">
                     <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav w-100 justify-content-center top-nav">
                         <li class="nav-item">
@@ -19,7 +19,7 @@
                             <a href="{% url 'T' %}" class="nav-link active">Hammasi</a>
                         </li>
                         <li class="nav-item">
-                        <a class="nav-link" href="{% url 'M' %}">Matab</a>
+                        <a class="nav-link" href="{% url 'M' %}">Maktab</a>
                         </li>
                         <li class="nav-item">
                         <a class="nav-link" href="{% url 'K' %}">Professional ta'lim</a>
@@ -35,12 +35,12 @@
                         </li> -->
                         <!-- <li class="nav-item">
                             <a href="{% url 'O' %}" class="nav-link">
-                                Boshqalar        
+                                Boshqalar
                             </a>
                         </li> -->
                     </ul>
                     </div>
-                </nav>              
+                </nav>
             <div class="table-box">
                 <table class="table">
                     {% include "widgets/table_header.html" %}
@@ -65,7 +65,7 @@
                                 <td>{{ i.tuman }}</td>
                                 <td>{{ i.mahalla }}</td>
                                 <td></td>
-                                <td>{{ i.kollej }}</td>
+                                <td>{{ i.kolleJ }}</td>
                                 <td></td>
                                 <td>{{ i.phone }}</td>
                                 <td>{{ i.t_sana }}</td>
@@ -79,7 +79,7 @@
                                 <td>{{ i.mahalla }}</td>
                                 <td></td>
                                 <td></td>
-                                <td>{{ i.universitet }}</td>
+                                <td>{{ i.universiteT }}</td>
                                 <!-- <td>O’zbekiston milliy universiteti</td>
                                 <td></td> -->
                                 <td>{{ i.phone }}</td>
@@ -88,7 +88,7 @@
                         {% endfor %}
                     </tbody>
                 </table>
-            </div>       
+            </div>
         </div>
     </div>
     </div>

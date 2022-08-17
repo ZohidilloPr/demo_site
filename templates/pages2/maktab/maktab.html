@@ -7,6 +7,16 @@
     <div class="background">
         {% include "../../widgets/sidebar.html" %}
         <div class="main">
+            <div class="dropdown">
+                <a class="btn dropdown-toggle" href="{% url 'AD' %}" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Tuman Va Shahar
+                </a>
+                <ol class="dropdown-menu">
+                    {% for i in all_d %}
+                        <li><a class="dropdown-item a-link" href="{% url 'D' pk=i.pk %}">{{ i.name }}</a></li>
+                    {% endfor %}
+                </ol>
+             </div>
             <div class="chart">
                 <h1>Bu yilgi  bitiruvchilar {{ mk }} misolida</h1>
                 <canvas id="maktab"></canvas>
@@ -45,11 +55,10 @@
                     {% for i in all_mk %}
                         <li><a href="{% url 'S' pk=i.pk %}">{{ i }}</a></li>
                     {% endfor %}
-                    {% for i in all_kj %}
-                        <li><a href="{% url 'KD' pk=i.pk %}">{{ i }}</a></li>
-                    {% endfor %}
+                    <li><a href="{% url 'AKB' pk=mk.tuman.pk %}">Professional ta'lim</a></li>
+                    <li><a href="{% url 'AOB' pk=mk.tuman.pk %}">OTM</a></li>
                 </ul>
-                
+
             </div>
         </div>
     </div>
@@ -62,9 +71,9 @@
                 labels : ['9-sinf bitiruvchilari', '11-sinf bitiruvchilari', 'O\'g\'il bolalar', 'qiz bolalar'],
                 datasets : [{
                     label: '',
-                    data: ['{{ gra_11 }}', '{{ gra_9 }}', '{{ boys }}', '{{ grils }}'],
+                    data: ['{{ gra_9 }}', '{{ gra_11 }}', '{{ boys }}', '{{ grils }}'],
                     backgroundColor: [
-                        'rgba(5, 140, 145, 0.47)', 
+                        'rgba(5, 140, 145, 0.47)',
                         'rgba(9, 57, 142, 0.45)',
                         'rgba(8, 140, 78, 0.5)',
                         'rgba(8, 140, 78, 0.5)',
