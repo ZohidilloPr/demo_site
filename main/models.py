@@ -120,6 +120,7 @@ class MaktabBitiruvchisi(Bitiruvchi):
 class KollejBitiruvchisi(Bitiruvchi):
     kollej = models.ForeignKey(Kollej, on_delete=models.SET_NULL, verbose_name="Bitirayotgan Kollej", null=True, blank=True)
     kolleJ = models.CharField(max_length=l, null=True, blank=True, verbose_name="Bitirayotgan kollej")
+    stu_way = models.CharField(max_length=l, null=True, blank=True, verbose_name="Mutaxasislik")
     maqsad = models.CharField(max_length=l, choices=aim, default="Ishlamoqchi", verbose_name="Maqsadi")
     univer_sity = models.CharField(max_length=l, verbose_name="Topshirmoqchi bo'lgan universitet", null=True, blank=True)
 
@@ -129,6 +130,7 @@ class KollejBitiruvchisi(Bitiruvchi):
 class UniversitetBitiruvchisi(Bitiruvchi):
     maqsad = models.CharField(max_length=l, choices=aim, default="Ishlamoqchi", verbose_name="Maqsadi")
     universiteT = models.CharField(max_length=l, null=True, blank=True, verbose_name="Bitirayotgan OTM",)
+    stu_way = models.CharField(max_length=l, null=True, blank=True, verbose_name="Mutaxasislik")
     universitet = models.ForeignKey(Universitet, on_delete=models.CASCADE, verbose_name="Bitirayotgan OTM", null=True, blank=True)
 
     def __str__(self):

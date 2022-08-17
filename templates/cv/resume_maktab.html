@@ -85,11 +85,15 @@
                             </p>
                         {% endif %}
                         <h3>Qiziqishlari</h3>
-                        <ul>
-                            {% for i in object.qiziqish.all %}  
-                                <li>{{ i }}</li>
-                            {% endfor %}
-                         </ul>
+                        <p>
+                            {{ object.qiziqish }}
+                        </p>
+                        {% if object.short_f %}
+                            <h3>Biznes g'oya haqida ozroq</h3>
+                            <p>
+                                {{ object.short_f }}
+                            </p>  
+                        {% endif %}
                          <h3>Fuqoro xaqida</h3>
                          <p>
                             {{ object.f_name }} Toshkent vilotati {{ object.tuman }}da tug'ulgan.
