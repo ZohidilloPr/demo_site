@@ -1,7 +1,9 @@
 from django.urls import path
 from .views import (
+    AllKollejBit,
     Ish,
     Home,
+    OTM_all_stu,
     Other,
     Table,
     Maktab,
@@ -74,4 +76,8 @@ urlpatterns = [
     path("jadval/universitet/bitiruvchi/<pk>/", ResumeUniversitetTable, name="RUT"),
     path("data/new/add/universitet/", UniversitetNameAddView.as_view(), name="UNAV"),
     path("data/new/add/tumanvashahar/", TumanVaShaharNameAddView.as_view(), name="TvSNAV"),
+
+    path("bitiruvchilar/tumanlar/kollej/<pk>/", AllKollejBit, name="AKB"),
+    path("bitiruvchilar/tumanlar/otm/<pk>/", OTM_all_stu, name="AOB"),
+
 ]

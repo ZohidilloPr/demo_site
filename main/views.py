@@ -95,6 +95,46 @@ def Schools(request, pk):
         'all_kj': kollej_all,
     }) 
 
+def AllKollejBit(request, pk):
+    kollej_all_stu = KollejBitiruvchisi.objects.filter(tuman=pk)
+    tuman_id = kollej_all_stu[0].tuman.pk
+    maktab_all = MK.objects.filter(tuman_id=tuman_id)
+    all_d = TumanVaShahar.objects.all().order_by('name')
+    student = KollejBitiruvchisi.objects.filter(tuman=pk)
+    grils = KollejBitiruvchisi.objects.filter(tuman_id=tuman_id, jins="qiz bola").count()
+    boys = KollejBitiruvchisi.objects.filter(tuman_id=tuman_id, jins="o'g'il bola").count()
+    return render(request, "pages2/maktab/all_kollej_stu.html",{
+        'pk':pk,
+        'boys': boys,
+        'grils': grils,
+        'all_d': all_d,
+        'student':student,
+        'tuman_id':tuman_id,
+        'all_mk':maktab_all,
+        'kas':kollej_all_stu,
+        # 'all_kj': kollej_all,
+    }) 
+
+def OTM_all_stu(request, pk):
+    otm_all_stu = UniversitetBitiruvchisi.objects.filter(tuman=pk)
+    tuman_id = otm_all_stu[0].tuman.pk
+    maktab_all = MK.objects.filter(tuman_id=tuman_id)
+    all_d = TumanVaShahar.objects.all().order_by('name')
+    student = UniversitetBitiruvchisi.objects.filter(tuman=pk)
+    grils = UniversitetBitiruvchisi.objects.filter(tuman_id=tuman_id, jins="qiz bola").count()
+    boys = UniversitetBitiruvchisi.objects.filter(tuman_id=tuman_id, jins="o'g'il bola").count()
+    return render(request, "pages2/maktab/all_otm_stu.html",{
+        'pk':pk,
+        'boys': boys,
+        'grils': grils,
+        'all_d': all_d,
+        'kas':otm_all_stu,
+        'student':student,
+        'all_mk':maktab_all,
+        'tuman_id':tuman_id,
+        # 'all_kj': kollej_all,
+    }) 
+
 def KollejD(request, pk):
     kollej = KJ.objects.get(pk=pk)
     tuman_pk = kollej.tuman.pk
