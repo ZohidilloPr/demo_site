@@ -7,17 +7,47 @@
     <div class="background">
         {% include "../../widgets/sidebar.html" %}
         <div class="main">
-            <div class="dropdown">
-                <a class="btn dropdown-toggle" href="{% url 'AD' %}" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Tuman Va Shahar
-                </a>
-                <ol class="dropdown-menu">
-                    {% for i in all_d %}
-                        <li><a class="dropdown-item a-link" href="{% url 'D' pk=i.pk %}">{{ i.name }}</a></li>
-                    {% endfor %}
-                </ol>
-             </div>
-            <div class="chart">
+            <ul class="fl-top">
+                <li class="">
+                    <div class="dropdown">
+                        <a class="btn dropdown-toggle w-100 rounded-0 border-0" href="{% url 'AD' %}" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Tuman va Shahar
+                        </a>
+                        <ol class="dropdown-menu w-100">
+                            {% for i in all_d %}
+                            <li><a class="dropdown-item a-link" href="{% url 'D' pk=i.pk %}">{{ i.name }}</a></li>
+                            {% endfor %}
+                        </ol>
+                    </div>
+                </li>
+                <li>
+                    <div class="dropdown">
+                        <a class="btn dropdown-toggle w-100 rounded-0 border-dark border-top-0 border-start-0 border-end-0 " href="" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Maktablar
+                        </a>
+                        <ol class="dropdown-menu w-100">
+                            {% for i in all_mk %}
+                            <li><a class="dropdown-item a-link" href="{% url 'S' pk=i.pk %}">{{ i }}</a></li>
+                            {% endfor %}
+                        </ol>
+                    </div>
+                </li>        
+                <!-- <li>
+                    <select name="" id="" class="form-select rounded-0">
+                        <option value="">-----------</option>
+                        {% for i in typeK %}
+                            <option>{{ i }}</option>
+                        {% endfor %}
+                    </select>
+                </li> -->
+                <li>
+                    <a href="{% url 'AKB' pk=mk.tuman.pk %}" style="padding: 7px 0;" class="btn rounded-0 w-100 border-0">kollej</a>
+                </li>        
+                <li>
+                    <a href="" style="padding: 7px 0;" class="btn rounded-0 w-100 border-0">OTM</a>
+                </li>        
+            </ul>
+            <div class="chart mt-5">
                 <h1>Bu yilgi  bitiruvchilar {{ mk }} misolida</h1>
                 <canvas id="maktab"></canvas>
             </div>
@@ -49,7 +79,7 @@
                     </tbody>
                 </table>
             </div>
-            <div class="tumanlar">
+            <!-- <div class="tumanlar">
                 <h1>Barcha ta'lim muassasalari</h1>
                 <ul id="tuman">
                     {% for i in all_mk %}
@@ -59,7 +89,7 @@
                     <li><a href="{% url 'AOB' pk=mk.tuman.pk %}">OTM</a></li>
                 </ul>
 
-            </div>
+            </div> -->
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>

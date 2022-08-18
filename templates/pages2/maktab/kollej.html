@@ -7,8 +7,60 @@
     <div class="background">
         {% include "../../widgets/sidebar.html" %}
         <div class="main">
-            <div class="chart">
-                <h1>Bu yilgi  bitiruvchilar " {{ kj }} " misolida</h1>
+            <ul class="fl-top">
+                <li class="">
+                    <div class="dropdown">
+                        <a class="btn dropdown-toggle w-100 rounded-0 border-0" href="{% url 'AD' %}" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Tuman va Shahar
+                        </a>
+                        <ol class="dropdown-menu w-100">
+                            {% for i in all_d %}
+                            <li><a class="dropdown-item a-link" href="{% url 'D' pk=i.pk %}">{{ i.name }}</a></li>
+                            {% endfor %}
+                        </ol>
+                    </div>
+                </li>
+                <li>
+                    <div class="dropdown">
+                        <a class="btn dropdown-toggle w-100 rounded-0 border-0" href="" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Maktablar
+                        </a>
+                        <ol class="dropdown-menu w-100">
+                            {% for i in all_mk %}
+                            <li><a class="dropdown-item a-link" href="{% url 'S' pk=i.pk %}">{{ i }}</a></li>
+                            {% endfor %}
+                        </ol>
+                    </div>
+                </li>        
+                <li>
+                    <a href="{% url 'AKB' pk=kj.tuman.pk %}" style="padding: 7px 0;" class="btn rounded-0 w-100 border-dark border-top-0 border-start-0 border-end-0">kollej</a>
+                </li>        
+                <li>
+                    <a href="" style="padding: 7px 0;" class="btn rounded-0 w-100 border-0">OTM</a>
+                </li>        
+            </ul>
+            <hr>
+            <br>
+            <ul class="fl-top-2">
+                {% for i in all_type %}
+                    <li>
+                        <div class="dropdown">
+                            <a class="btn dropdown-toggle w-100 rounded-0 border-0" href="" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                {{ i }}
+                            </a>
+                            <ol class="dropdown-menu w-100">
+                                {% for a in kjt %}
+                                    {% if i.pk == a.type.pk %}  
+                                        <li class=""><a class="dropdown-item a-link" href="{% url 'KD' pk=a.pk %}">{{ a }} </a></li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ol>
+                        </div>
+                    </li> 
+                {% endfor %}
+            </ul>
+            <div class="chart mt-5">
+                <h1>Bu yilgi  bitiruvchilar <b>" {{ kj }} "</b> misolida</h1>
                 <canvas id="maktab"></canvas>
             </div>
             <div class="jadval my-5">
@@ -39,7 +91,7 @@
                     </tbody>
                 </table>
             </div>
-            <div class="tumanlar">
+            <!-- <div class="tumanlar">
                 <h1>Barcha ta'lim muassasalari</h1>
                 <ul id="tuman">
                     {% for i in all_mk %}
@@ -53,7 +105,7 @@
                     {% endfor %}
                 </ul>
                 
-            </div>
+            </div> -->
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
