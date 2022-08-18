@@ -7,7 +7,8 @@ from .models import (
     ChetTili,
     Imkonyat,
     Mahalla,
-    Qiziqish, 
+    Qiziqish,
+    TypeKollej, 
     Universitet,
     TumanVaShahar, 
     MaktabBitiruvchisi, 
@@ -56,9 +57,17 @@ def Districts(request, pk):
     kollej_all = KJ.objects.filter(tuman_id=pk)
     uni_all = Universitet.objects.filter(tuman_id=pk)
     all_d = TumanVaShahar.objects.all().order_by('name')
+    typeKol = TypeKollej.objects.all()
     mkb = MaktabBitiruvchisi.objects.filter(tuman_id=pk).count()
     kjb = KollejBitiruvchisi.objects.filter(tuman_id=pk).count()
-    unb = UniversitetBitiruvchisi.objects.filter(tuman_id=pk).count()    
+    unb = UniversitetBitiruvchisi.objects.filter(tuman_id=pk).count()
+    all_students = []
+    for i in MaktabBitiruvchisi.objects.filter(tuman_id=pk):
+        all_students.append(i)    
+    for i in KollejBitiruvchisi.objects.filter(tuman_id=pk):
+        all_students.append(i)    
+    for i in UniversitetBitiruvchisi.objects.filter(tuman_id=pk):
+        all_students.append(i)    
     return render(request, "pages2/tumanlar.html", {
         'd':d,
         'pk':pk,
@@ -68,7 +77,9 @@ def Districts(request, pk):
         'all_d':all_d,
         'maktab':maktab,
         'all_un':uni_all,
+        'typeK': typeKol,
         'all_kj':kollej_all,
+        'student':all_students
     })    
 
 def Schools(request, pk):
@@ -96,15 +107,22 @@ def Schools(request, pk):
     }) 
 
 def AllKollejBit(request, pk):
+    all_types = TypeKollej.objects.all()
     kollej_all_stu = KollejBitiruvchisi.objects.filter(tuman=pk)
     tuman_id = kollej_all_stu[0].tuman.pk
+    kj = KJ.objects.filter(tuman_id=tuman_id)
     maktab_all = MK.objects.filter(tuman_id=tuman_id)
     all_d = TumanVaShahar.objects.all().order_by('name')
     student = KollejBitiruvchisi.objects.filter(tuman=pk)
     grils = KollejBitiruvchisi.objects.filter(tuman_id=tuman_id, jins="qiz bola").count()
     boys = KollejBitiruvchisi.objects.filter(tuman_id=tuman_id, jins="o'g'il bola").count()
+    list_p_t = []
+    for i in all_types:
+        list_p_t.append(kollej_all_stu.filter(type=i.pk).count())
+        print(kollej_all_stu.filter(type=i.pk).count())
     return render(request, "pages2/maktab/all_kollej_stu.html",{
         'pk':pk,
+        'kjt': kj,
         'boys': boys,
         'grils': grils,
         'all_d': all_d,
@@ -112,7 +130,11 @@ def AllKollejBit(request, pk):
         'tuman_id':tuman_id,
         'all_mk':maktab_all,
         'kas':kollej_all_stu,
-        # 'all_kj': kollej_all,
+        'all_type':all_types,
+        'count_0': list_p_t[0],
+        'count_1': list_p_t[1],
+        'count_2': list_p_t[2],
+        #'all_kj': kollej_all,
     }) 
 
 def OTM_all_stu(request, pk):
@@ -136,17 +158,20 @@ def OTM_all_stu(request, pk):
     }) 
 
 def KollejD(request, pk):
+    all_types = TypeKollej.objects.all()
     kollej = KJ.objects.get(pk=pk)
     tuman_pk = kollej.tuman.pk
+    kj = KJ.objects.filter(tuman_id=tuman_pk)
     maktab_all = MK.objects.filter(tuman_id=tuman_pk)
     kollej_all = KJ.objects.filter(tuman_id=tuman_pk)
-    univer_all = Universitet.objects.filter(tuman_id=tuman_pk)
     all_d = TumanVaShahar.objects.all().order_by('name')
+    univer_all = Universitet.objects.filter(tuman_id=tuman_pk)
     student = KollejBitiruvchisi.objects.filter(kollej=kollej.pk)
     grils = KollejBitiruvchisi.objects.filter(kollej=pk, jins="qiz bola").count()
     boys = KollejBitiruvchisi.objects.filter(kollej=pk, jins="o'g'il bola").count()
     return render(request, 'pages2/maktab/kollej.html', {
         'pk':pk,
+        'kjt':kj,
         'kj':kollej,
         'boys':boys,
         'all_d':all_d,
@@ -155,6 +180,7 @@ def KollejD(request, pk):
         'all_mk':maktab_all,
         'all_kj':kollej_all,
         'all_un':univer_all,
+        'all_type':all_types,
 
     })
 
@@ -310,7 +336,11 @@ def MaktabAdd(request):
         messages.error(request, "Malumot kiritishda xatolik")
         
     form = MaktabForm
-    return render(request, 'forms/add/maktabAdd.html', {"form":form})
+    imk = Imkonyat.objects.all()
+    return render(request, 'forms/add/maktabAdd.html', {
+        "form":form,
+        'imk':imk,
+    })
 
 class KollejAdd(SuccessMessageMixin, CreateView):
     model = KollejBitiruvchisi
@@ -422,6 +452,7 @@ def load_mahalla(request):
 
 def load_maktab(request):
     tuman_id = request.GET.get('tuman_id')
+    # print(tuman_id)
     maktab = MK.objects.filter(tuman_id=tuman_id).order_by("name")
     return render(request, 'loads/load_maktab_list.html', {"maktab" : maktab})
 
