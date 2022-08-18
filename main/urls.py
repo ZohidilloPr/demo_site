@@ -1,9 +1,7 @@
 from django.urls import path
 from .views import (
-    AllKollejBit,
     Ish,
     Home,
-    OTM_all_stu,
     Other,
     Table,
     Maktab,
@@ -16,12 +14,13 @@ from .views import (
     MaktabAdd,
     KollejAdd,
     OTM_Finish,
-    TumanVaShaharNameAddView,
+    OTM_all_stu,
     load_kollej,
     load_maktab,
     load_mahalla,
     UniversitetB,
     AllDistricts,
+    AllKollejBit,
     ResumeKollej,
     ResumeMaktab,
     UniversitetAdd,
@@ -36,6 +35,7 @@ from .views import (
     ImkonyatNameAddView,
     ResumeUniversitetTable,
     UniversitetNameAddView,
+    TumanVaShaharNameAddView,
 )
 urlpatterns = [
 

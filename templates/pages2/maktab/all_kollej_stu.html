@@ -7,17 +7,59 @@
     <div class="background">
         {% include "../../widgets/sidebar.html" %}
         <div class="main">
-            <div class="dropdown">
-                <a class="btn dropdown-toggle" href="{% url 'AD' %}" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Tuman va Shahar
-                </a>
-                <ol class="dropdown-menu">
-                    {% for i in all_d %}
-                        <li><a class="dropdown-item a-link" href="{% url 'D' pk=i.pk %}">{{ i.name }}</a></li>
-                    {% endfor %}
-                </ol>
-              </div>
-            <div class="chart">
+            <ul class="fl-top">
+                <li class="">
+                    <div class="dropdown">
+                        <a class="btn dropdown-toggle w-100 rounded-0 border-0" href="{% url 'AD' %}" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Tuman va Shahar
+                        </a>
+                        <ol class="dropdown-menu w-100">
+                            {% for i in all_d %}
+                            <li><a class="dropdown-item a-link" href="{% url 'D' pk=i.pk %}">{{ i.name }}</a></li>
+                            {% endfor %}
+                        </ol>
+                    </div>
+                </li>
+                <li>
+                    <div class="dropdown">
+                        <a class="btn dropdown-toggle w-100 rounded-0 border-0" href="" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Maktablar
+                        </a>
+                        <ol class="dropdown-menu w-100">
+                            {% for i in all_mk %}
+                            <li><a class="dropdown-item a-link" href="{% url 'S' pk=i.pk %}">{{ i }}</a></li>
+                            {% endfor %}
+                        </ol>
+                    </div>
+                </li>        
+                <li>
+                    <a href="" style="padding: 7px 0;" class="btn rounded-0 w-100 border-dark border-top-0 border-start-0 border-end-0">kollej</a>
+                </li>        
+                <li>
+                    <a href="" style="padding: 7px 0;" class="btn rounded-0 w-100 border-0">OTM</a>
+                </li>        
+            </ul>
+            <hr>
+            <br>
+            <ul class="fl-top-2">
+                {% for i in all_type %}
+                    <li>
+                        <div class="dropdown">
+                            <a class="btn dropdown-toggle w-100 rounded-0 border-0" href="" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                {{ i }}
+                            </a>
+                            <ol class="dropdown-menu w-100">
+                                {% for a in kjt %}
+                                    {% if i.pk == a.type.pk %}  
+                                        <li class=""><a class="dropdown-item a-link" href="{% url 'KD' pk=a.pk %}">{{ a }} </a></li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ol>
+                        </div>
+                    </li> 
+                {% endfor %}
+            </ul>
+            <div class="chart mt-5">
                 <h1>Bu yilgi  bitiruvchilar " Professional ta'lim " misolida</h1>
                 <canvas id="maktab"></canvas>
             </div>
@@ -38,18 +80,22 @@
                                 <td>{{ forloop.counter }}</td>
                                 <td><a href="{% url 'RK' pk=i.pk %}">{{ i.f_name }}</a></td>
                                 <td>{{ i.tuman }} {{ i.mahalla }}</td>
-                                <td>{{ i.kolleJ }}</td>
-                                <td></td>
+                                {% if i.kollej %}     
+                                    <td>{{ i.kollej }}</td>
+                                {% else %}
+                                    <td>{{ i.kolleJ }}</td>
+                                {% endif %}
+                                <td>{{ i.stu_way }}</td>
                             </tr>
                         {% empty %}
                             <tr>
-                                <th>Hozirda talabalar yoq! Malumotlarni to'ldirish kerak <a href="{% url 'UBA' %}">link</a></th>
+                                <th>Hozirda talabalar yoq! Malumotlarni to'ldirish kerak <a href="{% url 'KBA' %}">link</a></th>
                             </tr>
                         {% endfor %}
                     </tbody>
                 </table>
             </div>
-            <div class="tumanlar">
+            <!-- <div class="tumanlar">
                 <h1>Barcha ta'lim muassasalari</h1>
                 <ul id="tuman">
                     {% for i in all_mk %}
@@ -59,29 +105,31 @@
                     <li><a href="{% url 'AOB' pk=tuman_id %}">OTM</a></li>
                 </ul>
                 
-            </div>
+            </div> -->
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
     <script>
+        // let data = Array.from({{ count_p }});
+        // console.log("{{ count_p }}", data);
         const maktab = document.getElementById("maktab").getContext("2d");
         const maktabChart = new Chart(maktab, {
             type: 'bar',
             data: {
-                labels : ['O\'g\'il bolalar', 'qiz bolalar'],
+                labels : ['O\'g\'il bolalar', 'qiz bolalar', 'Kasb hunar maktab', 'Texnikom', 'Akademik litsey'],
                 datasets : [{
                     label: '',
-                    data: ['{{ boys }}', '{{ grils }}'],
+                    data: ['{{ boys }}', '{{ grils }}', '{{ count_0 }}','{{ count_1 }}','{{ count_2 }}',],
                     fill: false,
                     backgroundColor: [
                         'rgba(5, 140, 145, 0.47)', 
-                        'rgba(9, 57, 142, 0.45)',
+                        'rgba(255, 132, 145, 0.47)',
                         // 'rgba(8, 140, 78, 0.5)',
                         // 'rgba(8, 140, 78, 0.5)',
                     ],
                     borderColor: [
                         'rgba(5, 140, 145, 1)',
-                        'rgba(9, 57, 142, 1)',
+                        'rgba(255, 132, 145, 1)',
                         // 'rgba(8, 140, 78, 1)',
                         // 'rgba(8, 140, 78, 1)',
                     ],
@@ -90,7 +138,7 @@
                 }]
             },
             options: {
-                indexAxis: 'y',
+                indexAxis: 'x',
                 scales:{
                     y:{
                         beginAtZone :true

@@ -1,6 +1,9 @@
 body{
     overflow-x: hidden;
 }
+h1{
+    font-weight: 500 !important;
+}
 .hidden-over{
     overflow-y: hidden;
 }
@@ -155,7 +158,7 @@ thead tr th{
 }
 .chart{
     width: 100%;
-    height: 80vh;
+    height: 90vh;
     margin: auto;
     /* height: 50vh; */
 }
@@ -302,6 +305,37 @@ thead tr th{
     background-color: aliceblue;
 }
 .active-li{
+    border-bottom: 1px solid #3F4C5C;
+}
+#id_img{
+    display: none;
+}
+#id_imkonyat{
+    height: 30px;
+}
+.fl-top{
+    width: 100%;
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+}
+.fl-top-2{
+    width: 70%;
+    margin: auto;
+    display: grid;
+    grid-template-columns: auto auto auto;
+}
+.fl-top-2 li ol li a{
+    display: block;
+    word-wrap: break-word;
+}
+.fl-top li, .fl-top-2 li{
+    width: 100%;
+    list-style-type: none;
+}
+.fl-top li a{
+    border-radius: 10px;
+}
+.bottom-active{
     border-bottom: 1px solid #3F4C5C;
 }
 @media only screen and (max-width: 1290px){

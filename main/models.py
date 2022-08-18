@@ -1,4 +1,4 @@
-from email.policy import default
+from statistics import mode
 from django.db import models
 # Create your models here.
 
@@ -36,6 +36,10 @@ class AutoTime(models.Model):
     def __str__(self):
         return self.name
 
+class TypeKollej(AutoTime):
+    def __str__(self):
+        return super().__str__()
+
 class TumanVaShahar(AutoTime):
     status = models.CharField(max_length=l, choices=t_sh, default="shaxar")
 
@@ -58,8 +62,8 @@ class Maktab(AutoTime):
     def __str__(self):
         return f"{super().name}-{self.status}"
 
-
 class Kollej(AutoTime):
+    type = models.ForeignKey(TypeKollej, on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Ta'lim muassasasi turi")
     tuman = models.ForeignKey(TumanVaShahar, on_delete=models.CASCADE, verbose_name="Qaysi tuman")
 
     def __str__(self):
@@ -86,23 +90,35 @@ class ChetTili(AutoTime):
     def __str__(self):
         return super().__str__()
 
+class Sport(AutoTime):
+    def __str__(self):
+        return super().__str__()
+
+class DriverLicense(AutoTime):
+    def __str__(self):
+        return super().__str__()
+
 class Bitiruvchi(models.Model):
     f_name = models.CharField(max_length=l, verbose_name="F.I.Sh")
-    img = models.ImageField(default='default/default.png', upload_to='bitiruvchilar-foto/')
-    # t_sana = models.DateField(verbose_name="Tug'ulgan sana", null=True, blank=True)
-    t_sana = models.CharField(max_length=l, verbose_name="Tug'ulgan sana", null=True, blank=True)
-    phone = models.CharField(max_length=9, verbose_name="(+998) ")
-    email = models.EmailField(max_length=l, verbose_name="E-Pochta", null=True, blank=True)
+    img  = models.ImageField(default='default/default.png', upload_to='bitiruvchilar-foto/', verbose_name="Rasm")
+    t_sana = models.DateField(verbose_name="Tug'ulgan sana", null=True, blank=True)
+    jins = models.CharField(max_length=l, choices=jins, verbose_name="Jinsi", default="o'g'il bola")
     tuman = models.ForeignKey(TumanVaShahar, on_delete=models.CASCADE, verbose_name="Yashaydigan tuman(shahar)")
     mahalla = models.ForeignKey(Mahalla, on_delete=models.CASCADE, verbose_name="Mahalla Nomi")
-    imkonyat = models.ManyToManyField(Imkonyat, related_name="abilty", verbose_name="Qoshimcha bilimi")
+    uy = models.CharField(max_length=l, null=True, blank=True, verbose_name="Ko'cha nomi 45uy")
+    phone = models.CharField(max_length=9, verbose_name="Telefon raqam (+998) ", null=True, blank=True)
+    email = models.EmailField(max_length=l, verbose_name="E-Pochta", null=True, blank=True)
+    imkonyat = models.ManyToManyField(Imkonyat, related_name="abilty", verbose_name="Kompyuter bilimi")
     qiziqish = models.ForeignKey(Qiziqish, related_name="interest", on_delete=models.CASCADE, verbose_name="Qiziqish")
+    sport = models.ManyToManyField(Sport, related_name="sport", verbose_name="Qiziqadigan sport turi")
     chettili = models.ManyToManyField(ChetTili, related_name="f_lang")
-    guvohnoma = models.CharField(verbose_name="Haydovchilik Guvohnomasi", max_length=l, choices=yesNo, default="Yoq")
-    idea = models.CharField(verbose_name="Biznes g'oya", max_length=l, choices=yesNo, default="Bor")
+    idea = models.CharField(verbose_name="Biznes g'oya", max_length=l, choices=yesNo, default="Yoq")
     short_f = models.CharField(max_length=10000, verbose_name="Bizness g'oya haqqida qisqacha (agar bor bo'lsa)", null=True, blank=True)
-    jins = models.CharField(max_length=l, choices=jins, verbose_name="Jinsi", default="o'g'il bola")
     add_time = models.DateTimeField(auto_now_add=True)
+
+
+    # guvohnoma = models.CharField(verbose_name="Haydovchilik Guvohnomasi", max_length=l, choices=yesNo, default="Yoq")
+    # t_sana = models.CharField(max_length=l, verbose_name="Tug'ulgan sana", null=True, blank=True)
 
     def __str__(self):
         return self.f_name
@@ -110,6 +126,7 @@ class Bitiruvchi(models.Model):
     
 
 class MaktabBitiruvchisi(Bitiruvchi):
+    tuman_mk = models.ForeignKey(TumanVaShahar, on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Maktab manzili")
     maktab = models.ForeignKey(Maktab, on_delete=models.CASCADE, verbose_name="Bitirayotgan maktab")
     sinf = models.CharField(max_length=l, choices=sinf, default='9-sinf', verbose_name="Sinf")
     univer_sity = models.CharField(max_length=l, verbose_name="Topshirmoqchi bo'lgan universitet", null=True, blank=True)
@@ -118,12 +135,14 @@ class MaktabBitiruvchisi(Bitiruvchi):
         return super().__str__()
 
 class KollejBitiruvchisi(Bitiruvchi):
+    type = models.ForeignKey(TypeKollej, on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Professional ta'lim")
+    tuman_kj = models.ForeignKey(TumanVaShahar, on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Kollej manzili")
     kollej = models.ForeignKey(Kollej, on_delete=models.SET_NULL, verbose_name="Bitirayotgan Kollej", null=True, blank=True)
     kolleJ = models.CharField(max_length=l, null=True, blank=True, verbose_name="Bitirayotgan kollej")
     stu_way = models.CharField(max_length=l, null=True, blank=True, verbose_name="Mutaxasislik")
     maqsad = models.CharField(max_length=l, choices=aim, default="Ishlamoqchi", verbose_name="Maqsadi")
     univer_sity = models.CharField(max_length=l, verbose_name="Topshirmoqchi bo'lgan universitet", null=True, blank=True)
-
+    guvohnoma = models.ForeignKey(DriverLicense, on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Haydovchilik Guvohnomasi")
     def __str__(self):
         return super().__str__()
 
@@ -132,7 +151,7 @@ class UniversitetBitiruvchisi(Bitiruvchi):
     universiteT = models.CharField(max_length=l, null=True, blank=True, verbose_name="Bitirayotgan OTM",)
     stu_way = models.CharField(max_length=l, null=True, blank=True, verbose_name="Mutaxasislik")
     universitet = models.ForeignKey(Universitet, on_delete=models.CASCADE, verbose_name="Bitirayotgan OTM", null=True, blank=True)
-
+    guvohnoma = models.ForeignKey(DriverLicense, on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Haydovchilik Guvohnomasi")
     def __str__(self):
         return super().__str__()
 

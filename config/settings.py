@@ -104,7 +104,11 @@ DATABASES = {
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.mysql',
+<<<<<<< HEAD
 #         'NAME': 'demosite01$db',
+=======
+#         'NAME': 'demosite01$students',
+>>>>>>> 77db553a1919fca496fad4ffd21c73e9912d3b43
 #         'USER': 'demosite01',
 #         'PASSWORD': 'Tz20020927',
 #         'HOST': 'demosite01.mysql.pythonanywhere-services.com',
