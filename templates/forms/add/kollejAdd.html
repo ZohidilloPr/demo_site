@@ -76,17 +76,27 @@
                 <label for="id_chettili" class="form-label">Haydovchilik guvohnoma</label>
                 {{ form.guvohnoma }}
             </div>
-            <div class="mb-3" >
+            <div class="mb-3">
                 <label for="id_idea" class="form-label">Biznes g'oya</label>
-                {{ form.idea }}
+                <div class="input-group mb-3">
+                    {{ form.idea }}
+                    {{ form.short_f }}
+                </div>
             </div>
-            <div class="mb-3" >
-                <label for="id_short_f" class="form-label">Biznes g'oya qizqa mazmuni (majburiy emas)</label>
-                {{ form.short_f }}
+            <div class="mb-3">
+                <label for="id_tuman_un" class="mb-1">Topshirmoqchi bo'lgan OTM</label>
+                <div class="input-group mb-3">
+                    {{ form.vil }}
+                    {{ form.otm_name }}
+                    {{ form.stu_way_un }}
+                </div>
             </div>
-            <div class="mb-3" >
-                <label for="id_univer_sity" class="form-label">Topshirmoqchi bo'lgan OTM nomi</label>
-                {{ form.univer_sity }}
+            <div class="mb-3">
+                <label for="id_other_un" class="mb-1">Chet el OTM</label>
+                <div class="input-group mb-3">
+                    {{ form.other_un }}
+                    {{ form.stu_way_ch }}
+                </div>
             </div>
             <input type="submit" class="btn btn-outline-primary mb-5" value="Professional ta'lim bitiruvchi qo'shish">
         </form>
@@ -98,11 +108,23 @@
             $("#id_imkonyat").chosen();
             $("#id_sport").chosen();
             $("#id_chettili").chosen();
-        })
+            $('input').addClass("form-control");
+            $('select').addClass("form-select");
+        });
         $(function(){
             $("#id_t_sana_day option:selected").html("Kun");
             $("#id_t_sana_month option:selected").html("Oy");
             $("#id_t_sana_year option:selected").html("Yil");
+        });
+        $("#id_idea").change(function(){
+            const idea = $(this).val()
+            if (idea == "Bor") {
+                // console.log($(this).val())
+                $("#id_short_f").attr("disabled", false)
+            }
+            else{
+                $("#id_short_f").attr("disabled", true)
+            }
         })
         $("#id_tuman").change(function(){
             const url1 = $("#mahalla").attr("mahalla-queries-url");
@@ -118,5 +140,35 @@
                 },
             });
         });
+        $("#tuman_kj").change(function(){
+            const url2 = $("#kollej").attr("kollej-queries-url");
+            const tumanId = $(this).val();
+            const typeId = $("#type").filter("selected")
+            console.log(typeId)
+            $.ajax({
+                url : url2,     
+                data:{
+                    'tuman_kj':tumanId,
+                },
+                success: function(data){
+                    // console.log(data)
+                    $("#kollej").html(data)
+                }
+            });
+        });
+        // $("#type").change(function(){
+        //     const url2 = $("#kollej").attr("typekollej-queries-url");
+        //     const tumanId = $(this).val();
+        //     $.ajax({
+        //         url : url2,
+        //         data:{
+        //             'type':tumanId,
+        //         },
+        //         success: function(data){
+        //             console.log(data)
+        //             $("#kollej").html(data)
+        //         }
+        //     });
+        // });
     </script>
 {% endblock content %}

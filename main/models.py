@@ -29,6 +29,11 @@ aim = (
     ("Ishlamoqchi", "Ishlamoqchi"),
 )
 
+type_school = (
+    ("O'rta ta'lim maktabi", "O'rta ta'lim maktabi"),
+    ("Ixtisoslashgan maktablar", "Ixtisoslashgan maktablar"),
+)
+
 class AutoTime(models.Model):
     name = models.CharField(max_length=l, verbose_name="Nomi")
     add_time = models.DateTimeField(auto_now_add=True)
@@ -57,7 +62,7 @@ class Mahalla(AutoTime):
 
 class Maktab(AutoTime):
     tuman = models.ForeignKey(TumanVaShahar, on_delete=models.CASCADE, verbose_name="Qaysi tuman")
-    status = models.CharField(max_length=l, default="maktab", null=True)
+    status = models.CharField(max_length=l, default="O'rta ta'lim maktabi", choices=type_school, blank=True, null=True)
 
     def __str__(self):
         return f"{super().name}-{self.status}"
@@ -69,9 +74,14 @@ class Kollej(AutoTime):
     def __str__(self):
         return super().__str__()
 
-class Universitet(AutoTime):
-    tuman = models.ForeignKey(TumanVaShahar, on_delete=models.CASCADE, verbose_name="Qaysi tuman")
+class Vil(AutoTime):
+    """ Viloyatlar nomi """
+    def __str__(self):
+        return super().__str__()
 
+class Universitet(AutoTime):
+    """ Yangi OTM nomi qo'shish """
+    viloyat = models.ForeignKey(Vil, on_delete=models.SET_NULL, null=True, blank=True, verbose_name="viloyat nomi")    
     def __str__(self):
         return super().__str__()
 
@@ -103,6 +113,7 @@ class Bitiruvchi(models.Model):
     img  = models.ImageField(default='default/default.png', upload_to='bitiruvchilar-foto/', verbose_name="Rasm")
     t_sana = models.DateField(verbose_name="Tug'ulgan sana", null=True, blank=True)
     jins = models.CharField(max_length=l, choices=jins, verbose_name="Jinsi", default="o'g'il bola")
+    millat = models.CharField(max_length=l, null=True, blank=True)
     tuman = models.ForeignKey(TumanVaShahar, on_delete=models.CASCADE, verbose_name="Yashaydigan tuman(shahar)")
     mahalla = models.ForeignKey(Mahalla, on_delete=models.CASCADE, verbose_name="Mahalla Nomi")
     uy = models.CharField(max_length=l, null=True, blank=True, verbose_name="Ko'cha nomi 45uy")
@@ -130,6 +141,13 @@ class MaktabBitiruvchisi(Bitiruvchi):
     maktab = models.ForeignKey(Maktab, on_delete=models.CASCADE, verbose_name="Bitirayotgan maktab")
     sinf = models.CharField(max_length=l, choices=sinf, default='9-sinf', verbose_name="Sinf")
     univer_sity = models.CharField(max_length=l, verbose_name="Topshirmoqchi bo'lgan universitet", null=True, blank=True)
+    maqsad = models.CharField(max_length=l, choices=aim, null=True, blank=True, default="Ishlamoqchi", verbose_name="Maqsadi")
+
+    vil = models.ForeignKey(Vil, related_name="mk_vil", on_delete=models.SET_NULL, null=True, blank=True, verbose_name="OTM manzili")
+    otm_name = models.ForeignKey(Universitet, on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Topshirmoqchi bo'lgan OTM Nomi")
+    stu_way_un = models.CharField(max_length=l, null=True, blank=True, verbose_name="Mutaxasislik")
+    other_un = models.CharField(max_length=l, verbose_name="ChetEl OTM nomi", null=True, blank=True)
+    stu_way_ch = models.CharField(max_length=l, null=True, blank=True, verbose_name="Mutaxasislik")
 
     def __str__(self):
         return super().__str__()
@@ -138,20 +156,35 @@ class KollejBitiruvchisi(Bitiruvchi):
     type = models.ForeignKey(TypeKollej, on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Professional ta'lim")
     tuman_kj = models.ForeignKey(TumanVaShahar, on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Kollej manzili")
     kollej = models.ForeignKey(Kollej, on_delete=models.SET_NULL, verbose_name="Bitirayotgan Kollej", null=True, blank=True)
-    kolleJ = models.CharField(max_length=l, null=True, blank=True, verbose_name="Bitirayotgan kollej")
     stu_way = models.CharField(max_length=l, null=True, blank=True, verbose_name="Mutaxasislik")
     maqsad = models.CharField(max_length=l, choices=aim, default="Ishlamoqchi", verbose_name="Maqsadi")
-    univer_sity = models.CharField(max_length=l, verbose_name="Topshirmoqchi bo'lgan universitet", null=True, blank=True)
     guvohnoma = models.ForeignKey(DriverLicense, on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Haydovchilik Guvohnomasi")
+    
+    vil = models.ForeignKey(Vil, on_delete=models.SET_NULL, null=True, blank=True, related_name="kj_vil",)
+    otm_name = models.ForeignKey(Universitet, on_delete=models.SET_NULL, null=True, blank=True)
+    stu_way_un = models.CharField(max_length=l, null=True, blank=True, verbose_name="Mutaxasislik")
+    other_un = models.CharField(max_length=l, null=True, blank=True, verbose_name="chetel otm")
+    stu_way_ch = models.CharField(max_length=l, null=True, blank=True, verbose_name="Mutaxasislik")
+    
+    #kerakmas
+    kolleJ = models.CharField(max_length=l, null=True, blank=True, verbose_name="Bitirayotgan kollej")
+    univer_sity = models.CharField(max_length=l, verbose_name="Topshirmoqchi bo'lgan universitet", null=True, blank=True)
+    
     def __str__(self):
         return super().__str__()
 
 class UniversitetBitiruvchisi(Bitiruvchi):
-    maqsad = models.CharField(max_length=l, choices=aim, default="Ishlamoqchi", verbose_name="Maqsadi")
-    universiteT = models.CharField(max_length=l, null=True, blank=True, verbose_name="Bitirayotgan OTM",)
-    stu_way = models.CharField(max_length=l, null=True, blank=True, verbose_name="Mutaxasislik")
+    vil = models.ForeignKey(Vil, on_delete=models.SET_NULL, null=True, blank=True)
     universitet = models.ForeignKey(Universitet, on_delete=models.CASCADE, verbose_name="Bitirayotgan OTM", null=True, blank=True)
+    stu_way = models.CharField(max_length=l, null=True, blank=True, verbose_name="Mutaxasislik")
+    other_un = models.CharField(max_length=l, null=True, blank=True, verbose_name="ChetEl OTM")
+    stu_way_ch = models.CharField(max_length=l, null=True, blank=True, verbose_name="Mutaxasislik")
+    maqsad = models.CharField(max_length=l, choices=aim, default="Ishlamoqchi", verbose_name="Maqsadi")
     guvohnoma = models.ForeignKey(DriverLicense, on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Haydovchilik Guvohnomasi")
+    
+    #kerak emas
+    universiteT = models.CharField(max_length=l, null=True, blank=True, verbose_name="Bitirayotgan OTM",)
+
     def __str__(self):
         return super().__str__()
 

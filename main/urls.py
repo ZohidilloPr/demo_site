@@ -3,6 +3,8 @@ from .views import (
     Ish,
     Home,
     Other,
+    Resume,
+    SearchAllStudents,
     Table,
     Maktab,
     Kollej,
@@ -36,6 +38,7 @@ from .views import (
     ResumeUniversitetTable,
     UniversitetNameAddView,
     TumanVaShaharNameAddView,
+    load_type_kollej,
 )
 urlpatterns = [
 
@@ -45,6 +48,7 @@ urlpatterns = [
     # new 
 
     path("", Home, name="H"),
+    path("search/", SearchAllStudents, name="SEA"),
     path("table/", Table, name="T"),
     path("maktab/", Maktab, name="M"),
     path("kollej/", Kollej, name="K"),
@@ -55,9 +59,12 @@ urlpatterns = [
     path("tumanlar/all/", AllDistricts, name="AD"),
     path("tumanlar/maktablar/<pk>/", Schools, name="S"),
     path("tumanlar/kollejlar/<pk>/", KollejD, name="KD"),
+# ajax section
     path("ajax/load/kollej/list", load_kollej, name="ALK"),
     path("ajax/load/maktab/list", load_maktab, name="ALMa"),
     path("ajax/load/mahalla/list", load_mahalla, name="ALM"),
+    path("ajax/load/type/kollej/list", load_type_kollej, name="ALTK"),
+# end ajax section
     path("bitiruvchi/maktab/new/add/", MaktabAdd, name="MBA"),
     path("tumanlar/universitet/<pk>/", UniversitetB, name="UB"),
     path("tuman/maktab/bitiruvchi/<pk>/", ResumeMaktab, name="RM"),
@@ -79,5 +86,6 @@ urlpatterns = [
 
     path("bitiruvchilar/tumanlar/kollej/<pk>/", AllKollejBit, name="AKB"),
     path("bitiruvchilar/tumanlar/otm/<pk>/", OTM_all_stu, name="AOB"),
+    path("bitiruvchilar/resume/<pk>/", Resume, name="RE"),
 
 ]

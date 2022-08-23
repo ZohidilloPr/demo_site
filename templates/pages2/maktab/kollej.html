@@ -36,7 +36,7 @@
                     <a href="{% url 'AKB' pk=kj.tuman.pk %}" style="padding: 7px 0;" class="btn rounded-0 w-100 border-dark border-top-0 border-start-0 border-end-0">kollej</a>
                 </li>        
                 <li>
-                    <a href="" style="padding: 7px 0;" class="btn rounded-0 w-100 border-0">OTM</a>
+                    <a href="{% url 'AOB' pk=kj.tuman.pk %}" style="padding: 7px 0;" class="btn rounded-0 w-100 border-0">OTM</a>
                 </li>        
             </ul>
             <hr>
@@ -51,7 +51,7 @@
                             <ol class="dropdown-menu w-100">
                                 {% for a in kjt %}
                                     {% if i.pk == a.type.pk %}  
-                                        <li class=""><a class="dropdown-item a-link" href="{% url 'KD' pk=a.pk %}">{{ a }} </a></li>
+                                        <li class=""><a class="dropdown-item a-link " href="{% url 'KD' pk=a.pk %}">{{ a }} </a></li>
                                     {% endif %}
                                 {% endfor %}
                             </ol>

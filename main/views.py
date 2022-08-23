@@ -4,6 +4,7 @@ from django.shortcuts import redirect, render
 from django.contrib.messages.views import SuccessMessageMixin
 
 from .models import (
+    Bitiruvchi,
     ChetTili,
     Imkonyat,
     Mahalla,
@@ -28,6 +29,7 @@ from .forms import (
 )
 
 from .filters import (
+    BitiruvchiFilter,
     KollejFilter,
     MaktabFilter,
     UniversitetFilter,
@@ -37,49 +39,80 @@ from django.views.generic.edit import (
     CreateView
 )
 
+from django.db.models import Q
+
 # Create your views here.
 
 # diagramm section
-
 def Home(request):
     mkb = MaktabBitiruvchisi.objects.all().count()
     kjb = KollejBitiruvchisi.objects.all().count()
     unb = UniversitetBitiruvchisi.objects.all().count()
+    query = request.GET.get('searchHome')
+    if query:
+        queryset = Bitiruvchi.objects.filter(
+            Q(f_name__icontains=query) &
+            Q(f_name__icontains=query))
+    print(query)
     return render(request, 'base.html', {
         'mkb':mkb,
         'kjb':kjb,
         'unb':unb,
+    })
+def SearchAllStudents(request):
+    mkb = MaktabBitiruvchisi.objects.all().count()
+    kjb = KollejBitiruvchisi.objects.all().count()
+    unb = UniversitetBitiruvchisi.objects.all().count()
+    query = request.GET.get('searchHome')
+    if query:
+        queryset = Bitiruvchi.objects.filter(
+            Q(f_name__icontains=query) |
+            Q(tuman__name__icontains=query) |
+            Q(mahalla__name__icontains=query) |
+            Q(phone__icontains=query) |
+            Q(jins__icontains=query) |
+            Q(maktabbitiruvchisi__sinf__icontains=query) |
+            Q(kollejbitiruvchisi__stu_way__icontains=query) |
+            Q(universitetbitiruvchisi__stu_way__icontains=query) 
+        )
+    return render(request, 'pages/search.html', {
+        'mkb':mkb,
+        'kjb':kjb,
+        'unb':unb,
+        'queryset':queryset,
     })
 
 def Districts(request, pk):
     d = TumanVaShahar.objects.get(pk=pk)
     maktab = MK.objects.filter(tuman=pk).all()
     kollej_all = KJ.objects.filter(tuman_id=pk)
-    uni_all = Universitet.objects.filter(tuman_id=pk)
+    # uni_all = Universitet.objects.filter(tuman_id=pk)
     all_d = TumanVaShahar.objects.all().order_by('name')
     typeKol = TypeKollej.objects.all()
     mkb = MaktabBitiruvchisi.objects.filter(tuman_id=pk).count()
     kjb = KollejBitiruvchisi.objects.filter(tuman_id=pk).count()
     unb = UniversitetBitiruvchisi.objects.filter(tuman_id=pk).count()
-    all_students = []
-    for i in MaktabBitiruvchisi.objects.filter(tuman_id=pk):
-        all_students.append(i)    
-    for i in KollejBitiruvchisi.objects.filter(tuman_id=pk):
-        all_students.append(i)    
-    for i in UniversitetBitiruvchisi.objects.filter(tuman_id=pk):
-        all_students.append(i)    
+    btr = Bitiruvchi.objects.filter(tuman_id=pk)
+    # all_students = []
+    # for i in MaktabBitiruvchisi.objects.filter(tuman_id=pk):
+    #     all_students.append(i)    
+    # for i in KollejBitiruvchisi.objects.filter(tuman_id=pk):
+    #     all_students.append(i)    
+    # for i in UniversitetBitiruvchisi.objects.filter(tuman_id=pk):
+    #     all_students.append(i)    
     return render(request, "pages2/tumanlar.html", {
         'd':d,
         'pk':pk,
-        'kjb':kjb,
-        'unb':unb,
         'mkb':mkb,
+        'unb':unb,
+        'kjb':kjb,
+        'all_btr':btr,
         'all_d':all_d,
         'maktab':maktab,
-        'all_un':uni_all,
+        # 'all_un':uni_all,
         'typeK': typeKol,
         'all_kj':kollej_all,
-        'student':all_students
+        # 'student':all_students,
     })    
 
 def Schools(request, pk):
@@ -165,7 +198,7 @@ def KollejD(request, pk):
     maktab_all = MK.objects.filter(tuman_id=tuman_pk)
     kollej_all = KJ.objects.filter(tuman_id=tuman_pk)
     all_d = TumanVaShahar.objects.all().order_by('name')
-    univer_all = Universitet.objects.filter(tuman_id=tuman_pk)
+    # univer_all = Universitet.objects.filter(tuman_id=tuman_pk)
     student = KollejBitiruvchisi.objects.filter(kollej=kollej.pk)
     grils = KollejBitiruvchisi.objects.filter(kollej=pk, jins="qiz bola").count()
     boys = KollejBitiruvchisi.objects.filter(kollej=pk, jins="o'g'il bola").count()
@@ -179,7 +212,7 @@ def KollejD(request, pk):
         'student':student,
         'all_mk':maktab_all,
         'all_kj':kollej_all,
-        'all_un':univer_all,
+        # 'all_un':univer_all,
         'all_type':all_types,
 
     })
@@ -191,7 +224,7 @@ def UniversitetB(request, pk):
     students = UniversitetBitiruvchisi.objects.filter(universitet=un.pk)
     maktab_all = MK.objects.filter(tuman_id=tuman_pk)
     kollej_all = KJ.objects.filter(tuman_id=tuman_pk)
-    univer_all = Universitet.objects.filter(tuman_id=tuman_pk)
+    # univer_all = Universitet.objects.filter(tuman_id=tuman_pk)
     grils = UniversitetBitiruvchisi.objects.filter(universitet=pk, jins="qiz bola").count()
     boys = UniversitetBitiruvchisi.objects.filter(universitet=pk, jins="o'g'il bola").count()
     return render(request, 'pages2/universitet.html', {
@@ -201,13 +234,20 @@ def UniversitetB(request, pk):
         'student':students,
         'all_mk':maktab_all,
         'all_kj':kollej_all,
-        'all_un':univer_all,
+        # 'all_un':univer_all,
         'boys':boys,
         'grils':grils,
 
     })
 
 # RESUME SECTIONS
+
+def Resume(request, pk):
+    object = Bitiruvchi.objects.get(pk=pk)
+    return render(request, 'cv/resume.html', context={
+        'pk' : pk,
+        'object' : object,
+    })
 
 def ResumeMaktab(request, pk):
     maktab_b = MaktabBitiruvchisi.objects.get(pk=pk)
@@ -248,19 +288,12 @@ def ResumeUniversitetTable(request, pk):
 # tables section
 
 def Table(request):
-    mk = MaktabBitiruvchisi.objects.all()
-    kj = KollejBitiruvchisi.objects.all()
-    un = UniversitetBitiruvchisi.objects.all()
-    all_object = {}
-    all_object.update(mk.__dict__)
-    all_object.update(kj.__dict__)
-    all_object.update(un.__dict__)
-     
+    all_students = Bitiruvchi.objects.all()
+    all_student_filter = BitiruvchiFilter(request.GET, queryset=all_students)
+    all_students = all_student_filter.qs 
     return render(request, 'index.html', {
-        "mk": mk,
-        "kj": kj,
-        "un": un,
-        "a_obj":all_object,
+        'all_students':all_students,
+        'mkFil':all_student_filter,
     })
 
 def Maktab(request):
@@ -441,9 +474,15 @@ class TumanVaShaharNameAddView(SuccessMessageMixin, CreateView):
 # AJAX SECTION
 
 def load_kollej(request):
-    tuman_id = request.GET.get("tuman_id")
+    tuman_id = request.GET.get("tuman_kj")
     kollej = KJ.objects.filter(tuman_id=tuman_id).order_by('name')
-    return render(request, 'loads/load_kollej_list.html', {"kollej":kollej})
+    return render(request, 'loads/load_kollej_list.html', {"kollej" : kollej})
+
+def load_type_kollej(request):
+    tuman_id = request.GET.get("tuman_kj")
+    type = request.GET.get("type")
+    kollej = KJ.objects.filter(tuman_id=tuman_id, type=type).order_by('name')
+    return render(request, 'loads/load_type_kollej_list.html', {"kollej" : kollej})
 
 def load_mahalla(request):
     tuman_id = request.GET.get('tuman_id')
@@ -452,10 +491,11 @@ def load_mahalla(request):
 
 def load_maktab(request):
     tuman_id = request.GET.get('tuman_id')
-    # print(tuman_id)
     maktab = MK.objects.filter(tuman_id=tuman_id).order_by("name")
     return render(request, 'loads/load_maktab_list.html', {"maktab" : maktab})
 
+def load_otm(request):
+    pass
 
 
 

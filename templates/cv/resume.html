@@ -1,0 +1,394 @@
+{% extends "main.html" %}
+
+{% block title %}
+    {{ object.f_name }}
+{% endblock title %}
+
+{% block content %}
+
+<nav aria-label="breadcrumb" class="sticky-top bg-light">
+    <ol class="breadcrumb p-3">
+      <li class="breadcrumb-item"><a href="">Ortga qaytish</a></li>
+      <li class="breadcrumb-item active" aria-current="page">{{ object }}ning Resumesi</li>
+    </ol>
+</nav>
+
+{% if object.maktabbitiruvchisi %}
+    <div class="row">
+        <div class="col-xxl-5 m-auto p-5 border border-info">
+            <div class="img-name">
+                <div class="img border-end border-info pt-3">
+                    <img src="{{ object.img.url }}" width="100" alt="">
+                    <div class="my-5"></div>
+                    <div class="imkonyat">
+                        <h3>Imkonyatlari</h3>
+                        {{ object.abilty }}
+                        <ul>
+                            {% for i in object.imkonyat.all %}  
+                                <li>{{ i }}</li>
+                            {% endfor %}
+                        </ul>
+                        <h3>Chet tillari</h3>
+                        <ul>
+                            {% for i in object.chettili.all %}  
+                                <li>{{ i }}</li>
+                            {% endfor %}
+                        </ul>
+                        <!-- <h3>Haydovchilik Guvohnoma</h3>
+                        <ul>
+                            <li>{{ object.guvohnoma }}</li>
+                        </ul> -->
+                        <h3>Biznes G'oya</h3>
+                        <ul>
+                            <li>{{ object.idea }}</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="name">
+                    <div class="user-name">
+                        <h1 class="ism">{{ object.f_name }}</h1>
+                    </div>
+                    <div class="data">
+                        <table>
+                            <tr>
+                                <th>Email: </th>
+                                <td>{{ object.email }}</td>
+                            </tr>
+                            <tr>
+                                <th>Tug'ulgan sana: </th>
+                                <td>{{ object.t_sana }}</td>
+                            </tr>
+                            <tr>
+                                <th>Telefon raqami:</th>
+                                <td>(+998) {{ object.phone }}</td>
+                            </tr>
+                            <tr>
+                                <th>Yashash manzili: </th>
+                                <td>{{ object.tuman }} {{ object.mahalla }}</td>
+                            </tr> 
+                        </table>
+                        <div class="my-5"></div>
+                        <div class="info-data">
+                        <h3 class="">
+                            Ta'lim
+                        </h3>
+                        <p>
+                            Toshkent viloyati {{ object.maktabbitiruvchisi.tuman_mk }} {{ object.maktabbitiruvchisi.maktab }}
+                            <!-- <small class="text-warning">2011/09/3 --- 2022/05/25</small> -->
+                        </p>
+                        <h3>Topshirgan OTM nomi</h3>
+                        {% if object.maktabbitiruvchisi.univer_sity %}   
+                            <p>
+                                {{ object.maktabbitiruvchisi.univer_sity }}
+                            </p>
+                        {% elif object.maktabbitiruvchisi.otm_name %}
+                            <p>
+                                {{ object.maktabbitiruvchisi.vil }}ning {{ object.maktabbitiruvchisi.otm_name }} --- {{ object.maktabbitiruvchisi.stu_way_un }}
+                            </p>
+                        {% elif object.maktabbitiruvchisi.other_un %}
+                            <p>
+                                {{ object.maktabbitiruvchisi.other_un }}
+                            </p>
+                        {% else %}
+                            <p>
+                                ----------------
+                            </p>
+                        {% endif %}
+                        <h3>Qiziqishlari</h3>
+                        <p>
+                            {{ object.qiziqish }}
+                        </p>
+                        <h3>Yoqtirgan Sport turi</h3>
+                        <p>
+                            {{ object.sport.name }}
+                        </p>
+                        {% if object.short_f %}
+                            <h3>Biznes g'oya haqida ozroq</h3>
+                            <p>
+                                {{ object.short_f }}
+                            </p>  
+                        {% endif %}
+                            <h3>Fuqoro xaqida</h3>
+                            <p>
+                            {{ object.f_name }} Toshkent vilotati {{ object.tuman }}da tug'ulgan.
+                            {{ object.maktabbitiruvchisi.maktab }}ning {{ object.maktabbitiruvchisi.sinf }} bituruvchisi. 
+                            {% if object.maktabbitiruvchisi.univer_sity %}  
+                                Hozirda "{{ object.maktabbitiruvchisi.univer_sity }}" ga topshirgan.
+                            {% elif object.maktabbitiruvchisi.otm_name %}
+                                Hozirda "{{ object.maktabbitiruvchisi.otm_name }}" ga topshirgan.
+                            {% elif object.maktabbitiruvchisi.other_un %}
+                                Hozirda "{{ object.maktabbitiruvchisi.other_un }}" ga topshirgan.
+                            {% else %}
+                                Hech qaysi OTMga topshirmagan 
+                            {% endif %} 
+                            {% if object.idea == 'Bor' %}  
+                                O'zini biznes g'oyasi bor
+                            {% endif %}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% elif object.kollejbitiruvchisi %}
+    <div class="row">
+        <div class="col-xxl-5 m-auto p-5 border border-info">
+            <div class="img-name">
+                <div class="img border-end border-info pt-3">
+                    <img src="{{ object.img.url }}" width="100" alt="">
+                    <div class="my-5"></div>
+                    <div class="imkonyat">
+                        <h3>Imkonyatlari</h3>
+                        {{ object.abilty }}
+                        <ul>
+                            {% for i in object.imkonyat.all %}  
+                                <li>{{ i }}</li>
+                            {% endfor %}
+                        </ul>
+                        <h3>Chet tillari</h3>
+                        <ul>
+                            {% for i in object.chettili.all %}  
+                                <li>{{ i }}</li>
+                            {% endfor %}
+                        </ul>
+                        <h3>Haydovchilik Guvohnoma</h3>
+                        <ul>
+                            <li>{{ object.kollejbitiruvchisi.guvohnoma }}</li>
+                        </ul>
+                        <h3>Biznes G'oya</h3>
+                        <ul>
+                            <li>{{ object.idea }}</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="name">
+                    <div class="user-name">
+                        <h1 class="ism">{{ object.f_name }}</h1>
+                    </div>
+                    <div class="data">
+                        <table>
+                            <tr>
+                                <th>Email: </th>
+                                <td>{{ object.email }}</td>
+                            </tr>
+                            <tr>
+                                <th>Tug'ulgan sana: </th>
+                                <td>{{ object.t_sana }}</td>
+                            </tr>
+                            <tr>
+                                <th>Telefon raqami:</th>
+                                <td>(+998) {{ object.phone }}</td>
+                            </tr>
+                            <tr>
+                                <th>Yashash manzili: </th>
+                                <td>{{ object.tuman }} {{ object.mahalla }}</td>
+                            </tr> 
+                            <!-- <tr>
+                            <th>Millat</th>
+                            <td>{{ object.millat }}</td>
+                            </tr>  -->
+                            <tr>
+                            <th>Jins</th>
+                            <td>{{ object.jins }}</td>
+                            </tr>
+                        </table>
+                        <div class="my-5"></div>
+                        <div class="info-data">
+                        <h3 class="">
+                            Ta'lim
+                        </h3>
+                        {% if object.kollejbitiruvchisi.kolleJ %}                          
+                            <p>
+                                Toshkent viloyati "{{ object.kollejbitiruvchisi.kolleJ }}" 
+                                <!-- <small class="text-warning">2011/09/3 --- 2022/05/25</small> -->
+                            </p>
+                        {% else %}
+                            <p>
+                                Toshkent viloyati  {{ object.kollejbitiruvchisi.tuman_kj }} " {{ object.kollejbitiruvchisi.kollej }} " ning
+                                {{ object.kollejbitiruvchisi.stu_way }} yonalishida    
+                                <!-- <small class="text-warning">2011/09/3 --- 2022/05/25</small> -->
+                            </p>
+                        {% endif %}
+                        <h3>Maqsadi</h3>
+                        <p>
+                            {{ object.maqsad }}
+                        </p>
+                        <h3>Topshirgan OTM nomi</h3>
+                        {% if object.kollejbitiruvchisi.univer_sity %}   
+                            <p>
+                                {{ object.kollejbitiruvchisi.univer_sity }}
+                            </p>
+                        {% elif object.kollejbitiruvchisi.otm_name %}
+                            <p>
+                                {{ object.kollejbitiruvchisi.vil }}ning {{ object.kollejbitiruvchisi.otm_name }} --- {{ object.kollejbitiruvchisi.stu_way_un }}
+                            </p>
+                        {% elif object.kollejbitiruvchisi.other_un %}
+                            <p>
+                                {{ object.kollejbitiruvchisi.other_un }}
+                            </p>
+                        {% else %}
+                            <p>
+                                ----------------
+                            </p>
+                        {% endif %}
+                        <h3>Qiziqishlari</h3>
+                        <p>
+                            {{ object.qiziqish }}
+                        </p>
+                        {% if object.short_f %}
+                            <h3>Biznes g'oya haqida ozroq</h3>
+                            <p>
+                                {{ object.short_f }}
+                            </p>  
+                        {% endif %}
+                            <h3>Fuqoro xaqida</h3>
+                            <p>
+                            {{ object.f_name }} Toshkent vilotati {{ object.tuman }}da tug'ulgan.
+                            {{ object.kollejbitiruvchisi.tuman_kj }}dagi  {{ object.kollejbitiruvchisi.kollej }}ning {{ object.kollejbitiruvchisi.stu_way }} bituruvchisi.
+                            {% if object.kollejbitiruvchisi.univer_sity %}  
+                                Hozirda "{{ object.kollejbitiruvchisi.univer_sity }}" ga topshirgan.
+                            {% elif object.kollejbitiruvchisi.otm_name %}
+                                Hozirda "{{ object.kollejbitiruvchisi.otm_name }}"ning {{ object.kollejbitiruvchisi.stu_way_un }} yonalishiga topshirgan.
+                            {% else %}
+                                Hech qaysi OTMga topshirmagan 
+                            {% endif %}
+                            {% if object.idea == 'Bor' %}  
+                                O'zini biznes g'oyasi bor
+                            {% endif %}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% else %}
+    <div class="row">
+        <div class="col-xxl-5 m-auto p-5 border border-info">
+            <div class="img-name">
+                <div class="img border-end border-info pt-3">
+                    <img src="{{ object.img.url }}" width="100" alt="">
+                    <div class="my-5"></div>
+                    <div class="imkonyat">
+                        <h3>Imkonyatlari</h3>
+                        <ul>
+                            {% for i in object.imkonyat.all %}  
+                                <li>{{ i }}</li>
+                            {% endfor %}
+                        </ul>
+                        <h3>Chet tillari</h3>
+                        <ul>
+                            {% for i in object.chettili.all %}  
+                                <li>{{ i }}</li>
+                            {% endfor %}
+                        </ul>
+                        <h3>Haydovchilik Guvohnoma</h3>
+                        <ul>
+                            <li>{{ object.guvohnoma }}</li>
+                        </ul>
+                        <h3>Biznes G'oya</h3>
+                        <ul>
+                            <li>{{ object.idea }}</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="name">
+                    <div class="user-name">
+                        <h1 class="ism">{{ object.f_name }}</h1>
+                    </div>
+                    <div class="data">
+                        <table>
+                            <tr>
+                                <th>Email: </th>
+                                <td>{{ object.email }}</td>
+                            </tr>
+                            <tr>
+                                <th>Tug'ulgan sana: </th>
+                                <td>{{ object.t_sana }}</td>
+                            </tr>
+                            <tr>
+                                <th>Telefon raqami:</th>
+                                <td>(+998) {{ object.phone }}</td>
+                            </tr>
+                            <tr>
+                                <th>Yashash manzili: </th>
+                                <td>{{ object.tuman }} {{ object.mahalla }}</td>
+                            </tr> 
+                            <tr>
+                            <th>Millat</th>
+                            <td>{{ object.millat }}</td>
+                            </tr> 
+                            <tr>
+                            <th>Jins</th>
+                            <td>{{ object.jins }}</td>
+                            </tr>
+                        </table>
+                        <div class="my-5"></div>
+                        <div class="info-data">
+                        <h3 class="">
+                            Ta'lim
+                        </h3>
+                        {% if object.universiteT %}                          
+                            <p>
+                                Toshkent viloyati " {{ object.universiteT }} "
+                                <!-- <small class="text-warning">2011/09/3 --- 2022/05/25</small> -->
+                            </p>
+                        {% elif object.universitet %}
+                            <p>
+                                {{ object.vil }} " {{ object.universitet }} " {{ object.stu_way }} yonalishida
+                            </p>
+                        {% endif %}
+                        <!-- <h3>Topshirgan OTM nomi</h3>
+                        {% if object.univer_sity %}   
+                            <p>
+                                {{ object.univer_sity }}
+                            </p>
+                        {% else %}
+                            <p>
+                                --------------
+                            </p>
+                        {% endif %} -->
+                        <h3>Maqsadi</h3>
+                        <p>
+                            {{ object.maqsad }}
+                        </p>
+                        <h3>Qiziqishlari</h3>
+                        <p>
+                            {{ object.qiziqish }}
+                        </p>
+                        {% if object.short_f %}
+                            <h3>Biznes g'oya haqida ozroq</h3>
+                            <p>
+                                {{ object.short_f }}
+                            </p>  
+                        {% endif %}
+                            <h3>Fuqoro xaqida</h3>
+                            <p>
+                            {{ object.f_name }} Toshkent vilotati {{ object.tuman }}da tug'ulgan.
+                            {% if object.universitet %}
+                                {{ object.vil }}da {{ object.universitet }}ning {{ object.stu_way }}
+                                yonalishida bitiruvchi
+                            {% else %}  
+                                {{ object.universiteT }}ning {{ object.stu_way }} yonalishida bituruvchi.  
+                            {% endif %}
+                            {% if object.idea == 'Bor' %}  
+                                O'zini biznes g'oyasi bor
+                            {% endif %}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}
+
+{% endblock %}
+
+
+
+
+
+
+

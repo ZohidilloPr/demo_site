@@ -55,25 +55,27 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for i in student %}
+                        {% for i in all_btr %}
                             <tr>
                                 <td>{{ forloop.counter }}</td>
-                                <td><a href="{% url 'RM' pk=i.pk %}">{{ i.f_name }}</a></td>
+                                <td><a href="">{{ i.f_name }}</a></td>
                                 <td>{{ i.tuman }} {{ i.mahalla }}</td>
-                                {% if i.maktab %}
-                                    <td> {{ i.maktab }}</td>
-                                {% elif i.kollej %}
-                                    <td> {{ i.kollej }}{{ i.kolleJ }}</td>
-                                {% elif i.universitet %}    
-                                    <td> {{ i.universitet }}</td>    
+                                {% if i.maktabbitiruvchisi %}
+                                    <td> {{ i.maktabbitiruvchisi.maktab }}</td>
+                                {% elif i.kollejbitiruvchisi.kollej %}
+                                    <td> {{ i.kollejbitiruvchisi.kollej }}</td>
+                                {% elif i.kollejbitiruvchisi.kolleJ %}
+                                    <td> {{ i.kollejbitiruvchisi.kolleJ }}</td>
+                                {% elif i.universitetbitiruvchisi.universitet %}    
+                                    <td> {{ i.universitetbitiruvchisi.universitet }}</td>    
                                 {% else %}
-                                <td> {{ i.universiteT }}</td>    
+                                <td> {{ i.universitetbitiruvchisi.universiteT }}</td>    
                                 {% endif %}    
-                            </tr>
+                            </tr> 
                         {% empty %}
                             <tr>
                                 <th>Hozirda talabalar yoq! Malumotlarni to'ldirish kerak <a href="{% url 'MBA' %}">link</a></th>
-                            </tr>
+                            </tr> 
                         {% endfor %}
                     </tbody>
                 </table>
@@ -113,7 +115,7 @@
         const tumanChart = new Chart(tuman, {
             type: 'bar',
             data: {
-                labels : ['Universitet bitiruvchilari', 'Professional ta\'lim bitiruvchilari', 'Maktab bitiruvchilari'],
+                labels : ['OTM bitiruvchilari', 'Professional ta\'lim bitiruvchilari', 'Maktab bitiruvchilari'],
                 datasets : [{
                     label: '',
                     data: ['{{ unb }}', '{{ kjb }}', '{{ mkb }}'],
