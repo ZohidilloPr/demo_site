@@ -64,16 +64,32 @@
                              <th>Yashash manzili: </th>
                              <td>{{ object.tuman }} {{ object.mahalla }}</td>
                          </tr> 
+                         <tr>
+                            <th>Millat</th>
+                            <td>{{ object.millat }}</td>
+                         </tr> 
+                         <tr>
+                            <th>Jins</th>
+                            <td>{{ object.jins }}</td>
+                         </tr>
                      </table>
                      <div class="my-5"></div>
                      <div class="info-data">
                         <h3 class="">
                             Ta'lim
                         </h3>
-                        <p>
-                            Toshkent viloyati {{ object.kolleJ.tuman }} " {{ object.kolleJ }} "
-                            <!-- <small class="text-warning">2011/09/3 --- 2022/05/25</small> -->
-                        </p>
+                        {% if object.kolleJ %}                          
+                            <p>
+                                Toshkent viloyati {{ object.kolleJ.tuman }} " {{ object.kolleJ }} "
+                                <!-- <small class="text-warning">2011/09/3 --- 2022/05/25</small> -->
+                            </p>
+                        {% else %}
+                            <p>
+                                Toshkent viloyati  {{ object.kollej.tuman }} " {{ object.kollej }} " ning
+                                {{ object.stu_way }} yonalishida    
+                                <!-- <small class="text-warning">2011/09/3 --- 2022/05/25</small> -->
+                            </p>
+                        {% endif %}
                         <h3>Maqsadi</h3>
                         <p>
                             {{ object.maqsad }}
@@ -83,9 +99,17 @@
                             <p>
                                 {{ object.univer_sity }}
                             </p>
+                        {% elif object.otm_name %}
+                            <p>
+                                {{ object.vil }}ning {{ object.otm_name }} --- {{ object.stu_way_un }}
+                            </p>
+                        {% elif object.other_un %}
+                            <p>
+                                {{ object.other_un }}
+                            </p>
                         {% else %}
                             <p>
-                                --------------
+                                ----------------
                             </p>
                         {% endif %}
                         <h3>Qiziqishlari</h3>

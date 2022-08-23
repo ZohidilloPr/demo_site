@@ -1,4 +1,5 @@
 {% extends 'main.html' %}
+{% load widget_tweaks %}
 
 {% block title %}
     Tables
@@ -6,10 +7,10 @@
 
 {% block content %}
 <div class="background-table" >
-    <div class="row mt-5">
+    <div class="row">
         <div class="col-10 m-auto">
-            <h1 class="text-center my-3">Bitiruvchilar haqida malumotlar</h1>
-                <nav class="navbar navbar-expand-lg my-5 bg-light">
+            <h1 class="text-center my-1">Bitiruvchilar haqida malumotlar</h1>
+                <nav class="navbar navbar-expand-lg my-4 bg-light">
                     <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav w-100 justify-content-center top-nav">
                         <li class="nav-item">
@@ -30,58 +31,46 @@
                         <li class="nav-item">
                         <a href="{% url 'E' %}" class="nav-link">OTMga topshirganlar</a>
                         </li>
-                        <!-- <li class="nav-item">
-                            <a href="{% url 'I' %}" class="nav-link">Ish bilan taminlanganlar</a>
-                        </li> -->
-                        <!-- <li class="nav-item">
-                            <a href="{% url 'O' %}" class="nav-link">
-                                Boshqalar
-                            </a>
-                        </li> -->
                     </ul>
                     </div>
                 </nav>
+                <div class="my-4 p-3 bg-shadow-a bg-light">
+                    <form action="" method="get" novalidate>
+                        <label for="id_tuman" class="mx-3">Tuman&Shahar</label>
+                        {{ mkFil.form.tuman|add_class:"btn btn-outline-secondary btn-sm" }}
+                        <label for="id_mahalla" class="mx-3">Mahalla</label>
+                        {{ mkFil.form.mahalla|attr:"mahalla-queries-url:{% url 'ALM' %}"|add_class:"btn btn-outline-secondary btn-sm" }} {% comment %}|attr:"mahalla-queries-url:{% url 'ALM' %}" |attr:"maktab-queries-url:{% url 'ALMa' %}" {% endcomment %}
+                        <label for="id_maktabbitiruvchisi__maktab" class="mx-3">Maktab №</label>
+                        {{ mkFil.form.maktabbitiruvchisi__maktab | add_class:"btn btn-outline-secondary btn-sm"}}
+                        <label for="id_maktabbitiruvchisi__sinf" class="mx-3">Sinf №</label>
+                        {{ mkFil.form.maktabbitiruvchisi__sinf | add_class:"btn btn-outline-secondary btn-sm"}} <br><br>
+                        <label for="id_kollejbitiruvchisi__kollej" class="mx-3">Kollej №</label>
+                        {{ mkFil.form.kollejbitiruvchisi__kollej | add_class:"btn btn-outline-secondary btn-sm"}}
+                        <label for="id_universitetbitiruvchisi__universitet" class="mx-3">OTM №</label>
+                        {{ mkFil.form.universitetbitiruvchisi__universitet | add_class:"btn btn-outline-secondary btn-sm"}}
+                        <input type="submit" value="Qidirish" class="mx-3 btn btn-outline-dark text- btn-sm">
+                    </form>
+                </div>
             <div class="table-box">
                 <table class="table"> 
                     {% include "widgets/table_header.html" %}
                     <tbody>
-                        {% for i in mk %}
+                        {% for i in all_students %}
                             <tr>
                                 <td>{{ forloop.counter }}</td>
-                                <td><a href="{% url 'RMT' pk=i.pk %}">{{ i.f_name }}</a></td>
-                                <td>{{ i.tuman }}</td>
-                                <td>{{ i.mahalla }}</td>
-                                <td>{{ i.maktab }}</td>
-                                <td></td>
-                                <td></td>
-                                <td>{{ i.phone }}</td>
-                                <td>{{ i.t_sana }}</td>
-                            </tr>
-                        {% endfor %}
-                        {% for i in kj %}
-                            <tr>
-                                <td>{{ i.pk }}</td>
-                                <td><a href="{% url 'RKT' pk=i.pk %}">{{ i.f_name }}</a></td>
-                                <td>{{ i.tuman }}</td>
-                                <td>{{ i.mahalla }}</td>
-                                <td></td>
-                                <td>{{ i.kolleJ }}</td>
-                                <td></td>
-                                <td>{{ i.phone }}</td>
-                                <td>{{ i.t_sana }}</td>
-                            </tr>
-                        {% endfor %}
-                        {% for i in un %}
-                            <tr>
-                                <td>{{ i.pk }}</td>
-                                <td><a href="{% url 'RUT' pk=i.pk %}">{{ i.f_name }}</a></td>
-                                <td>{{ i.tuman }}</td>
-                                <td>{{ i.mahalla }}</td>
-                                <td></td>
-                                <td></td>
-                                <td>{{ i.universiteT }}</td>
-                                <!-- <td>O’zbekiston milliy universiteti</td>
-                                <td></td> -->
+                                <td><a href="">{{ i.f_name }}</a></td>
+                                <td>{{ i.tuman }} {{ i.mahalla }}</td>
+                                <td>{{ i.maktabbitiruvchisi.maktab }}</td>
+                                {% if  i.kollejbitiruvchisi.kolleJ %}
+                                    <td>{{ i.kollejbitiruvchisi.kolleJ }}</td>
+                                {% else %}
+                                    <td>{{ i.kollejbitiruvchisi.kollej }}</td>
+                                {% endif %}
+                                {% if i.universitetbitiruvchisi.universitet %}
+                                    <td>{{ i.universitetbitiruvchisi.universitet }}</td>  
+                                {% else %}
+                                    <td>{{ i.universitetbitiruvchisi.universiteT }}</td>  
+                                {% endif %}
                                 <td>{{ i.phone }}</td>
                                 <td>{{ i.t_sana }}</td>
                             </tr>

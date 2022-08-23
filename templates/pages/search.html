@@ -1,0 +1,141 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block title %}
+    Home
+{% endblock %}
+{% block content %}
+
+    <div class="background">
+        <div id="sidebar">
+            <div id="bar">
+                <ul>
+                    <li>
+                        <a href="{% url 'H' %}" class="a-link active-sidebar">Bosh sahifa</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'AD' %}" class="a-link ">Tumanlar</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'DA' %}" class="a-link">Ma'lumot qo'shish</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'T' %}" class="a-link">Jadvallarda ko'rish</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'users:LO' %}" class="a-link border border-danger text-danger">Accountdan chiqish</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="main">
+            <form action="{% url 'SEA' %}" method="get">
+                <div class="input-group mb-3 search-box">
+                    <input type="search" class="search" placeholder="Bitiruvchilarni qidirish" aria-label="Recipient's username" name="searchHome" aria-describedby="button-addon2"> 
+                    <button class="btn btn-outline-success" type="submit" id="button-addon2">Qidirish</button>
+                </div>
+            </form>
+            <div class="chart">
+                <h1>Bu yilgi bitiruvchilar raqamlarda</h1>
+                <canvas id="toshvil"></canvas>
+            </div>
+            <div class="table-box">
+                <table class="table">
+                    <thead class="border-info">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">F.I.SH</th>
+                            <th scope="col">
+                                Yashash manzili
+                            </th>
+                            <th scope="col">
+                                Tugatayotgan ta'lim muassasasi
+                            </th>
+                            <th scope="col">Sinf/Mutaxasisligi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in queryset %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td><a href="{% url 'RE' pk=i.pk %}">{{ i.f_name }}</a></td>
+                                <td>{{ i.tuman }} {{ i.mahalla }}</td>
+                                <td>
+                                    {% if i.maktabbitiruvchisi %}
+                                        {{ i.maktabbitiruvchisi.maktab }}
+                                    {% elif i.kollejbitiruvchisi.kollej %}
+                                        {{ i.kollejbitiruvchisi.kollej }}  
+                                    {% elif i.kollejbitiruvchisi.kolleJ %}
+                                        {{ i.kollejbitiruvchisi.kolleJ }}      
+                                    {% elif i.universitetbitiruvchisi %}
+                                        {{ i.universitetbitiruvchisi.universitet }}
+                                    {% else %}
+                                        {{ i.universitetbitiruvchisi.universiteT }}
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if i.maktabbitiruvchisi %}
+                                        {{ i.maktabbitiruvchisi.sinf }}
+                                    {% elif i.kollejbitiruvchisi.kollej %}
+                                        {{ i.kollejbitiruvchisi.stu_way }}  
+                                    {% elif i.kollejbitiruvchisi.kolleJ %}
+                                        {{ i.kollejbitiruvchisi.stu_way }}      
+                                    {% elif i.universitetbitiruvchisi.universitet %}
+                                        {{ i.universitetbitiruvchisi.stu_way }}
+                                    {% else %}
+                                        {{ i.universitetbitiruvchisi.stu_way_ch }}
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% empty %}
+                            <tr>
+                                <td colspan="7">Kechirasi Ammo bunday malumot topilmadi</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <script>
+        const toshvil = document.getElementById("toshvil").getContext("2d");
+        const vilChart = new Chart(toshvil, {
+            type: 'bar',
+            data: {
+                labels : ['OTM bitiruvchilari', 'Professional ta\'lim bitiruvchilari', 'Maktab bitiruvchilari'],
+                datasets : [{
+                    label: '',
+                    axis: 'y',
+                    data: ['{{ unb }}', '{{ kjb }}', '{{ mkb }}'],
+                    fill: false,
+                    backgroundColor: [
+                        'rgba(5, 140, 145, 0.47)',
+                        'rgba(9, 57, 142, 0.45)',
+                        'rgba(8, 140, 78, 0.5)',
+                    ],
+                    borderColor: [
+                        'rgba(5, 140, 145, 1)',
+                        'rgba(9, 57, 142, 1)',
+                        'rgba(8, 140, 78, 1)',
+                    ],
+                    borderWidth: 1,
+                    hoverOffset: 10,
+                }]
+            },
+            options: {
+                scales:{
+                    y:{
+                        beginAtZone :true,
+                    },
+                    x:{
+                        grid:{
+                            offset: true,
+                        },
+                    }
+                }
+            }
+        })
+    </script>
+{% endblock %}

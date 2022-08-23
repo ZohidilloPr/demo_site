@@ -32,10 +32,10 @@
                                 <li>{{ i }}</li>
                             {% endfor %}
                         </ul>
-                        <h3>Haydovchilik Guvohnoma</h3>
+                        <!-- <h3>Haydovchilik Guvohnoma</h3>
                         <ul>
                             <li>{{ object.guvohnoma }}</li>
-                        </ul>
+                        </ul> -->
                         <h3>Biznes G'oya</h3>
                         <ul>
                             <li>{{ object.idea }}</li>
@@ -79,14 +79,26 @@
                             <p>
                                 {{ object.univer_sity }}
                             </p>
+                        {% elif object.otm_name %}
+                            <p>
+                                {{ object.vil }}ning {{ object.otm_name }} --- {{ object.stu_way_un }}
+                            </p>
+                        {% elif object.other_un %}
+                            <p>
+                                {{ object.other_un }}
+                            </p>
                         {% else %}
                             <p>
-                                --------------
+                                ----------------
                             </p>
                         {% endif %}
                         <h3>Qiziqishlari</h3>
                         <p>
                             {{ object.qiziqish }}
+                        </p>
+                        <h3>Yoqtirgan Sport turi</h3>
+                        <p>
+                            {{ object.sport.name }}
                         </p>
                         {% if object.short_f %}
                             <h3>Biznes g'oya haqida ozroq</h3>

@@ -1,5 +1,6 @@
 from django.contrib import admin
 from .models import (
+    Vil,
     Sport,
     Maktab, 
     Kollej,
@@ -18,6 +19,7 @@ from .models import (
 )
 # Register your models here.
 
+admin.site.register(Vil)
 admin.site.register(Sport)
 admin.site.register(Maktab)
 admin.site.register(Kollej)

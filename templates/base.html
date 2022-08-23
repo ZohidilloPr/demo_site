@@ -15,15 +15,6 @@
                     <li>
                         <a href="{% url 'AD' %}" class="a-link ">Tumanlar</a>
                     </li>
-                    <!-- {% if all_d %}
-                        <li>
-                            <ol class="tm">
-                                {% for i in all_d %}
-                                    <li><a href="{% url 'D' pk=i.pk %}" class="text-info">{{ i }}</a></li>
-                                {% endfor %}
-                            </ol>
-                        </li>
-                    {% endif %} -->
                     <li>
                         <a href="{% url 'DA' %}" class="a-link">Ma'lumot qo'shish</a>
                     </li>
@@ -38,6 +29,12 @@
         </div>
 
         <div class="main">
+            <form action="{% url 'SEA' %}" method="get">
+                <div class="input-group mb-3 search-box">
+                    <input type="search" class="search" placeholder="Bitiruvchilarni qidirish" aria-label="Recipient's username" name="searchHome" aria-describedby="button-addon2"> 
+                    <button class="btn btn-outline-success" type="submit" id="button-addon2">Qidirish</button>
+                </div>
+            </form>
             <div class="chart">
                 <h1>Bu yilgi bitiruvchilar raqamlarda</h1>
                 <canvas id="toshvil"></canvas>
@@ -50,7 +47,7 @@
         const vilChart = new Chart(toshvil, {
             type: 'bar',
             data: {
-                labels : ['Universitet bitiruvchilari', 'Professional ta\'lim bitiruvchilari', 'Maktab bitiruvchilari'],
+                labels : ['OTM bitiruvchilari', 'Professional ta\'lim bitiruvchilari', 'Maktab bitiruvchilari'],
                 datasets : [{
                     label: '',
                     axis: 'y',

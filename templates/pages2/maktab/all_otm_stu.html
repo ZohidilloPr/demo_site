@@ -26,7 +26,7 @@
                             Maktablar
                         </a>
                         <ol class="dropdown-menu w-100">
-                            {% for i in maktab %}
+                            {% for i in all_mk %}
                             <li><a class="dropdown-item a-link" href="{% url 'S' pk=i.pk %}">{{ i }}</a></li>
                             {% endfor %}
                         </ol>

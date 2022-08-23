@@ -13,14 +13,13 @@
     </ol>
 </nav>
  <div class="row">
-     <div class="col-xxl-5 m-auto p-5 border border-info">
+     <div class="col-lg-5 col-xl-6 col-xxl-5 m-auto p-5 border border-info">
          <div class="img-name">
              <div class="img border-end border-info pt-3">
                  <img src="{{ object.img.url }}" width="100" alt="">
                  <div class="my-5"></div>
-                 <div class="imkonyat">
+                 <div class="imkonyat mt-5">
                         <h3>Imkonyatlari</h3>
-                        {{ object.abilty }}
                         <ul>
                             {% for i in object.imkonyat.all %}  
                                 <li>{{ i }}</li>
@@ -32,10 +31,10 @@
                                 <li>{{ i }}</li>
                             {% endfor %}
                         </ul>
-                        <h3>Haydovchilik Guvohnoma</h3>
+                        <!-- <h3>Haydovchilik Guvohnoma</h3>
                         <ul>
                             <li>{{ object.guvohnoma }}</li>
-                        </ul>
+                        </ul> -->
                         <h3>Biznes G'oya</h3>
                         <ul>
                             <li>{{ object.idea }}</li>
@@ -62,7 +61,15 @@
                          </tr>
                          <tr>
                              <th>Yashash manzili: </th>
-                             <td>{{ object.tuman }} {{ object.mahalla }}</td>
+                             <td>{{ object.tuman }} {{ object.mahalla }} {{ object.uy }}</td>
+                         </tr>
+                         <tr>
+                            <th>Millat</th>
+                            <td>{{ object.millat }}</td>
+                         </tr> 
+                         <tr>
+                            <th>Jins</th>
+                            <td>{{ object.jins }}</td>
                          </tr> 
                      </table>
                      <div class="my-5"></div>
@@ -77,16 +84,28 @@
                         <h3>Topshirgan OTM nomi</h3>
                         {% if object.univer_sity %}   
                             <p>
-                                {{object.univer_sity}}
+                                {{ object.univer_sity }}
+                            </p>
+                        {% elif object.otm_name %}
+                            <p>
+                                {{ object.vil }}ning {{ object.otm_name }} --- {{ object.stu_way_un }}
+                            </p>
+                        {% elif object.other_un %}
+                            <p>
+                                {{ object.other_un }}
                             </p>
                         {% else %}
                             <p>
-                                --------------
+                                ----------------
                             </p>
                         {% endif %}
                         <h3>Qiziqishlari</h3>
+                            <p>
+                            {{ object.qiziqish }}
+                            </p>
+                        <h3>Yoqtirgan Sport turi</h3>
                         <p>
-                        {{ object.qiziqish }}
+                            {{ object.sport.name }}
                         </p>
                         {% if object.short_f %}
                             <h3>Biznes g'oya haqida ozroq</h3>

@@ -63,16 +63,30 @@
                              <th>Yashash manzili: </th>
                              <td>{{ object.tuman }} {{ object.mahalla }}</td>
                          </tr> 
+                         <tr>
+                            <th>Millat</th>
+                            <td>{{ object.millat }}</td>
+                         </tr> 
+                         <tr>
+                            <th>Jins</th>
+                            <td>{{ object.jins }}</td>
+                         </tr>
                      </table>
                      <div class="my-5"></div>
                      <div class="info-data">
                         <h3 class="">
                             Ta'lim
                         </h3>
-                        <p>
-                            Toshkent viloyati " {{ object.universiteT }} "
-                            <!-- <small class="text-warning">2011/09/3 --- 2022/05/25</small> -->
-                        </p>
+                        {% if object.universiteT %}                          
+                            <p>
+                                Toshkent viloyati " {{ object.universiteT }} "
+                                <!-- <small class="text-warning">2011/09/3 --- 2022/05/25</small> -->
+                            </p>
+                        {% elif object.universitet %}
+                            <p>
+                                {{ object.vil }} " {{ object.universitet }} " {{ object.stu_way }} yonalishida
+                            </p>
+                        {% endif %}
                         <!-- <h3>Topshirgan OTM nomi</h3>
                         {% if object.univer_sity %}   
                             <p>
@@ -100,7 +114,12 @@
                          <h3>Fuqoro xaqida</h3>
                          <p>
                             {{ object.f_name }} Toshkent vilotati {{ object.tuman }}da tug'ulgan.
-                            {{ object.universiteT }}ning {{ object.stu_way }} bituruvchisi.  
+                            {% if object.universitet %}
+                                {{ object.vil }}da {{ object.universitet }}ning {{ object.stu_way }}
+                                yonalishida bitiruvchi
+                            {% else %}  
+                                {{ object.universiteT }}ning {{ object.stu_way }} yonalishida bituruvchi.  
+                            {% endif %}
                             {% if object.idea == 'Bor' %}  
                                 O'zini biznes g'oyasi bor
                             {% endif %}

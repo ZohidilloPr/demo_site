@@ -325,8 +325,7 @@ thead tr th{
     grid-template-columns: auto auto auto;
 }
 .fl-top-2 li ol li a{
-    display: block;
-    word-wrap: break-word;
+    white-space: unset;
 }
 .fl-top li, .fl-top-2 li{
     width: 100%;
@@ -337,6 +336,22 @@ thead tr th{
 }
 .bottom-active{
     border-bottom: 1px solid #3F4C5C;
+}
+.search-box{
+    width: 100%;
+    display: inline-flex;
+    justify-content: end;
+}
+.search{
+    width: 25%;
+    border: none;
+    padding: 0 10px;
+    background: none;
+    outline: none;
+    /* outline-color: darkcyan; */
+    border: 1px solid #3F4C5C;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
 }
 @media only screen and (max-width: 1290px){
     .tumanlar ul {
@@ -354,5 +369,11 @@ thead tr th{
     }
     .chart{
         height: 60vh;
+    }
+    .table-box{
+        height: 300px;
+    }
+    .ism{
+        font-size: 50px;
     }
 }

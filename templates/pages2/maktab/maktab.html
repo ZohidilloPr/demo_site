@@ -32,19 +32,11 @@
                         </ol>
                     </div>
                 </li>        
-                <!-- <li>
-                    <select name="" id="" class="form-select rounded-0">
-                        <option value="">-----------</option>
-                        {% for i in typeK %}
-                            <option>{{ i }}</option>
-                        {% endfor %}
-                    </select>
-                </li> -->
                 <li>
                     <a href="{% url 'AKB' pk=mk.tuman.pk %}" style="padding: 7px 0;" class="btn rounded-0 w-100 border-0">kollej</a>
                 </li>        
                 <li>
-                    <a href="" style="padding: 7px 0;" class="btn rounded-0 w-100 border-0">OTM</a>
+                    <a href="{% url 'AOB' pk=mk.tuman.pk %}" style="padding: 7px 0;" class="btn rounded-0 w-100 border-0">OTM</a>
                 </li>        
             </ul>
             <div class="chart mt-5">
@@ -59,7 +51,7 @@
                             <th>F.I.SH</th>
                             <th>Telefon raqami</th>
                             <th>Yashash manzili</th>
-                            <th>Topshirgan OTM nomi</th>
+                            <th>Sinf</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -69,7 +61,7 @@
                                 <td><a href="{% url 'RM' pk=i.pk %}">{{ i.f_name }}</a></td>
                                 <td>(+998) {{ i.phone }}</td>
                                 <td>{{ i.tuman }} {{ i.mahalla }}</td>
-                                <td>{{ i.univer_sity }}</td>
+                                <td>{{ i.sinf }}</td>
                             </tr>
                         {% empty %}
                             <tr>
@@ -106,13 +98,13 @@
                         'rgba(5, 140, 145, 0.47)',
                         'rgba(9, 57, 142, 0.45)',
                         'rgba(8, 140, 78, 0.5)',
-                        'rgba(8, 140, 78, 0.5)',
+                        'rgba(255, 132, 145, 0.47)', 
                     ],
                     borderColor: [
                         'rgba(5, 140, 145, 1)',
-                        'rgba(9, 57, 142, 1)',
+                        'rgba(9, 57, 142, 0.45)',
                         'rgba(8, 140, 78, 1)',
-                        'rgba(8, 140, 78, 1)',
+                        'rgba(255, 132, 145, 1)',
                     ],
                     borderWidth: 1,
                     hoverOffset: 10,

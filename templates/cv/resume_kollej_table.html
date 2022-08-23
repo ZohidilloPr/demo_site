@@ -20,7 +20,6 @@
                  <div class="my-5"></div>
                  <div class="imkonyat">
                         <h3>Imkonyatlari</h3>
-                        {{ object.abilty }}
                         <ul>
                             {% for i in object.imkonyat.all %}  
                                 <li>{{ i }}</li>
@@ -33,7 +32,7 @@
                             {% endfor %}
                         </ul>
                         <h3>Haydovchilik Guvohnoma</h3>
-                        <ul>
+                        <ul> 
                             <li>{{ object.guvohnoma }}</li>
                         </ul>
                         <h3>Biznes G'oya</h3>
@@ -63,7 +62,15 @@
                          <tr>
                              <th>Yashash manzili: </th>
                              <td>{{ object.tuman }} {{ object.mahalla }}</td>
+                         </tr>
+                         <tr>
+                            <th>Millat</th>
+                            <td>{{ object.millat }}</td>
                          </tr> 
+                         <tr>
+                            <th>Jins</th>
+                            <td>{{ object.jins }}</td>
+                         </tr>
                      </table>
                      <div class="my-5"></div>
                      <div class="info-data">
@@ -83,9 +90,17 @@
                             <p>
                                 {{ object.univer_sity }}
                             </p>
+                        {% elif object.otm_name %}
+                            <p>
+                                {{ object.vil }}ning {{ object.otm_name }} --- {{ object.stu_way_un }}
+                            </p>
+                        {% elif object.other_un %}
+                            <p>
+                                {{ object.other_un }}
+                            </p>
                         {% else %}
                             <p>
-                                --------------
+                                ----------------
                             </p>
                         {% endif %}
                         <h3>Qiziqishlari</h3>
