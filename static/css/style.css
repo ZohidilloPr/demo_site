@@ -52,6 +52,9 @@ table thead{
 table tbody{
     background: linear-gradient(rgba(250, 250, 250, 0.5), rgba(250, 250, 250, 0.9));
 }
+.data table tbody{
+    background: none;
+}
 table tbody tr td a{
     color: darkcyan;
     text-decoration: none;
@@ -77,11 +80,11 @@ thead tr th{
     padding-left: 20px;
 }
 .ism{
-    font-size: 60px;
+    font-size: 50px;
     color: cadetblue;
     font-family: fantasy;
 }
-.info-data h3{
+.info-data h3, .data h3{
     width: 300px;
     font-family: serif;
     border-bottom: 2px solid cadetblue;
@@ -170,6 +173,12 @@ thead tr th{
     box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
 
 }
+.indexFilter{
+    padding: 18px 10px 0 10px;
+}
+.indexFilter select, .indexFilter label, .indexFilter input{
+    height: 50%;
+}
 @keyframes chart {
     from{
         opacity: 0;
@@ -210,6 +219,9 @@ thead tr th{
     margin-top: 25px;
     list-style-type: none;
     
+}
+.shadow_light{
+    box-shadow: rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset, rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
 }
 .tumanlar ul li a{
     width: 200px;

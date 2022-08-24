@@ -49,7 +49,7 @@
                     <thead class="table-dark">
                         <tr>
                             <th>№</th>
-                            <th>F.I.SH</th>
+                            <th>F.I.SH</th> 
                             <th>Yashash manzili</th>
                             <th>Ta'lim Muassasasi nomi</th>
                         </tr>
@@ -58,7 +58,7 @@
                         {% for i in all_btr %}
                             <tr>
                                 <td>{{ forloop.counter }}</td>
-                                <td><a href="">{{ i.f_name }}</a></td>
+                                <td><a href="{% url 'RE' pk=i.pk %}">{{ i.f_name }}</a></td>
                                 <td>{{ i.tuman }} {{ i.mahalla }}</td>
                                 {% if i.maktabbitiruvchisi %}
                                     <td> {{ i.maktabbitiruvchisi.maktab }}</td>

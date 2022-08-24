@@ -159,10 +159,25 @@
                     'tuman_id': tumanID,
                 },
                 success: function(data){
-                    console.log(data)
+                    // console.log(data)
                     $("#maktab").html(data);
                 },
             });
+        });
+        $("#vil").change(function(){
+            const url = $("#otm_name").attr("otm-queries-url");
+            const vilID = $(this).val();
+
+            $.ajax({
+                url:url,
+                data:{
+                    'viloyat': vilID,
+                },
+                success: function(data){
+                    // console.log(data, vilID, url)
+                    $("#otm_name").html(data)
+                }
+            })
         });
     </script>
 

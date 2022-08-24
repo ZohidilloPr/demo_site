@@ -39,6 +39,7 @@ from .views import (
     UniversitetNameAddView,
     TumanVaShaharNameAddView,
     load_type_kollej,
+    load_otm,
 )
 urlpatterns = [
 
@@ -60,6 +61,7 @@ urlpatterns = [
     path("tumanlar/maktablar/<pk>/", Schools, name="S"),
     path("tumanlar/kollejlar/<pk>/", KollejD, name="KD"),
 # ajax section
+    path("ajax/load/otm/list", load_otm, name="ALO"),
     path("ajax/load/kollej/list", load_kollej, name="ALK"),
     path("ajax/load/maktab/list", load_maktab, name="ALMa"),
     path("ajax/load/mahalla/list", load_mahalla, name="ALM"),

@@ -66,8 +66,10 @@
                                         {{ i.kollejbitiruvchisi.kollej }}  
                                     {% elif i.kollejbitiruvchisi.kolleJ %}
                                         {{ i.kollejbitiruvchisi.kolleJ }}      
-                                    {% elif i.universitetbitiruvchisi %}
+                                    {% elif i.universitetbitiruvchisi.universitet %}
                                         {{ i.universitetbitiruvchisi.universitet }}
+                                    {% elif i.universitetbitiruvchisi.other_un %}
+                                        {{ i.universitetbitiruvchisi.other_un }}
                                     {% else %}
                                         {{ i.universitetbitiruvchisi.universiteT }}
                                     {% endif %}
@@ -79,10 +81,12 @@
                                         {{ i.kollejbitiruvchisi.stu_way }}  
                                     {% elif i.kollejbitiruvchisi.kolleJ %}
                                         {{ i.kollejbitiruvchisi.stu_way }}      
-                                    {% elif i.universitetbitiruvchisi.universitet %}
+                                    {% elif i.universitetbitiruvchisi.stu_way %}
                                         {{ i.universitetbitiruvchisi.stu_way }}
-                                    {% else %}
+                                    {% elif i.universitetbitiruvchisi.other_un %}
                                         {{ i.universitetbitiruvchisi.stu_way_ch }}
+                                    {% else %}
+                                        malumot kiritilmagan
                                     {% endif %}
                                 </td>
                             </tr>

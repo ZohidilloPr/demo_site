@@ -98,6 +98,7 @@
             $("#id_imkonyat").chosen();
             $("#id_sport").chosen();
             $("#id_chettili").chosen();
+            $("#id_guvohnoma").chosen();
         })
         $(function(){
             $('input').addClass("form-control");
@@ -129,6 +130,21 @@
                     $("#mahalla").html(data);
                 },
             });
+        });
+        $("#vil").change(function(){
+            const url = $("#otm_name").attr("otm-queries-url");
+            const vilID = $(this).val();
+
+            $.ajax({
+                url:url,
+                data:{
+                    'viloyat': vilID,
+                },
+                success: function(data){
+                    // console.log(data, vilID, url)
+                    $("#otm_name").html(data)
+                }
+            })
         });
     </script>
 {% endblock content %}

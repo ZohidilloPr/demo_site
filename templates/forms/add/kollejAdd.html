@@ -43,7 +43,7 @@
                 {{ form.email }}
             </div>
             <div class="mb-3">
-                <label for="id_tuman" class="mb-1">Tugatayotgan ta'lim muassasasi</label>
+                <label for="type" class="mb-1">Tugatayotgan ta'lim muassasasi</label>
                 <div class="input-group mb-3">
                     {{ form.type }}
                     {{ form.tuman_kj }}
@@ -52,8 +52,8 @@
                 <label for="id_stu_way">Mutaxasisligi</label>
                 {{ form.stu_way }}
             </div>
-            <div class="mb-3" id="imkonyat">
-                <label for="id_imkonyat" class="form-label">Maqsadi</label>
+            <div class="mb-3">
+                <label for="id_maqsad" class="form-label">Maqsadi</label>
                 {{ form.maqsad }}
             </div>
             <div class="mb-3" id="imkonyat">
@@ -73,7 +73,7 @@
                 {{ form.chettili }}
             </div>
             <div class="mb-3" >
-                <label for="id_chettili" class="form-label">Haydovchilik guvohnoma</label>
+                <label for="id_guvohnoma" class="form-label">Haydovchilik guvohnoma</label>
                 {{ form.guvohnoma }}
             </div>
             <div class="mb-3">
@@ -84,7 +84,7 @@
                 </div>
             </div>
             <div class="mb-3">
-                <label for="id_tuman_un" class="mb-1">Topshirmoqchi bo'lgan OTM</label>
+                <label for="vil" class="mb-1">Topshirmoqchi bo'lgan OTM</label>
                 <div class="input-group mb-3">
                     {{ form.vil }}
                     {{ form.otm_name }}
@@ -108,10 +108,11 @@
             $("#id_imkonyat").chosen();
             $("#id_sport").chosen();
             $("#id_chettili").chosen();
-            $('input').addClass("form-control");
-            $('select').addClass("form-select");
+            $("#id_guvohnoma").chosen();
         });
         $(function(){
+            $('input').addClass("form-control");
+            $('select').addClass("form-select");
             $("#id_t_sana_day option:selected").html("Kun");
             $("#id_t_sana_month option:selected").html("Oy");
             $("#id_t_sana_year option:selected").html("Yil");
@@ -141,34 +142,36 @@
             });
         });
         $("#tuman_kj").change(function(){
-            const url2 = $("#kollej").attr("kollej-queries-url");
+            const url2 = $("#kollej").attr("typekollej-queries-url");
+            const typeId = $("#type").children("option:selected").val()
             const tumanId = $(this).val();
-            const typeId = $("#type").filter("selected")
             console.log(typeId)
             $.ajax({
                 url : url2,     
                 data:{
                     'tuman_kj':tumanId,
+                    'type':typeId,
                 },
                 success: function(data){
-                    // console.log(data)
+                    console.log(data, typeId, url2, tumanId)
                     $("#kollej").html(data)
                 }
             });
         });
-        // $("#type").change(function(){
-        //     const url2 = $("#kollej").attr("typekollej-queries-url");
-        //     const tumanId = $(this).val();
-        //     $.ajax({
-        //         url : url2,
-        //         data:{
-        //             'type':tumanId,
-        //         },
-        //         success: function(data){
-        //             console.log(data)
-        //             $("#kollej").html(data)
-        //         }
-        //     });
-        // });
+        $("#vil").change(function(){
+            const url = $("#otm_name").attr("otm-queries-url");
+            const vilID = $(this).val();
+
+            $.ajax({
+                url:url,
+                data:{
+                    'viloyat': vilID,
+                },
+                success: function(data){
+                    // console.log(data, vilID, url)
+                    $("#otm_name").html(data)
+                }
+            })
+        });
     </script>
 {% endblock content %}

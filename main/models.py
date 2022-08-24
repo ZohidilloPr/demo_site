@@ -83,7 +83,7 @@ class Universitet(AutoTime):
     """ Yangi OTM nomi qo'shish """
     viloyat = models.ForeignKey(Vil, on_delete=models.SET_NULL, null=True, blank=True, verbose_name="viloyat nomi")    
     def __str__(self):
-        return super().__str__()
+        return super().__str__() 
 
 class Qiziqish(AutoTime):
 
@@ -158,7 +158,7 @@ class KollejBitiruvchisi(Bitiruvchi):
     kollej = models.ForeignKey(Kollej, on_delete=models.SET_NULL, verbose_name="Bitirayotgan Kollej", null=True, blank=True)
     stu_way = models.CharField(max_length=l, null=True, blank=True, verbose_name="Mutaxasislik")
     maqsad = models.CharField(max_length=l, choices=aim, default="Ishlamoqchi", verbose_name="Maqsadi")
-    guvohnoma = models.ForeignKey(DriverLicense, on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Haydovchilik Guvohnomasi")
+    guvohnoma = models.ManyToManyField(DriverLicense, related_name="guvohnomaK", verbose_name="Haydovchilik Guvohnomasi")
     
     vil = models.ForeignKey(Vil, on_delete=models.SET_NULL, null=True, blank=True, related_name="kj_vil",)
     otm_name = models.ForeignKey(Universitet, on_delete=models.SET_NULL, null=True, blank=True)
@@ -180,7 +180,7 @@ class UniversitetBitiruvchisi(Bitiruvchi):
     other_un = models.CharField(max_length=l, null=True, blank=True, verbose_name="ChetEl OTM")
     stu_way_ch = models.CharField(max_length=l, null=True, blank=True, verbose_name="Mutaxasislik")
     maqsad = models.CharField(max_length=l, choices=aim, default="Ishlamoqchi", verbose_name="Maqsadi")
-    guvohnoma = models.ForeignKey(DriverLicense, on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Haydovchilik Guvohnomasi")
+    guvohnoma = models.ManyToManyField(DriverLicense, related_name="guvohnomaU", verbose_name="Haydovchilik Guvohnomasi")
     
     #kerak emas
     universiteT = models.CharField(max_length=l, null=True, blank=True, verbose_name="Bitirayotgan OTM",)

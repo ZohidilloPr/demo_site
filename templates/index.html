@@ -34,21 +34,23 @@
                     </ul>
                     </div>
                 </nav>
-                <div class="my-4 p-3 bg-shadow-a bg-light">
-                    <form action="" method="get" novalidate>
-                        <label for="id_tuman" class="mx-3">Tuman&Shahar</label>
-                        {{ mkFil.form.tuman|add_class:"btn btn-outline-secondary btn-sm" }}
-                        <label for="id_mahalla" class="mx-3">Mahalla</label>
-                        {{ mkFil.form.mahalla|attr:"mahalla-queries-url:{% url 'ALM' %}"|add_class:"btn btn-outline-secondary btn-sm" }} {% comment %}|attr:"mahalla-queries-url:{% url 'ALM' %}" |attr:"maktab-queries-url:{% url 'ALMa' %}" {% endcomment %}
-                        <label for="id_maktabbitiruvchisi__maktab" class="mx-3">Maktab №</label>
-                        {{ mkFil.form.maktabbitiruvchisi__maktab | add_class:"btn btn-outline-secondary btn-sm"}}
-                        <label for="id_maktabbitiruvchisi__sinf" class="mx-3">Sinf №</label>
-                        {{ mkFil.form.maktabbitiruvchisi__sinf | add_class:"btn btn-outline-secondary btn-sm"}} <br><br>
-                        <label for="id_kollejbitiruvchisi__kollej" class="mx-3">Kollej №</label>
-                        {{ mkFil.form.kollejbitiruvchisi__kollej | add_class:"btn btn-outline-secondary btn-sm"}}
-                        <label for="id_universitetbitiruvchisi__universitet" class="mx-3">OTM №</label>
-                        {{ mkFil.form.universitetbitiruvchisi__universitet | add_class:"btn btn-outline-secondary btn-sm"}}
-                        <input type="submit" value="Qidirish" class="mx-3 btn btn-outline-dark text- btn-sm">
+                <div class="my-4 bg-shadow-a bg-light">
+                    <form action="" method="get" novalidate class="indexFilter">
+                        <div class="input-group input-group-sm">
+                            <label for="id_tuman" class="input-group-text">Tuman&Shahar</label>
+                            {{ mkFil.form.tuman|add_class:"form-select" }}
+                            <label for="id_mahalla" class="input-group-text ms-3">Mahalla</label>
+                            {{ mkFil.form.mahalla|add_class:"form-select" }}
+                            <label for="id_maktabbitiruvchisi__maktab" class="input-group-text ms-3">Maktab №</label>
+                            {{ mkFil.form.maktabbitiruvchisi__maktab|add_class:"form-select"}}
+                            <label for="id_maktabbitiruvchisi__sinf" class="input-group-text ms-3">Sinf №</label>
+                            {{ mkFil.form.maktabbitiruvchisi__sinf|add_class:"form-select"}} <br><br>
+                            <label for="id_kollejbitiruvchisi__kollej" class="input-group-text ms-3">Kollej №</label>
+                            {{ mkFil.form.kollejbitiruvchisi__kollej|add_class:"form-select"}}
+                            <label for="id_universitetbitiruvchisi__universitet" class="input-group-text ms-3">OTM №</label>
+                            {{ mkFil.form.universitetbitiruvchisi__universitet|add_class:"form-select"}}
+                            <input type="submit" value="Qidirish" class="mx-3 btn btn-outline-dark  btn-sm">
+                        </div>
                     </form>
                 </div>
             <div class="table-box">
@@ -58,7 +60,7 @@
                         {% for i in all_students %}
                             <tr>
                                 <td>{{ forloop.counter }}</td>
-                                <td><a href="">{{ i.f_name }}</a></td>
+                                <td><a href="{% url 'RE' pk=i.pk %}">{{ i.f_name }}</a></td>
                                 <td>{{ i.tuman }} {{ i.mahalla }}</td>
                                 <td>{{ i.maktabbitiruvchisi.maktab }}</td>
                                 {% if  i.kollejbitiruvchisi.kolleJ %}
@@ -71,8 +73,6 @@
                                 {% else %}
                                     <td>{{ i.universitetbitiruvchisi.universiteT }}</td>  
                                 {% endif %}
-                                <td>{{ i.phone }}</td>
-                                <td>{{ i.t_sana }}</td>
                             </tr>
                         {% endfor %}
                     </tbody>

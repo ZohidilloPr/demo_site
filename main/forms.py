@@ -3,6 +3,7 @@ from .widget import DatePicker
 from django.urls import reverse_lazy
 
 from .models import (
+    Bitiruvchi,
     Kollej,
     Maktab, 
     Mahalla, 
@@ -90,10 +91,13 @@ class MaktabForm(forms.ModelForm):
                 'class':'form-select'
             }),
             'vil':forms.Select(attrs={
+                'id':'vil',
                 'class':'form-select',
             }),
             'otm_name':forms.Select(attrs={
+                'id':'otm_name',
                 'class':'form-select',
+                'otm-queries-url':reverse_lazy("ALO"),
             }),
             'stu_way_un':forms.TextInput(attrs={
                 'class':'form-control',
@@ -119,7 +123,7 @@ class MaktabForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.fields['mahalla'].queryset = Mahalla.objects.none()
         self.fields['maktab'].queryset = Maktab.objects.none()
-        self.fields['otm_name'].queryset = Universitet.objects.all()
+        self.fields['otm_name'].queryset = Universitet.objects.none()
 
         if 'tuman' in self.data:
             try:
@@ -144,7 +148,8 @@ class MaktabForm(forms.ModelForm):
         if 'vil' in self.data:
             try: 
                 vil_id = int(self.data.get('vil'))
-                self.fields['otm_name'].queryset = Universitet.objects.filter(vil_id=vil_id).all()
+                print("forms.py ", vil_id)
+                self.fields['otm_name'].queryset = Universitet.objects.filter(viloyat_id=vil_id).all()
             except (ValueError, TypeError):
                 pass
         elif self.instance.pk:
@@ -180,7 +185,7 @@ class KollejForm(forms.ModelForm):
             'kollej': forms.Select(attrs={
                 "id":"kollej",
                 'class':'form-select',
-                'kollej-queries-url': reverse_lazy("ALK"),
+                # 'kollej-queries-url': reverse_lazy("ALK"),
                 'typekollej-queries-url': reverse_lazy("ALTK"),
             }),
             'imkonyat':forms.SelectMultiple(attrs={
@@ -220,7 +225,7 @@ class KollejForm(forms.ModelForm):
                 'class':'form-control',
                 'placeholder':'Toshkent axborot texnologiyalar universiteti'
             }),
-            'guvohnoma':forms.Select(attrs={
+            'guvohnoma':forms.SelectMultiple(attrs={
                 'class':'form-select',
             }),
             'tuman_kj': forms.Select(attrs={
@@ -242,7 +247,8 @@ class KollejForm(forms.ModelForm):
                 'class':'form-select'
             }),
             'other_un':forms.TextInput(attrs={
-                'placeholder':'Boshqa OTM nomi'
+                'placeholder':'Boshqa OTM nomi',
+                'class':'w-75'
             }),
             'stu_way_un':forms.TextInput(attrs={
                 'placeholder':'Mutaxasisligi'
@@ -250,6 +256,13 @@ class KollejForm(forms.ModelForm):
             'stu_way_ch':forms.TextInput(attrs={
                 'placeholder':'Mutaxasisligi'
             }),
+            'vil':forms.Select(attrs={
+                'id':'vil',
+            }),
+            'otm_name':forms.Select(attrs={
+                'id':'otm_name',
+                'otm-queries-url':reverse_lazy("ALO"),
+            })
 
         }
     def __init__(self, *args, **kwargs):
@@ -295,8 +308,8 @@ class UniversitetForm(forms.ModelForm):
                 'mahalla-queries-url':reverse_lazy("ALM")
             }),
             'universitet':forms.Select(attrs={
-                'id':'universitet',
-                # 'universitet-queries-url': reverse_lazy("ALK"),
+                'id':'otm_name',
+                'otm-queries-url':reverse_lazy("ALO"),
             }),
             'imkonyat':forms.SelectMultiple(attrs={
                 'class':'form-control',
@@ -324,7 +337,9 @@ class UniversitetForm(forms.ModelForm):
                 'disabled':'true'
             }),
             'other_un':forms.TextInput(attrs={
-                'placeholder':'Boshqa OTM nomi'
+                'placeholder':'Boshqa OTM nomi',
+                'class':'w-75'
+
             }),
             'stu_way':forms.TextInput(attrs={
                 'placeholder':'Mutaxasisligi'
@@ -338,6 +353,12 @@ class UniversitetForm(forms.ModelForm):
             'email':forms.TextInput(attrs={
                 'placeholder':'example@domain.com'
             }),
+            'vil':forms.Select(attrs={
+                'id':'vil',
+            }),
+            'guvohnoma':forms.SelectMultiple(attrs={
+                'class':'form-select'
+            })
         }
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -351,6 +372,20 @@ class UniversitetForm(forms.ModelForm):
                 pass
         elif self.instance.pk:
             self.fields['mahalla'].queryset = self.instance.tuman.mahalla_set.all()
+
+class BitiruvchiForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['mahalla'].queryset = Mahalla.objects.none()
+        self.fields['maktabbitiruvchisi__maktab'].queryset = Maktab.objects.none()
+        self.fields['kollejbitiruvchisi__kollej'].queryset = Kollej.objects.none()
+
+        if 'tuman' in self.data:
+            try:
+                tuman_id = int(self.data.get('tuman'))
+                self.fields['mahalla'].queryset = Mahalla.objects.filter(tuman_id=tuman_id)
+            except (TypeError, ValueError):
+                pass
 
 class MaktabFilterForm(forms.Form):
     def __init__(self, *args, **kwargs):
