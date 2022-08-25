@@ -152,6 +152,7 @@ class MaktabBitiruvchisi(Bitiruvchi):
     def __str__(self):
         return super().__str__()
 
+
 class KollejBitiruvchisi(Bitiruvchi):
     type = models.ForeignKey(TypeKollej, on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Professional ta'lim")
     tuman_kj = models.ForeignKey(TumanVaShahar, on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Kollej manzili")

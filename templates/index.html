@@ -62,18 +62,89 @@
                                 <td>{{ forloop.counter }}</td>
                                 <td><a href="{% url 'RE' pk=i.pk %}">{{ i.f_name }}</a></td>
                                 <td>{{ i.tuman }} {{ i.mahalla }}</td>
-                                <td>{{ i.maktabbitiruvchisi.maktab }}</td>
-                                {% if  i.kollejbitiruvchisi.kolleJ %}
-                                    <td>{{ i.kollejbitiruvchisi.kolleJ }}</td>
-                                {% else %}
+                                {% if i.maktabbitiruvchisi.maktab %}
+                                    <td>{{ i.maktabbitiruvchisi.maktab }}</td>
+                                    <td>{{ i.maktabbitiruvchisi.sinf }}</td>
+                                    <td class="">
+                                        <a href="{% url 'EMB' pk=i.pk %}" class="btn btn-primary btn-sm">Taxrirlash</a>
+                                        <a href="" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{forloop.counter}}">O'chirish</a>
+                                    </td>
+                                {% elif i.kollejbitiruvchisi.kollej %}
                                     <td>{{ i.kollejbitiruvchisi.kollej }}</td>
-                                {% endif %}
-                                {% if i.universitetbitiruvchisi.universitet %}
+                                    <td>{{ i.kollejbitiruvchisi.stu_way }}</td>
+                                    <td class="">
+                                        <a href="{% url 'EKB' pk=i.pk %}" class="btn btn-primary btn-sm">Taxrirlash</a>
+                                        <a href="" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{forloop.counter}}">O'chirish</a>
+                                    </td>
+                                {% elif i.kollejbitiruvchisi.kolleJ %}
+                                    <td>{{ i.kollejbitiruvchisi.kolleJ }}</td>
+                                    <td>{{ i.kollejbitiruvchisi.stu_way }}</td>
+                                    <td class="">
+                                        <a href="{% url 'EKB' pk=i.pk %}" class="btn btn-primary btn-sm">Taxrirlash</a>
+                                        <a href="" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{forloop.counter}}">O'chirish</a>
+                                    </td>
+                                {% elif i.universitetbitiruvchisi.universitet %}
                                     <td>{{ i.universitetbitiruvchisi.universitet }}</td>  
-                                {% else %}
+                                    <td>{{ i.universitetbitiruvchisi.stu_way }}</td>  
+                                    <td class="">
+                                        <a href="{% url 'EOB' pk=i.pk %}" class="btn btn-primary btn-sm">Taxrirlash</a>
+                                        <a href="" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{forloop.counter}}">O'chirish</a>
+                                    </td>
+                                {% elif i.universitetbitiruvchisi.universiteT %}
                                     <td>{{ i.universitetbitiruvchisi.universiteT }}</td>  
+                                    <td>{{ i.universitetbitiruvchisi.stu_way }}</td>
+                                    <td class="">
+                                        <a href="{% url 'EOB' pk=i.pk %}" class="btn btn-primary btn-sm">Taxrirlash</a>
+                                        <a href="   " class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{forloop.counter}}">O'chirish</a>
+                                    </td>
+                                {% else %}
+                                    <td>{{ i.universitetbitiruvchisi.other_un }}</td>  
+                                    <td>{{ i.universitetbitiruvchisi.stu_way_ch }}</td>
+                                    <td class="{% url 'DKB' pk=i.pk %}">
+                                        <a href="{% url 'EOB' pk=i.pk %}" class="btn btn-primary btn-sm">Taxrirlash</a>
+                                        <a href="" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{forloop.counter}}">O'chirish</a>
+                                    </td>
                                 {% endif %}
                             </tr>
+                            <!-- MODEL -->  
+                                <!-- Modal -->
+                                <div class="modal fade" id="staticBackdrop{{forloop.counter}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                        <h5 class="modal-title" id="staticBackdropLabel">"{{ i }}"</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Shu obeyktni rostan ham o'chirishni xoxlaysizmi ?
+                                            <br>
+                                            <small class="text-danger">Bu obeyktni o'chirgandan so'ng qayta tiklash imkoni yoq!</small>
+                                        </div>
+                                        <div class="modal-footer">
+                                            {% if i.maktabbitiruvchisi.maktab %}                                              
+                                                <form action="{% url 'DMB' pk=i.pk %}" method="post">
+                                                    {% csrf_token %}
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Bekor qilish</button>
+                                                    <button type="submit" class="btn btn-danger">O'chirib yuborish</button>
+                                                </form>
+                                            {% elif i.kollejbitiruvchisi.kolleJ %}
+                                                <form action="{% url 'DKB' pk=i.pk %}" method="post">
+                                                    {% csrf_token %}
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Bekor qilish</button>
+                                                    <button type="submit" class="btn btn-danger">O'chirib yuborish</button>
+                                                </form>
+                                            {% else %}
+                                                <form action="{% url 'DOB' pk=i.pk %}" method="post">
+                                                    {% csrf_token %}
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Bekor qilish</button>
+                                                    <button type="submit" class="btn btn-danger">O'chirib yuborish</button>
+                                                </form>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                            <!-- MODEL -->
                         {% endfor %}
                     </tbody>
                 </table>

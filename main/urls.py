@@ -1,16 +1,20 @@
 from django.urls import path
 from .views import (
+    DeleteKollejBitiruvchisi,
+    DeleteMaktabBitiruvchisi,
+    DeleteOTMBitiruvchisi,
     Ish,
     Home,
     Other,
     Resume,
-    SearchAllStudents,
     Table,
     Maktab,
     Kollej,
     KollejD,
     Schools,
     DataAdd,
+    export_exel_search,
+    load_otm,
     OTM_Enter,
     Districts,
     MaktabAdd,
@@ -26,20 +30,23 @@ from .views import (
     ResumeKollej,
     ResumeMaktab,
     UniversitetAdd,
+    SearchAllStudents,
+    load_type_kollej,
     ResumeKollejTable,
     ResumeMaktabTable,
     ResumeUniversitet,
     MaktabNameAddView,
     KollejNameAddView,
+    EditOTMBitiruvchi,
     MahallaNameAddView,
     QiziqishNameAddView,
     ChetTiliNameAddView,
     ImkonyatNameAddView,
+    EditMaktabBitiruvchi,
+    EditKollejBitiruvchi,
     ResumeUniversitetTable,
     UniversitetNameAddView,
     TumanVaShaharNameAddView,
-    load_type_kollej,
-    load_otm,
 )
 urlpatterns = [
 
@@ -49,7 +56,6 @@ urlpatterns = [
     # new 
 
     path("", Home, name="H"),
-    path("search/", SearchAllStudents, name="SEA"),
     path("table/", Table, name="T"),
     path("maktab/", Maktab, name="M"),
     path("kollej/", Kollej, name="K"),
@@ -58,6 +64,7 @@ urlpatterns = [
     path("tuman/<pk>/", Districts, name="D"),
     path("data/new/add/", DataAdd, name="DA"),
     path("tumanlar/all/", AllDistricts, name="AD"),
+    path("search/", SearchAllStudents, name="SEA"),
     path("tumanlar/maktablar/<pk>/", Schools, name="S"),
     path("tumanlar/kollejlar/<pk>/", KollejD, name="KD"),
 # ajax section
@@ -86,8 +93,19 @@ urlpatterns = [
     path("data/new/add/universitet/", UniversitetNameAddView.as_view(), name="UNAV"),
     path("data/new/add/tumanvashahar/", TumanVaShaharNameAddView.as_view(), name="TvSNAV"),
 
-    path("bitiruvchilar/tumanlar/kollej/<pk>/", AllKollejBit, name="AKB"),
-    path("bitiruvchilar/tumanlar/otm/<pk>/", OTM_all_stu, name="AOB"),
     path("bitiruvchilar/resume/<pk>/", Resume, name="RE"),
+    path("bitiruvchilar/tumanlar/otm/<pk>/", OTM_all_stu, name="AOB"),
+    path("bitiruvchilar/tumanlar/kollej/<pk>/", AllKollejBit, name="AKB"),
+
+    # EDIT 
+    path("bitiruvchilar/otm/taxrirlash/<pk>/", EditOTMBitiruvchi.as_view(), name="EOB"),
+    path("bitiruvchilar/otm/delete/<pk>/", DeleteOTMBitiruvchisi.as_view(), name="DOB"),
+    path("bitiruvchilar/maktab/taxrirlash/<pk>/", EditMaktabBitiruvchi.as_view(), name="EMB"),
+    path("bitiruvchilar/kollej/taxrirlash/<pk>/", EditKollejBitiruvchi.as_view(), name="EKB"),
+    path("bitiruvchilar/maktab/delete/<pk>/", DeleteMaktabBitiruvchisi.as_view(), name="DMB"),
+    path("bitiruvchilar/kollej/delete/<pk>/", DeleteKollejBitiruvchisi.as_view(), name="DKB"),
+
+    # EXPORT DATA TO EXEL FILE
+    path('bitiruvchilar/export/searched/data/to/exel/', export_exel_search, name="EES") 
 
 ]

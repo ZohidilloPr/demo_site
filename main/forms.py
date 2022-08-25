@@ -145,15 +145,15 @@ class MaktabForm(forms.ModelForm):
         elif self.instance.pk:
             self.fields['maktab'].queryset = self.instance.tuman.maktab_set.all()
 
-        if 'vil' in self.data:
-            try: 
-                vil_id = int(self.data.get('vil'))
-                print("forms.py ", vil_id)
-                self.fields['otm_name'].queryset = Universitet.objects.filter(viloyat_id=vil_id).all()
-            except (ValueError, TypeError):
-                pass
-        elif self.instance.pk:
-            self.fields['otm_name'].queryset = self.instance.vil.universitet_set.all()
+        # if 'vil' in self.data:
+        #     try: 
+        #         vil_id = int(self.data.get('vil'))
+        #         print("forms.py ", vil_id)
+        #         self.fields['otm_name'].queryset = Universitet.objects.filter(viloyat_id=vil_id).all()
+        #     except (ValueError, TypeError):
+        #         pass
+        # elif self.instance.pk:
+        #     self.fields['otm_name'].queryset = self.instance.vil.universitet_set.all()
 
 
 
@@ -287,15 +287,6 @@ class KollejForm(forms.ModelForm):
                 pass
         elif self.instance.pk:
             self.fields['kollej'].queryset = self.instance.tuman.kollej_set.all()
-
-        if 'type' in self.data:
-            try:
-                tuman_id = int(self.data.get("type"))
-                self.fields['kollej'].queryset = Kollej.objects.filter(tuman_id=tuman_id).all()
-            except (ValueError, TypeError):
-                pass
-        elif self.instance.pk:
-            self.fields['kollej'].queryset = self.instance.typekollej.kollej_set.all()
         
 class UniversitetForm(forms.ModelForm):
     class Meta:

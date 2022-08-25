@@ -1,6 +1,8 @@
-from django.urls import reverse_lazy
+import xlwt
+from datetime import datetime
 from django.contrib import messages
-from django.shortcuts import redirect, render
+from django.urls import reverse_lazy
+from django.shortcuts import redirect, render, HttpResponse
 from django.contrib.messages.views import SuccessMessageMixin
 
 from .models import (
@@ -36,7 +38,9 @@ from .filters import (
 )
 
 from django.views.generic.edit import (
-    CreateView
+    CreateView,
+    UpdateView,
+    DeleteView,
 )
 
 from django.db.models import Q
@@ -70,8 +74,11 @@ def SearchAllStudents(request):
             Q(kollejbitiruvchisi__stu_way__icontains=query) |
             Q(universitetbitiruvchisi__stu_way__icontains=query) 
         ).order_by("f_name")
+        SearchAllStudents.queryset = queryset.values_list('id','f_name', 't_sana', 'jins', 'tuman__name', 'mahalla__name', 'uy', 'phone', 'email', 'imkonyat__name', 'qiziqish__name', 'sport__name', 'chettili__name', 'idea', 'short_f')
+
     else:
-        queryset = Bitiruvchi.objects.all().order_by('f_name')        
+        queryset = Bitiruvchi.objects.all().order_by('f_name')  
+        SearchAllStudents.queryset = queryset.values_list('id','f_name', 't_sana', 'jins', 'tuman', 'mahalla', 'uy', 'phone', 'email', 'imkonyat__name', 'qiziqish__name', 'sport__name', 'chettili__name', 'idea', 'short_f')    
     return render(request, 'pages/search.html', {
         'mkb':mkb,
         'kjb':kjb,
@@ -277,7 +284,7 @@ def ResumeUniversitetTable(request, pk):
 # tables section
 
 def Table(request):
-    all_students = Bitiruvchi.objects.all()
+    all_students = Bitiruvchi.objects.all().order_by('f_name')
     all_student_filter = BitiruvchiFilter(request.GET, queryset=all_students)
     all_students = all_student_filter.qs 
     return render(request, 'index.html', {
@@ -489,4 +496,67 @@ def load_otm(request):
     return render(request, 'loads/load_otm_list.html', {"otm" : otm})
 
 
+# EDIT // DELETE section
+class EditMaktabBitiruvchi(UpdateView, SuccessMessageMixin):
+    model = MaktabBitiruvchisi
+    form_class = MaktabForm
+    template_name = 'forms/edit/maktab.html'
+    success_message = 'Taxrirlash muaffaqiyatli bajarildi!'
+    success_url = reverse_lazy("T")
 
+class EditKollejBitiruvchi(UpdateView, SuccessMessageMixin):
+    model = KollejBitiruvchisi
+    form_class = KollejForm
+    template_name = 'forms/edit/kollej.html'
+    success_message = 'Taxrirlash muaffaqiyatli bajarildi!'
+    success_url = reverse_lazy("T")
+
+
+class EditOTMBitiruvchi(UpdateView, SuccessMessageMixin):
+    form_class = UniversitetForm
+    model = UniversitetBitiruvchisi
+    template_name = 'forms/edit/otm.html'
+    success_message = 'Taxrirlash muaffaqiyatli bajarildi!'
+    success_url = reverse_lazy("T")
+
+class DeleteMaktabBitiruvchisi(DeleteView, SuccessMessageMixin):
+    model = MaktabBitiruvchisi
+    success_message = 'O\'chirish muaffaqiyatli bajarildi!'
+    success_url = reverse_lazy("T")
+
+class DeleteKollejBitiruvchisi(DeleteView, SuccessMessageMixin):
+    model = KollejBitiruvchisi
+    success_message = 'O\'chirish muaffaqiyatli bajarildi!'
+    success_url = reverse_lazy("T")
+
+class DeleteOTMBitiruvchisi(DeleteView, SuccessMessageMixin):
+    model = UniversitetBitiruvchisi
+    success_message = 'O\'chirish muaffaqiyatli bajarildi!'
+    success_url = reverse_lazy("T")
+
+# EXPORT DJANGO FILTER DATA TO EXEL FILE
+def export_exel_search(request):
+    """ SEARCHED DATA EXPORT TO FILE """
+    response = HttpResponse(content_type='application/ms-exel')
+    response['Content-Disposition'] = 'attachment; filename=humans' + str(datetime.now()) + '.xls'
+    wb = xlwt.Workbook(encoding = 'utf-8')
+    ws = wb.add_sheet("humans")
+    row_now = 0
+    font_style = xlwt.XFStyle()
+    font_style.font.bold = True
+
+    colums = ['id', 'f_name', 't_sana', 'jins', 'tuman', 'mahalla', 'uy', 'phone', 'email', 'imkonyat', 'qiziqish', 'sport', 'chettili', 'idea', 'short_f']
+
+    for col_num in range(len(colums)):
+        ws.write(row_now, col_num, colums[col_num], font_style)
+
+    font_style=xlwt.XFStyle()
+    rows = SearchAllStudents.queryset
+
+    for row in rows:
+        row_now += 1 
+        for col_num in range(len(row)):
+            ws.write(row_now, col_num, str(row[col_num]), font_style)
+    wb.save(response)
+
+    return response
