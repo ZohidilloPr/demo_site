@@ -1,3 +1,4 @@
+from import_export.admin import ImportExportModelAdmin
 from django.contrib import admin
 from .models import (
     Vil,
@@ -31,6 +32,10 @@ admin.site.register(TypeKollej)
 admin.site.register(Universitet)
 admin.site.register(DriverLicense)
 admin.site.register(TumanVaShahar)
-admin.site.register(MaktabBitiruvchisi)
+# admin.site.register(MaktabBitiruvchisi)
 admin.site.register(KollejBitiruvchisi)
 admin.site.register(UniversitetBitiruvchisi)
+
+@admin.register(MaktabBitiruvchisi)
+class MaktabAdmin(ImportExportModelAdmin):
+    pass

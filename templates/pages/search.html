@@ -38,8 +38,10 @@
                 <h1>Bu yilgi bitiruvchilar raqamlarda</h1>
                 <canvas id="toshvil"></canvas>
             </div>
+            <div class="text-end py-3">
+                <a class="btn btn-outline-success btn-sm" href="{% url 'EES' %}">Jadvalni yuklab olish</a>
+            </div>
             <div class="table-box">
-                <a href="{% url 'EES' %}">Export data</a>
                 <table class="table">
                     <thead class="border-info">
                         <tr>
@@ -91,11 +93,11 @@
                                     {% endif %}
                                 </td>
                             </tr>
-                        {% empty %}
+                            {% empty %}
                             <tr>
                                 <td colspan="7">Kechirasi Ammo bunday malumot topilmadi</td>
                             </tr>
-                        {% endfor %}
+                            {% endfor %}
                     </tbody>
                 </table>
             </div>

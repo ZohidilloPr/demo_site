@@ -49,6 +49,10 @@
                             {{ mkFil.form.tuman|add_class:"form-select" }}
                             <label for="id_mahalla" class="input-group-text ms-3">Mahalla</label>
                             {{ mkFil.form.mahalla|add_class:"form-select" }}
+                            <label for="id_vil" class="input-group-text ms-3">Viloyat</label>
+                            {{ mkFil.form.vil|add_class:"form-select" }}
+                            <label for="id_universitet" class="input-group-text ms-3">OTM nomi</label>
+                            {{ mkFil.form.universitet|add_class:"form-select" }}
                             <input type="submit" value="Qidirish" class="mx-3 btn btn-outline-dark  btn-sm">
                         </div>
                     </form>
@@ -107,6 +111,22 @@
                     $("#id_mahalla").html(data);
                 },
             });
-        })
+        });
+        $("#id_vil").change(function(){
+            $("#id_universitet").attr("otm-queries-url", "{% url 'ALO' %}");
+            const url = $("#id_universitet").attr("otm-queries-url");
+            const vilID = $(this).val();
+
+            $.ajax({
+                url:url,
+                data:{
+                    'viloyat': vilID,
+                },
+                success: function(data){
+                    // console.log(data, vilID, url)
+                    $("#id_universitet").html(data)
+                }
+            })
+        });
     </script>
 {% endblock %}

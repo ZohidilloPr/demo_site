@@ -55,8 +55,13 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
 
     #global apps
+    'core',
+    'corsheaders',
+    'import_export',
     'widget_tweaks',
     'django_filters',
+    'celery_progress',
+    'django_extensions',
     "django_bootstrap5",
 ]
 
@@ -69,6 +74,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+IMPORT_EXPORT_USE_TRANSACTIONS = True
 
 ROOT_URLCONF = 'config.urls'
 

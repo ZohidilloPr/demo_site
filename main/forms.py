@@ -422,12 +422,6 @@ class MaktabNameForm(forms.ModelForm):
         model = Maktab
         fields = '__all__'
 
-        # widgets = {
-        #     'status': forms.TextInput(attrs={
-        #         'hidden': 'true'
-        #     })
-        # }
-
 class KollejNameForm(forms.ModelForm):
     class Meta:
         model = Kollej
@@ -437,3 +431,6 @@ class UniversitetNameForm(forms.ModelForm):
     class Meta:
         model = Universitet
         fields = '__all__'
+
+class BitiruvchiFilterForm(forms.ModelForm):
+    pass

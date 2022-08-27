@@ -49,7 +49,11 @@
                             {{ mkFil.form.tuman|add_class:"form-select" }}
                             <label for="id_mahalla" class="input-group-text ms-3">Mahalla</label>
                             {{ mkFil.form.mahalla|add_class:"form-select" }}
-                            <label for="id_kollej" class="input-group-text ms-3">Kollej №</label>
+                            <label for="id_type" class="input-group-text ms-3">Professional ta'lim turi</label>
+                            {{ mkFil.form.type|add_class:"form-select" }}
+                            <label for="id_tuman_kj" class="input-group-text ms-3">Hudud nomi</label>
+                            {{ mkFil.form.tuman_kj|add_class:"form-select" }}
+                            <label for="id_kollej" class="input-group-text ms-3">Professional ta'lim №</label>
                             {{ mkFil.form.kollej|add_class:"form-select" }}
                             <input type="submit" value="Qidirish" class="mx-3 btn btn-outline-dark  btn-sm">
                         </div>
@@ -142,7 +146,6 @@
     <script>
         $("#id_tuman").change(function(){
             $("#id_mahalla").attr("mahalla-queries-url", "{% url 'ALM' %}");
-            $("#id_kollej").attr("kollej-queries-url", "{% url 'ALK' %}");
             const url = $("#id_mahalla").attr("mahalla-queries-url");
             const url1 = $("#id_kollej").attr("kollej-queries-url");
             const tumanID = $(this).val()
@@ -164,7 +167,25 @@
                     $("#id_kollej").html(data);
                 },
             });
-        })
+        });
+        $("#id_tuman_kj").change(function(){
+            $("#id_kollej").attr("typekollej-queries-url", "{% url 'ALTK' %}");
+            const url2 = $("#id_kollej").attr("typekollej-queries-url");
+            const typeId = $("#id_type").children("option:selected").val()
+            const tumanId = $(this).val();
+            console.log(typeId)
+            $.ajax({
+                url : url2,     
+                data:{
+                    'tuman_kj':tumanId,
+                    'type':typeId,
+                },
+                success: function(data){
+                    console.log(data, typeId, url2, tumanId)
+                    $("#id_kollej").html(data)
+                }
+            });
+        });
     </script>
 {% endblock %}
 
