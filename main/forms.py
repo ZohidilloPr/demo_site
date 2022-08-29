@@ -3,11 +3,11 @@ from .widget import DatePicker
 from django.urls import reverse_lazy
 
 from .models import (
-    Bitiruvchi,
     Kollej,
     Maktab, 
     Mahalla, 
     Imkonyat, 
+    Bitiruvchi,
     Universitet,
     KollejBitiruvchisi, 
     MaktabBitiruvchisi, 
@@ -56,7 +56,7 @@ class MaktabForm(forms.ModelForm):
             'qiziqish':forms.Select(attrs={
                 'class':'form-control',
             }),
-            'chettili':forms.CheckboxSelectMultiple(),
+            'chettili':forms.SelectMultiple(),
             't_sana': forms.SelectDateWidget(attrs={
                 'id':"datepicker",
                 'class':'form-control'

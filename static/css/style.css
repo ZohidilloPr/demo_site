@@ -365,6 +365,9 @@ thead tr th{
     border-top-left-radius: 8px;
     border-bottom-left-radius: 8px;
 }
+.hidden2{
+    display: none;
+}
 @media only screen and (max-width: 1290px){
     .tumanlar ul {
         display: grid;
@@ -387,5 +390,8 @@ thead tr th{
     }
     .ism{
         font-size: 50px;
+    }
+    .indexFilter{
+        padding: 50px;
     }
 }

@@ -127,25 +127,11 @@
                                             <small class="text-danger">Bu obeyktni o'chirgandan so'ng qayta tiklash imkoni yoq!</small>
                                         </div>
                                         <div class="modal-footer">
-                                            {% if i.maktabbitiruvchisi.maktab %}                                              
-                                                <form action="{% url 'DMB' pk=i.pk %}" method="post">
-                                                    {% csrf_token %}
-                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Bekor qilish</button>
-                                                    <button type="submit" class="btn btn-danger">O'chirib yuborish</button>
-                                                </form>
-                                            {% elif i.kollejbitiruvchisi.kolleJ %}
-                                                <form action="{% url 'DKB' pk=i.pk %}" method="post">
-                                                    {% csrf_token %}
-                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Bekor qilish</button>
-                                                    <button type="submit" class="btn btn-danger">O'chirib yuborish</button>
-                                                </form>
-                                            {% else %}
-                                                <form action="{% url 'DOB' pk=i.pk %}" method="post">
-                                                    {% csrf_token %}
-                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Bekor qilish</button>
-                                                    <button type="submit" class="btn btn-danger">O'chirib yuborish</button>
-                                                </form>
-                                            {% endif %}
+                                            <form action="{% url 'DB' pk=i.pk %}" method="post">
+                                                {% csrf_token %}
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Bekor qilish</button>
+                                                <button type="submit" class="btn btn-danger">O'chirib yuborish</button>
+                                            </form>
                                         </div>
                                     </div>
                                     </div>

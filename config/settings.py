@@ -55,13 +55,9 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
 
     #global apps
-    'core',
-    'corsheaders',
     'import_export',
     'widget_tweaks',
     'django_filters',
-    'celery_progress',
-    'django_extensions',
     "django_bootstrap5",
 ]
 
