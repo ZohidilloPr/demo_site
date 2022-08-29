@@ -1,10 +1,12 @@
 from django.urls import path
 from .views import (
+    DeleteBitiruvchi,
     DeleteKollejBitiruvchisi,
     DeleteMaktabBitiruvchisi,
     DeleteOTMBitiruvchisi,
     Ish,
     Home,
+    MaktabADD,
     Other,
     Resume,
     Table,
@@ -67,6 +69,7 @@ urlpatterns = [
     path("search/", SearchAllStudents, name="SEA"),
     path("tumanlar/maktablar/<pk>/", Schools, name="S"),
     path("tumanlar/kollejlar/<pk>/", KollejD, name="KD"),
+    
 # ajax section
     path("ajax/load/otm/list", load_otm, name="ALO"),
     path("ajax/load/kollej/list", load_kollej, name="ALK"),
@@ -74,7 +77,9 @@ urlpatterns = [
     path("ajax/load/mahalla/list", load_mahalla, name="ALM"),
     path("ajax/load/type/kollej/list", load_type_kollej, name="ALTK"),
 # end ajax section
-    path("bitiruvchi/maktab/new/add/", MaktabAdd, name="MBA"),
+
+    # path("bitiruvchi/maktab/new/add/", MaktabAdd, name="MBA"),
+    path("bitiruvchi/maktab/new/add/", MaktabADD.as_view(), name="MBA"),
     path("tumanlar/universitet/<pk>/", UniversitetB, name="UB"),
     path("tuman/maktab/bitiruvchi/<pk>/", ResumeMaktab, name="RM"),
     path("tuman/kollej/bitiruvchi/<pk>/", ResumeKollej, name="RK"),
@@ -98,6 +103,7 @@ urlpatterns = [
     path("bitiruvchilar/tumanlar/kollej/<pk>/", AllKollejBit, name="AKB"),
 
     # EDIT 
+    path("bitiruvchilar/delete/<pk>/", DeleteBitiruvchi.as_view(), name="DB"),
     path("bitiruvchilar/otm/taxrirlash/<pk>/", EditOTMBitiruvchi.as_view(), name="EOB"),
     path("bitiruvchilar/otm/delete/<pk>/", DeleteOTMBitiruvchisi.as_view(), name="DOB"),
     path("bitiruvchilar/maktab/taxrirlash/<pk>/", EditMaktabBitiruvchi.as_view(), name="EMB"),

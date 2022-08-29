@@ -375,6 +375,14 @@ def MaktabAdd(request):
         'imk':imk,
     })
 
+class MaktabADD(SuccessMessageMixin, CreateView):
+    model = MaktabBitiruvchisi
+    form_class = MaktabForm
+    template_name = 'forms/add/maktabAdd.html'
+    success_url = reverse_lazy("MBA")
+    success_message = 'Maktab muaffaqiyatli qo\'shildi'
+
+
 class KollejAdd(SuccessMessageMixin, CreateView):
     model = KollejBitiruvchisi
     form_class = KollejForm
@@ -537,6 +545,12 @@ class DeleteOTMBitiruvchisi(DeleteView, SuccessMessageMixin):
     model = UniversitetBitiruvchisi
     success_message = 'O\'chirish muaffaqiyatli bajarildi!'
     success_url = reverse_lazy("T")
+
+class DeleteBitiruvchi(DeleteView, SuccessMessageMixin):
+    model = Bitiruvchi
+    success_message = 'O\'chirish muaffaqiyatli bajarildi!'
+    success_url = reverse_lazy("T")
+    
 
 # EXPORT DJANGO FILTER DATA TO EXEL FILE
 

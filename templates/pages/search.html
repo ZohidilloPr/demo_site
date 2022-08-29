@@ -39,7 +39,7 @@
                 <canvas id="toshvil"></canvas>
             </div>
             <div class="text-end py-3">
-                <a class="btn btn-outline-success btn-sm" href="{% url 'EES' %}">Jadvalni yuklab olish</a>
+                <a class="btn btn-outline-success btn-sm" id="exportSearched" type="button" href="">Jadvalni yuklab olish</a>
             </div>
             <div class="table-box">
                 <table class="table">
@@ -50,10 +50,28 @@
                             <th scope="col">
                                 Yashash manzili
                             </th>
+                            <th class="hidden2" scope="col">Uy</th>
+                            <th class="hidden2" scope="col">Telefon raqam</th>
+                            <th class="hidden2" scope="col">E-Pochta</th>
+                            <th class="hidden2" scope="col">Kompyuter bilimlari</th>
+                            <th class="hidden2" scope="col">Qiziqishlari</th>
+                            <th class="hidden2" scope="col">Yoqtirgan sport turi</th>
+                            <th class="hidden2" scope="col">Chet tili</th>
+                            <th class="hidden2" scope="col">Bizsess g'oya</th>
+                            <th class="hidden2" scope="col">Bizsess g'oya xaqida</th>
+                            <th class="hidden2" scope="col">Haydovchilik Guvohnomasi</th>
+                            <th class="hidden2" scope="col">TTMning Turi</th>
+                            <th class="hidden2" scope="col">TTMning manzili</th>
                             <th scope="col">
                                 Tugatayotgan ta'lim muassasasi
                             </th>
                             <th scope="col">Sinf/Mutaxasisligi</th>
+                            <th class="hidden2" scope="col">Maqsadi</th>
+                            <th class="hidden2" scope="col">Topshirgan OTM manzili</th>
+                            <th class="hidden2" scope="col">Topshirgan OTM nomi</th>
+                            <th class="hidden2" scope="col">Topshirgan OTM yonalishi</th>
+                            <th class="hidden2" scope="col">ChetEl OTM nomi</th>
+                            <th class="hidden2" scope="col">Yonalishi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -62,6 +80,58 @@
                                 <td>{{ forloop.counter }}</td>
                                 <td><a href="{% url 'RE' pk=i.pk %}">{{ i.f_name }}</a></td>
                                 <td>{{ i.tuman }} {{ i.mahalla }}</td>
+                                <td class="hidden2">{{ i.uy }}</td>
+                                <td class="hidden2">{{ i.phone }}</td>
+                                <td class="hidden2">{{ i.email }}</td>
+                                <td class="hidden2">
+                                    {% for k in imkonyat.all %}
+                                        {{ k.name }} |   
+                                    {% endfor %}
+                                </td>
+                                <td class="hidden2">{{ i.qiziqish }}</td>
+                                <td class="hidden2">
+                                    {% for s in sport.all %}
+                                        {{ s.name }} |   
+                                    {% endfor %}
+                                </td>
+                                <td class="hidden2">
+                                    {% for ch in chettili.all %}
+                                        {{ ch.name }} |   
+                                    {% endfor %}
+                                </td>
+                                <td class="hidden2">{{ i.idea }}</td>
+                                <td class="hidden2">{{ i.short_f }}</td>
+                                <td class="hidden2">
+                                    {% if i.kollejbitiruvchisi.guvohnoma %}
+                                        {% for g in i.kollejbitiruvchisi.guvohnoma.all %}
+                                            {{ g }} |   
+                                        {% endfor %}
+                                    {% elif i.universitetbitiruvchisi.guvohnoma %}
+                                        {% for u in i.universitetbitiruvchisi.guvohnoma.all %}
+                                            {{ u }} |   
+                                        {% endfor %}
+                                    {% else %}
+                                        Guvohnoma mavjudemas      
+                                    {% endif %}
+                                </td>
+                                <td class="hidden2">
+                                    {% if i.maktabbitiruvchisi %}
+                                        {{ i.maktabbitiruvchisi.maktab.status }}
+                                    {% elif i.kollejbitiruvchisi.kollej %}
+                                        {{ i.kollejbitiruvchisi.kollej.type }}        
+                                    {% else %}
+                                        OTM
+                                    {% endif %}
+                                </td>
+                                <td class="hidden2">
+                                    {% if i.maktabbitiruvchisi %}
+                                        {{ i.maktabbitiruvchisi.tuman_mk }}
+                                    {% elif i.kollejbitiruvchisi %}
+                                        {{ i.kollejbitiruvchisi.tuman_kj }}      
+                                    {% else %}
+                                        {{ i.universitetbitiruvchisi.vil }}
+                                    {% endif %}
+                                </td>
                                 <td>
                                     {% if i.maktabbitiruvchisi %}
                                         {{ i.maktabbitiruvchisi.maktab }}
@@ -92,6 +162,41 @@
                                         malumot kiritilmagan
                                     {% endif %}
                                 </td>
+                                <td class="hidden2">
+                                    {% if i.kollejbitiruvchisi %}
+                                        {{ i.kollejbitiruvchisi.maqsad }}
+                                    {% elif i.universitetbitiruvchisi %}
+                                        {{ i.universitetbitiruvchisi.maqsad }}
+                                    {% else %}
+                                        <td class="hidden2">
+                                            Malumot mavjud emas    
+                                        </td>      
+                                    {% endif %}
+                                </td>
+                                {% if i.maktabbitiruvchisi %}
+                                    <td class="hidden2">{{ i.maktabbitiruvchisi.vil }}</td>
+                                    <td class="hidden2">{{ i.maktabbitiruvchisi.otm_name }}</td>
+                                    <td class="hidden2">{{ i.maktabbitiruvchisi.stu_way_un }}</td>
+                                {% elif i.kollejbitiruvchisi %}          
+                                    <td class="hidden2">{{ i.kollejbitiruvchisi.vil }}</td>
+                                    <td class="hidden2">{{ i.kollejbitiruvchisi.otm_name }}</td>
+                                    <td class="hidden2">{{ i.kollejbitiruvchisi.stu_way_un }}</td>
+                                {% else %}
+                                    <td class="hidden2">
+                                        Malumot mavjud emas    
+                                    </td>    
+                                {% endif %}
+                                {% if i.maktabbitiruvchisi.other_un %}
+                                    <td class="hidden2">{{ i.maktabbitiruvchisi.other_un }}</td>  
+                                    <td class="hidden2">{{ i.maktabbitiruvchisi.stu_way_ch }}</td>
+                                {% elif i.kollejbitiruvchisi.other_un %}  
+                                    <td class="hidden2">{{ i.kollejbitiruvchisi.other_un }}</td>  
+                                    <td class="hidden2">{{ i.kollejbitiruvchisi.stu_way_ch }}</td>
+                                {% else %}
+                                    <td class="hidden2">
+                                        Malumot mavjud emas    
+                                    </td>    
+                                {% endif %}
                             </tr>
                             {% empty %}
                             <tr>
@@ -106,7 +211,19 @@
     </div>
     
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="https://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
     <script>
+        $(document).ready(function(){
+            $("#exportSearched").click(function(){
+                $(".table").table2excel({
+                    exclude: ".noExl",
+                    filename: `searchedDATA--${new Date()}`,
+                    fileext: '.xls',
+                    exclude_links : true,
+                })
+            })
+        });
         const toshvil = document.getElementById("toshvil").getContext("2d");
         const vilChart = new Chart(toshvil, {
             type: 'bar',
