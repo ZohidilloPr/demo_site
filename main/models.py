@@ -140,7 +140,7 @@ class MaktabBitiruvchisi(Bitiruvchi):
     tuman_mk = models.ForeignKey(TumanVaShahar, on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Maktab manzili")
     maktab = models.ForeignKey(Maktab, on_delete=models.CASCADE, verbose_name="Bitirayotgan maktab")
     sinf = models.CharField(max_length=l, choices=sinf, default='9-sinf', verbose_name="Sinf")
-    maqsad = models.CharField(max_length=l, choices=aim, null=True, blank=True, default="Ishlamoqchi", verbose_name="Maqsadi")
+    # maqsad = models.CharField(max_length=l, choices=aim, null=True, blank=True, default="Ishlamoqchi", verbose_name="Maqsadi")
 
     vil = models.ForeignKey(Vil, related_name="mk_vil", on_delete=models.SET_NULL, null=True, blank=True, verbose_name="OTM manzili")
     otm_name = models.ForeignKey(Universitet, on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Topshirmoqchi bo'lgan OTM Nomi")

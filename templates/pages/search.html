@@ -28,9 +28,9 @@
             </div>
         </div>
         <div class="main">
-            <form action="{% url 'SEA' %}" method="get">
+            <form action="{% url 'SEA' %}" id="fsearch" method="get">
                 <div class="input-group mb-3 search-box">
-                    <input type="search" class="search" placeholder="Bitiruvchilarni qidirish" aria-label="Recipient's username" name="searchHome" aria-describedby="button-addon2"> 
+                    <input type="search" class="search" placeholder="Bitiruvchilarni qidirish" aria-label="Recipient's username" id="searchHome" name="searchHome" aria-describedby="button-addon2"> 
                     <button class="btn btn-outline-success" type="submit" id="button-addon2">Qidirish</button>
                 </div>
             </form>
@@ -84,19 +84,25 @@
                                 <td class="hidden2">{{ i.phone }}</td>
                                 <td class="hidden2">{{ i.email }}</td>
                                 <td class="hidden2">
-                                    {% for k in imkonyat.all %}
+                                    {% for k in i.imkonyat.all %}
                                         {{ k.name }} |   
+                                    {% empty %}
+                                        malumotlar kiritilmagan
                                     {% endfor %}
                                 </td>
                                 <td class="hidden2">{{ i.qiziqish }}</td>
                                 <td class="hidden2">
-                                    {% for s in sport.all %}
+                                    {% for s in i.sport.all %}
                                         {{ s.name }} |   
+                                    {% empty %}
+                                        malumotlar mavjudemas
                                     {% endfor %}
                                 </td>
                                 <td class="hidden2">
-                                    {% for ch in chettili.all %}
+                                    {% for ch in i.chettili.all %}
                                         {{ ch.name }} |   
+                                    {% empty %}
+                                        malumotlar mavjudemas
                                     {% endfor %}
                                 </td>
                                 <td class="hidden2">{{ i.idea }}</td>
@@ -124,9 +130,9 @@
                                     {% endif %}
                                 </td>
                                 <td class="hidden2">
-                                    {% if i.maktabbitiruvchisi %}
+                                    {% if i.maktabbitiruvchisi.tuman_mk %}
                                         {{ i.maktabbitiruvchisi.tuman_mk }}
-                                    {% elif i.kollejbitiruvchisi %}
+                                    {% elif i.kollejbitiruvchisi.tuman_kj %}
                                         {{ i.kollejbitiruvchisi.tuman_kj }}      
                                     {% else %}
                                         {{ i.universitetbitiruvchisi.vil }}
@@ -163,14 +169,12 @@
                                     {% endif %}
                                 </td>
                                 <td class="hidden2">
-                                    {% if i.kollejbitiruvchisi %}
+                                    {% if i.kollejbitiruvchisi.maqsad %}
                                         {{ i.kollejbitiruvchisi.maqsad }}
-                                    {% elif i.universitetbitiruvchisi %}
+                                    {% elif i.universitetbitiruvchisi.maqsad %}
                                         {{ i.universitetbitiruvchisi.maqsad }}
                                     {% else %}
-                                        <td class="hidden2">
-                                            Malumot mavjud emas    
-                                        </td>      
+                                        Malumot mavjud emas          
                                     {% endif %}
                                 </td>
                                 {% if i.maktabbitiruvchisi %}
@@ -214,13 +218,17 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
     <script src="https://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
     <script>
+        // let searchH = $("#searchHome").keyup(function(e){});
+        // console.log(searchH)
         $(document).ready(function(){
             $("#exportSearched").click(function(){
                 $(".table").table2excel({
                     exclude: ".noExl",
-                    filename: `searchedDATA--${new Date()}`,
+                    name: "Qidirilgan malumotlar",
+                    filename: `Qidirilgan_malumot---${new Date()}`,
                     fileext: '.xls',
                     exclude_links : true,
+                    sheetName: "Open Data",
                 })
             })
         });
