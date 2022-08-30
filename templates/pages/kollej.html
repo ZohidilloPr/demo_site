@@ -63,64 +63,16 @@
                         <table class="table">
                             <thead class="border-info">
                                 <tr>
-                                <th>#</th>
-                                <th>F.I.SH</th>
-                                <th>
-                                    Tuman & Shaxar
-                                        <!-- <div class="btn-group">
-                                            <button class="btn btn-light btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-
-                                            </button>
-                                            <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="#">Nurafshon sh</a></li>
-                                            </ul>
-                                        </div> -->
+                                    <th>#</th>
+                                    <th>F.I.SH</th>
+                                    <th>
+                                        Yashash manzili
                                     </th>
                                     <th>
-                                        Mahalalar
-                                        <!-- <div class="btn-group">
-                                            <button class="btn btn-light btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-
-                                            </button>
-                                            <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="#">Bobur MFY</a></li>
-                                            </ul>
-                                        </div> -->
+                                        Profisanal Ta'lim                                        
                                     </th>
-                                    <!-- <th>
-                                        <div class="btn-group">
-                                            <button class="btn btn-light btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                            Maktablar №
-                                            </button>
-                                            <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="#">26-maktab</a></li>
-                                            </ul>
-                                        </div>
-                                    </th> -->
-                                    <th>
-                                        Profisanal Ta'lim
-                                        <!-- <div class="btn-group">
-                                            <button class="btn btn-light btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                            Kollej №
-                                            </button>
-                                            <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="#">Qibray moliya-iqtisodiyot kolleji</a></li>
-                                            </ul>
-                                        </div> -->
-                                    </th>
-                                    <!-- <th>
-                                        <div class="btn-group">
-                                            <button class="btn btn-light btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                            Topshirgan OTM nomi
-                                            </button>
-                                            <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="#">O’zbekiston milliy universiteti</a></li>
-                                            </ul>
-                                        </div>
-                                    </th>
-                                    <th>Passport Id</th> -->
-                                    <th>Telefon raqam</th>
-                                    <th>Kun/Oy/Yil</th>
+                                    <th>Mutaxasislig</th>
+                                    <th>Taxrirlash</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -128,11 +80,11 @@
                                     <tr>
                                         <td>{{ forloop.counter }}</td>
                                         <td><a href="{% url 'RKT' pk=i.pk %}">{{ i.f_name }}</a></td>
-                                        <td>{{ i.tuman }}</td>
-                                        <td>{{ i.mahalla }}</td>
+                                        <td>{{ i.tuman }} {{ i.mahalla }}</td>
+                                        
                                         <td>{{ i.kolleJ }}</td>
-                                        <td>(+998) {{ i.phone }}</td>
-                                        <td>{{ i.t_sana }}</td>
+                                        <td>{{ i.stu_way }}</td>
+                                        <td></td>
                                     </tr>
                                 {% endfor %}
                             </tbody>
@@ -143,7 +95,20 @@
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
     <script>
+        $(document).ready(function(){
+            $("#KollejExport").click(function(){
+                $(".table").table2excel({
+                    exclude: ".noExl",
+                    name: "filterlangan barcha talabalar",
+                    filename: `Professional_Ta'lim__bitiruvchilari__ro'yhati__${new Date()}`,
+                    fileext: ".xlsx",
+                    exclude_links: true,
+                    sheetName: "Open Data "
+                });
+            });
+        });
         $("#id_tuman").change(function(){
             $("#id_mahalla").attr("mahalla-queries-url", "{% url 'ALM' %}");
             const url = $("#id_mahalla").attr("mahalla-queries-url");

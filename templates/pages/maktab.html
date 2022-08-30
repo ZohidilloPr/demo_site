@@ -12,9 +12,6 @@
                 <nav class="navbar navbar-expand-lg my-4 bg-light">
                     <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav w-100 justify-content-center top-nav">
-                        <li class="nav-item">
-                            <a href="{% url 'H' %}" class="btn btn-outline-primary">Diagrammada ko'rish</a>
-                        </li>
                         <li class="nav-item ">
                             <a href="{% url 'T' %}" class="nav-link ">Hammasi</a>
                         </li>
@@ -30,14 +27,12 @@
                         <li class="nav-item">
                             <a href="{% url 'E' %}" class="nav-link">OTMga topshirganlar</a>
                         </li>
-                        <!-- <li class="nav-item">
-                            <a href="{% url 'I' %}" class="nav-link">Ish bilan taminlanganlar</a>
-                        </li> -->
-                        <!-- <li class="nav-item">
-                            <a href="{% url 'O' %}" class="nav-link">
-                                Boshqalar
-                            </a>
-                        </li> -->
+                        <li class="nav-item">
+                            <a href="{% url 'H' %}" class="btn btn-outline-success">Diagrammada ko'rish</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="btn btn-outline-success" id="MaktabExport" type="button" href="">Jadvalni yuklab olish</a>
+                        </li>
                     </ul>
                     </div>
                 </nav>
@@ -52,11 +47,26 @@
                                     <th scope="col">
                                         Yashash manzili
                                     </th>
+                                    <th class="hidden2" scope="col">Uy</th>
+                                    <th class="hidden2" scope="col">Telefon raqam</th>
+                                    <th class="hidden2" scope="col">E-Pochta</th>
+                                    <th class="hidden2" scope="col">Kompyuter bilimlari</th>
+                                    <th class="hidden2" scope="col">Qiziqishlari</th>
+                                    <th class="hidden2" scope="col">Yoqtirgan sport turi</th>
+                                    <th class="hidden2" scope="col">Chet tili</th>
+                                    <th class="hidden2" scope="col">Bizsess g'oya</th>
+                                    <th class="hidden2" scope="col">Bizsess g'oya xaqida</th>
+                                    <th class="hidden2" scope="col">Maktab manzili</th>
                                     <th scope="col">
                                         Maktab №
                                     </th>
                                     <th scope="col">Sinf №</th>
-                                    <th scope="col">Telefon raqam</th>
+                                    <th class="noExl">Taxrirlash</th>
+                                    <th class="hidden2" scope="col">Topshirgan OTM manzili</th>
+                                    <th class="hidden2" scope="col">Topshirgan OTM nomi</th>
+                                    <th class="hidden2" scope="col">Topshirgan OTM yonalishi</th>
+                                    <th class="hidden2" scope="col">ChetEl OTM nomi</th>
+                                    <th class="hidden2" scope="col">Yonalishi</th>
                                 </tr>
                             </thead>
                         </form>
@@ -64,11 +74,76 @@
                             {% for i in mk %}
                                 <tr>
                                     <td>{{ forloop.counter }}</td>
-                                    <td><a href="{% url 'RMT' pk=i.pk %}">{{ i.f_name }}</a></td>
+                                    <td><a href="{% url 'RE' pk=i.pk %}">{{ i.f_name }}</a></td>
                                     <td>{{ i.tuman }} {{ i.mahalla }}</td>
+                                    <td class="hidden2">{{ i.uy }}</td>
+                                    <td class="hidden2">{{ i.phone }}</td>
+                                    <td class="hidden2">{{ i.email }}</td>
+                                    <td class="hidden2">
+                                        {% for k in i.imkonyat.all %}
+                                            {{ k.name }} |   
+                                        {% empty %}
+                                            malumotlar kiritilmagan
+                                        {% endfor %}
+                                    </td>
+                                    <td class="hidden2">{{ i.qiziqish }}</td>
+                                    <td class="hidden2">
+                                        {% for s in i.sport.all %}
+                                            {{ s.name }} |   
+                                        {% empty %}
+                                            malumotlar mavjudemas
+                                        {% endfor %}
+                                    </td>
+                                    <td class="hidden2">
+                                        {% for ch in i.chettili.all %}
+                                            {{ ch.name }} |   
+                                        {% empty %}
+                                            malumotlar mavjudemas
+                                        {% endfor %}
+                                    </td>
+                                    <td class="hidden2">{{ i.idea }}</td>
+                                    <td class="hidden2">{{ i.short_f }}</td>
+                                    <td class="hidden2">{{ i.tuman_mk }}</td>
                                     <td>{{ i.maktab }}</td>
                                     <td>{{ i.sinf }}</td>
-                                    <td>{{ i.phone }}</td>
+                                    <td class="hidden2">{{ i.vil }}</td>
+                                    <td class="hidden2">{{ i.otm_name }}</td>
+                                    <td class="hidden2">{{ i.stu_way_un }}</td>
+                                    <td class="hidden2">{{ i.other_un }}</td>
+                                    <td class="hidden2">{{ i.stu_way_ch }}</td>
+                                    <td class="noExl">
+                                        <a href="{% url 'EMB' pk=i.pk %}" class="btn btn-primary btn-sm">Taxrirlash</a>
+                                        <a href="" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{ forloop.counter }}">O'chirish</a>
+                                    </td>
+                                </tr>
+
+                            <!-- START MODEL -->  
+                                <div class="modal fade" id="staticBackdrop{{forloop.counter}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                        <h5 class="modal-title" id="staticBackdropLabel">"{{ i }}"</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Shu obeyktni rostan ham o'chirishni xoxlaysizmi ?
+                                            <br>
+                                            <small class="text-danger">Bu obeyktni o'chirgandan so'ng qayta tiklash imkoni yoq!</small>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <form action="{% url 'DB' pk=i.pk %}" method="post">
+                                                {% csrf_token %}
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Bekor qilish</button>
+                                                <button type="submit" class="btn btn-danger">O'chirib yuborish</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                            <!-- END MODEL -->
+                            {% empty %}
+                                <tr class="text-center">
+                                    <td colspan="6">Afsuski siz qidirgan malumotlar topilmadi</td>
                                 </tr>
                             {% endfor %}
                         </tbody>
@@ -79,7 +154,20 @@
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
     <script>
+        $(document).ready(function(){
+            $("#MaktabExport").click(function(){
+                $(".table").table2excel({
+                    exclude: ".noExl",
+                    name: "filterlangan barcha talabalar",
+                    filename: `Maktab__bitiruvchilari__ro'yhati__${new Date()}`,
+                    fileext: ".xlsx",
+                    exclude_links: true,
+                    sheetName: "Open Data"
+                });
+            });
+        });
         $("#id_tuman").change(function(){
             $("#id_maktab").attr("maktab-queries-url", "{% url 'ALMa' %}")
             $("#id_mahalla").attr("mahalla-queries-url", "{% url 'ALM' %}")

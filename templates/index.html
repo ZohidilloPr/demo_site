@@ -13,23 +13,26 @@
                 <nav class="navbar navbar-expand-lg my-4 bg-light">
                     <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav w-100 justify-content-center top-nav">
-                        <li class="nav-item">
-                            <a href="{% url 'H' %}" class="btn btn-outline-primary">Diagrammada ko'rish</a>
-                        </li>
                         <li class="nav-item active-li">
                             <a href="{% url 'T' %}" class="nav-link active">Hammasi</a>
                         </li>
                         <li class="nav-item">
-                        <a class="nav-link" href="{% url 'M' %}">Maktab</a>
+                            <a class="nav-link" href="{% url 'M' %}">Maktab</a>
                         </li>
                         <li class="nav-item">
-                        <a class="nav-link" href="{% url 'K' %}">Professional ta'lim</a>
+                            <a class="nav-link" href="{% url 'K' %}">Professional ta'lim</a>
                         </li>
                         <li class="nav-item">
-                        <a class="nav-link" href="{% url 'F' %}">OTM Bitiruvchilari</a>
+                            <a class="nav-link" href="{% url 'F' %}">OTM Bitiruvchilari</a>
                         </li>
                         <li class="nav-item">
-                        <a href="{% url 'E' %}" class="nav-link">OTMga topshirganlar</a>
+                            <a href="{% url 'E' %}" class="nav-link">OTMga topshirganlar</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'H' %}" class="btn btn-outline-success">Diagrammada ko'rish</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="btn btn-outline-success" id="indexExport" type="button" href="">Jadvalni yuklab olish</a>
                         </li>
                     </ul>
                     </div>
@@ -61,27 +64,122 @@
                 </div>
             <div class="table-box">
                 <table class="table"> 
-                    {% include "widgets/table_header.html" %}
+                    <thead class="border-info">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">F.I.SH</th>
+                            <th scope="col">
+                                Yashash manzili
+                            </th>
+                            <th class="hidden2" scope="col">Uy</th>
+                            <th class="hidden2" scope="col">Telefon raqam</th>
+                            <th class="hidden2" scope="col">E-Pochta</th>
+                            <th class="hidden2" scope="col">Kompyuter bilimlari</th>
+                            <th class="hidden2" scope="col">Qiziqishlari</th>
+                            <th class="hidden2" scope="col">Yoqtirgan sport turi</th>
+                            <th class="hidden2" scope="col">Chet tili</th>
+                            <th class="hidden2" scope="col">Bizsess g'oya</th>
+                            <th class="hidden2" scope="col">Bizsess g'oya xaqida</th>
+                            <th class="hidden2" scope="col">Haydovchilik Guvohnomasi</th>
+                            <th class="hidden2" scope="col">TTMning Turi</th>
+                            <th class="hidden2" scope="col">TTMning manzili</th>
+                            <th scope="col">
+                                Tugatayotgan ta'lim muassasasi
+                            </th>
+                            <th scope="col">Sinf/Mutaxasisligi</th>
+                            <th class="noExl">Taxrirlash</th>
+                            <th class="hidden2" scope="col">Maqsadi</th>
+                            <th class="hidden2" scope="col">Topshirgan OTM manzili</th>
+                            <th class="hidden2" scope="col">Topshirgan OTM nomi</th>
+                            <th class="hidden2" scope="col">Topshirgan OTM yonalishi</th>
+                            <th class="hidden2" scope="col">ChetEl OTM nomi</th>
+                            <th class="hidden2" scope="col">Yonalishi</th>
+                        </tr>
+                    </thead>
                     <tbody>
                         {% for i in all_students %}
                             <tr>
                                 <td>{{ forloop.counter }}</td>
                                 <td><a href="{% url 'RE' pk=i.pk %}">{{ i.f_name }}</a></td>
                                 <td>{{ i.tuman }} {{ i.mahalla }}</td>
+                                <td class="hidden2">{{ i.uy }}</td>
+                                <td class="hidden2">{{ i.phone }}</td>
+                                <td class="hidden2">{{ i.email }}</td>
+                                <td class="hidden2">
+                                    {% for k in i.imkonyat.all %}
+                                        {{ k.name }} |   
+                                    {% empty %}
+                                        malumotlar kiritilmagan
+                                    {% endfor %}
+                                </td>
+                                <td class="hidden2">{{ i.qiziqish }}</td>
+                                <td class="hidden2">
+                                    {% for s in i.sport.all %}
+                                        {{ s.name }} |   
+                                    {% empty %}
+                                        malumotlar mavjudemas
+                                    {% endfor %}
+                                </td>
+                                <td class="hidden2">
+                                    {% for ch in i.chettili.all %}
+                                        {{ ch.name }} |   
+                                    {% empty %}
+                                        malumotlar mavjudemas
+                                    {% endfor %}
+                                </td>
+                                <td class="hidden2">{{ i.idea }}</td>
+                                <td class="hidden2">{{ i.short_f }}</td>
+                                <td class="hidden2">
+                                    {% if i.kollejbitiruvchisi.guvohnoma %}
+                                        {% for g in i.kollejbitiruvchisi.guvohnoma.all %}
+                                            {{ g }} |   
+                                        {% endfor %}
+                                    {% elif i.universitetbitiruvchisi.guvohnoma %}
+                                        {% for u in i.universitetbitiruvchisi.guvohnoma.all %}
+                                            {{ u }} |   
+                                        {% endfor %}
+                                    {% else %}
+                                        Guvohnoma mavjudemas      
+                                    {% endif %}
+                                </td>
+                                <td class="hidden2">
+                                    {% if i.maktabbitiruvchisi.maktab %}
+                                        {{ i.maktabbitiruvchisi.maktab.status }}
+                                    {% elif i.kollejbitiruvchisi.kollej %}
+                                        {{ i.kollejbitiruvchisi.kollej.type }}        
+                                    {% else %}
+                                        OTM
+                                    {% endif %}
+                                </td>
+                                <td class="hidden2">
+                                    {% if i.maktabbitiruvchisi.tuman_mk %}
+                                        {{ i.maktabbitiruvchisi.tuman_mk }}
+                                    {% elif i.kollejbitiruvchisi.tuman_kj %}
+                                        {{ i.kollejbitiruvchisi.tuman_kj }}      
+                                    {% else %}
+                                        {{ i.universitetbitiruvchisi.vil }}
+                                    {% endif %}
+                                </td>
                                 {% if i.maktabbitiruvchisi.maktab %}
                                     <td>{{ i.maktabbitiruvchisi.maktab }}</td>
                                     <td>{{ i.maktabbitiruvchisi.sinf }}</td>
+<<<<<<< HEAD
                                     <td class="">
                                         <a href="{% url 'EMB' pk=i.pk %}" class="btn btn-primary btn-sm">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
                                             <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
                                             <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
                                           </svg></a>
+=======
+                                    <td class="noExl">
+                                        <a href="{% url 'EMB' pk=i.pk %}" class="btn btn-primary btn-sm">Taxrirlash</a>
+>>>>>>> 2c5d55b6c7df48c4ed0f0ae89b92d42207428332
                                         <a href="" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{forloop.counter}}">O'chirish</a>
                                     </td>
                                 {% elif i.kollejbitiruvchisi.kollej %}
                                     <td>{{ i.kollejbitiruvchisi.kollej }}</td>
                                     <td>{{ i.kollejbitiruvchisi.stu_way }}</td>
+<<<<<<< HEAD
                                     <td class="">
                                         <a href="{% url 'EKB' pk=i.pk %}" class="btn btn-primary btn-sm">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
@@ -89,11 +187,16 @@
                                                 <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
                                               </svg>    
                                         </a>
+=======
+                                    <td class="noExl">
+                                        <a href="{% url 'EKB' pk=i.pk %}" class="btn btn-primary btn-sm">Taxrirlash</a>
+>>>>>>> 2c5d55b6c7df48c4ed0f0ae89b92d42207428332
                                         <a href="" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{forloop.counter}}">O'chirish</a>
                                     </td>
                                 {% elif i.kollejbitiruvchisi.kolleJ %}
                                     <td>{{ i.kollejbitiruvchisi.kolleJ }}</td>
                                     <td>{{ i.kollejbitiruvchisi.stu_way }}</td>
+<<<<<<< HEAD
                                     <td class="">
                                         <a href="{% url 'EKB' pk=i.pk %}" class="btn btn-primary btn-sm">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
@@ -101,11 +204,16 @@
                                                 <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
                                               </svg>    
                                         </a>
+=======
+                                    <td class="noExl">
+                                        <a href="{% url 'EKB' pk=i.pk %}" class="btn btn-primary btn-sm">Taxrirlash</a>
+>>>>>>> 2c5d55b6c7df48c4ed0f0ae89b92d42207428332
                                         <a href="" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{forloop.counter}}">O'chirish</a>
                                     </td>
                                 {% elif i.universitetbitiruvchisi.universitet %}
                                     <td>{{ i.universitetbitiruvchisi.universitet }}</td>  
                                     <td>{{ i.universitetbitiruvchisi.stu_way }}</td>  
+<<<<<<< HEAD
                                     <td class="">
                                         <a href="{% url 'EOB' pk=i.pk %}" class="btn btn-primary btn-sm">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
@@ -113,11 +221,16 @@
                                                 <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
                                               </svg>
                                         </a>
+=======
+                                    <td class="noExl">
+                                        <a href="{% url 'EOB' pk=i.pk %}" class="btn btn-primary btn-sm">Taxrirlash</a>
+>>>>>>> 2c5d55b6c7df48c4ed0f0ae89b92d42207428332
                                         <a href="" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{forloop.counter}}">O'chirish</a>
                                     </td>
                                 {% elif i.universitetbitiruvchisi.universiteT %}
                                     <td>{{ i.universitetbitiruvchisi.universiteT }}</td>  
                                     <td>{{ i.universitetbitiruvchisi.stu_way }}</td>
+<<<<<<< HEAD
                                     <td class="">
                                         <a href="{% url 'EOB' pk=i.pk %}" class="btn btn-primary btn-sm">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
@@ -125,11 +238,16 @@
                                                 <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
                                               </svg>
                                         </a>
+=======
+                                    <td class="noExl">
+                                        <a href="{% url 'EOB' pk=i.pk %}" class="btn btn-primary btn-sm">Taxrirlash</a>
+>>>>>>> 2c5d55b6c7df48c4ed0f0ae89b92d42207428332
                                         <a href="   " class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{forloop.counter}}">O'chirish</a>
                                     </td>
                                 {% else %}
                                     <td>{{ i.universitetbitiruvchisi.other_un }}</td>  
                                     <td>{{ i.universitetbitiruvchisi.stu_way_ch }}</td>
+<<<<<<< HEAD
                                     <td class="{% url 'DKB' pk=i.pk %}">
                                         <a href="{% url 'EOB' pk=i.pk %}" class="btn btn-primary btn-sm">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
@@ -137,8 +255,45 @@
                                                 <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
                                               </svg>
                                         </a>
+=======
+                                    <td class="noExl">
+                                        <a href="{% url 'EOB' pk=i.pk %}" class="btn btn-primary btn-sm">Taxrirlash</a>
+>>>>>>> 2c5d55b6c7df48c4ed0f0ae89b92d42207428332
                                         <a href="" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{forloop.counter}}">O'chirish</a>
                                     </td>
+                                {% endif %}
+                                <td class="hidden2">
+                                    {% if i.kollejbitiruvchisi.maqsad %}
+                                        {{ i.kollejbitiruvchisi.maqsad }}
+                                    {% elif i.universitetbitiruvchisi.maqsad %}
+                                        {{ i.universitetbitiruvchisi.maqsad }}
+                                    {% else %}
+                                        Malumot mavjud emas          
+                                    {% endif %}
+                                </td>
+                                {% if i.maktabbitiruvchisi %}
+                                    <td class="hidden2">{{ i.maktabbitiruvchisi.vil }}</td>
+                                    <td class="hidden2">{{ i.maktabbitiruvchisi.otm_name }}</td>
+                                    <td class="hidden2">{{ i.maktabbitiruvchisi.stu_way_un }}</td>
+                                {% elif i.kollejbitiruvchisi %}          
+                                    <td class="hidden2">{{ i.kollejbitiruvchisi.vil }}</td>
+                                    <td class="hidden2">{{ i.kollejbitiruvchisi.otm_name }}</td>
+                                    <td class="hidden2">{{ i.kollejbitiruvchisi.stu_way_un }}</td>
+                                {% else %}
+                                    <td class="hidden2">
+                                        Malumot mavjud emas    
+                                    </td>    
+                                {% endif %}
+                                {% if i.maktabbitiruvchisi.other_un %}
+                                    <td class="hidden2">{{ i.maktabbitiruvchisi.other_un }}</td>  
+                                    <td class="hidden2">{{ i.maktabbitiruvchisi.stu_way_ch }}</td>
+                                {% elif i.kollejbitiruvchisi.other_un %}  
+                                    <td class="hidden2">{{ i.kollejbitiruvchisi.other_un }}</td>  
+                                    <td class="hidden2">{{ i.kollejbitiruvchisi.stu_way_ch }}</td>
+                                {% else %}
+                                    <td class="hidden2">
+                                        Malumot mavjud emas    
+                                    </td>    
                                 {% endif %}
                             </tr>
                             <!-- MODEL -->  
@@ -166,6 +321,10 @@
                                     </div>
                                 </div>
                             <!-- MODEL -->
+                        {% empty %}
+                            <tr class="text-center">
+                                <td colspan="6">Afsuski siz qidirgan malumotlar topilmadi</td>
+                            </tr>
                         {% endfor %}
                     </tbody>
                 </table>
@@ -174,7 +333,20 @@
     </div>
     </div> 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
     <script>
+        $(document).ready(function(){
+            $("#indexExport").click(function(){
+                $(".table").table2excel({
+                    exclude: ".noExl",
+                    name: "filterlangan barcha talabalar",
+                    filename: `Talabalar__ro'yhati---${new Date()}`,
+                    fileext: ".xlsx",
+                    exclude_links: true,
+                    sheetName: "Open Data"
+                });
+            });
+        });
         $("#id_tuman").change(function(){
             $("#id_maktabbitiruvchisi__maktab").attr("maktab-queries-url", "{% url 'ALMa' %}")
             $("#id_mahalla").attr("mahalla-queries-url", "{% url 'ALM' %}")
