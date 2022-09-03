@@ -1,5 +1,3 @@
-from xml.dom.minicompat import EmptyNodeList
-import xlwt
 from datetime import datetime
 from django.contrib import messages
 from django.urls import reverse_lazy
@@ -327,6 +325,7 @@ def OTM_Finish(request):
 
 def OTM_Enter(request):
     all_graduents = Bitiruvchi.objects.all()
+
     return render(request, "pages/otm_topshirganlar.html", context={
         'all_list':all_graduents,
     })
@@ -363,7 +362,7 @@ def MaktabAdd(request):
         "form":form,
         'imk':imk,
     })
-
+ 
 class MaktabADD(SuccessMessageMixin, CreateView):
     model = MaktabBitiruvchisi
     form_class = MaktabForm

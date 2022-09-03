@@ -56,17 +56,19 @@
                         </thead>
                         <tbody>
                             {% for i in all_list %}
-                                {% if i.maktabbitiruvchisi.otm_name != None and i.kollejbitiruvchisi.otm_name != None %}
+                                {% if i.maktabbitiruvchisi.otm_name == None or i.kollejbitiruvchisi.otm_name == None%}
+                                
+                                {% elif i.universitetbitiruvchisi %}    
+                                
+                                {% else %}
                                     <tr>
                                         <td>{{ forloop.counter }}</td>
-                                        <td><a href="{% url 'RMT' pk=i.pk %}">{{i.f_name}}</a></td>
+                                        <td><a href="{% url 'RE' pk=i.pk %}">{{i.f_name}}</a></td>
                                         <td>{{ i.tuman }} {{ i.mahalla }}</td>
-                                        <td>{{ i.maktabbitiruvchisi.maktab }} {{ i.kollejbitiruvchisi.kollej }}</td>
+                                        <td>{{ i.maktabbitiruvchisi.maktab }} {{ i.universitetbitiruvchisi.universitet }} {{ i.kollejbitiruvchisi.kollej }}</td>
                                         <td>{{ i.kollejbitiruvchisi.otm_name }}{{ i.maktabbitiruvchisi.otm_name }}</td>
                                         <td>{{ i.t_sana }}</td>
                                     </tr>
-                                {% else %}
-                                    123
                                 {% endif %}
                             {% endfor %}
                         </tbody>

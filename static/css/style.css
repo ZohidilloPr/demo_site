@@ -19,19 +19,6 @@ a{
 .top-nav li{
     margin-right: 25px;
 }
-/* .top-nav li a:hover, .active-nav{
-    color: #3F4C5C;
-    text-decoration: underline;
-} */
-.top-nav li:nth-child(1) a{
-    color: darkcyan;
-    border-color: darkcyan;
-}
-.top-nav li:nth-child(1) a:hover{
-    color: white;
-    text-decoration: none;
-    background-color: darkcyan;
-}
 .table-box{
     height: 618px;
     overflow-x: hidden;

@@ -12,7 +12,7 @@ from .models import (
     KollejBitiruvchisi, 
     MaktabBitiruvchisi, 
     UniversitetBitiruvchisi,
-)
+) 
 
 imk = Imkonyat.objects.all()
 
