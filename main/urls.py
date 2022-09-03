@@ -37,7 +37,6 @@ from .views import (
     ResumeMaktabTable,
     ResumeUniversitet,
     MaktabNameAddView,
-    export_exel_search,
     KollejNameAddView,
     EditOTMBitiruvchi,
     MahallaNameAddView,
@@ -111,7 +110,5 @@ urlpatterns = [
     path("bitiruvchilar/maktab/delete/<pk>/", DeleteMaktabBitiruvchisi.as_view(), name="DMB"),
     path("bitiruvchilar/kollej/delete/<pk>/", DeleteKollejBitiruvchisi.as_view(), name="DKB"),
 
-    # EXPORT DATA TO EXEL FILE
-    path('bitiruvchilar/export/searched/data/to/exel/', export_exel_search, name="EES") 
 
 ]

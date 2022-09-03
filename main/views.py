@@ -1,3 +1,4 @@
+from xml.dom.minicompat import EmptyNodeList
 import xlwt
 from datetime import datetime
 from django.contrib import messages
@@ -325,21 +326,9 @@ def OTM_Finish(request):
 
 
 def OTM_Enter(request):
-    mk = MaktabBitiruvchisi.objects.all()
-    kj = KollejBitiruvchisi.objects.all()
-    all_list = []
-    for i in mk:
-        if not i.univer_sity:
-            pass
-        else:
-            all_list.append(i)
-    for i in kj:
-        if not i.univer_sity:
-            pass
-        else:
-            all_list.append(i)
+    all_graduents = Bitiruvchi.objects.all()
     return render(request, "pages/otm_topshirganlar.html", context={
-        'all_list':all_list,
+        'all_list':all_graduents,
     })
     
 def AllDistricts(request):
@@ -551,59 +540,3 @@ class DeleteBitiruvchi(DeleteView, SuccessMessageMixin):
     success_message = 'O\'chirish muaffaqiyatli bajarildi!'
     success_url = reverse_lazy("T")
     
-
-# EXPORT DJANGO FILTER DATA TO EXEL FILE
-
-def export_exel_search(request):
-    """ SEARCHED DATA EXPORT TO FILE """
-    response = HttpResponse(content_type='application/ms-exel')
-    response['Content-Disposition'] = 'attachment; filename=Qidililgan_malumot' + str(datetime.now()) + '.xls'
-    wb = xlwt.Workbook(encoding = 'utf-8')
-    ws = wb.add_sheet("SEARCHED_DATA")
-    row_now = 0
-    font_style = xlwt.XFStyle()
-    font_style.font.bold = True
-
-    colums = ['id', 'f_name', 't_sana', 'jins', 'tuman', 'mahalla', \
-    'uy', 'phone', 'email', 'imkonyat', 'qiziqish', 'sport', 'chettili', 'idea', 'short_f', \
-    'maktab №', 'sinf', 'kollej №', 'mutaxasisligi', 'OTM nomi', 'mutaxasisligi']
-
-    for col_num in range(len(colums)):
-        ws.write(row_now, col_num, colums[col_num], font_style)
-
-    font_style=xlwt.XFStyle()
-    rows = SearchAllStudents.queryset
-
-    for row in rows:
-        row_now += 1 
-        for col_num in range(len(row)):
-            ws.write(row_now, col_num, str(row[col_num]), font_style)
-    wb.save(response)
-
-    return response
-
-def export_exel_tuman(request):
-    """ DISTRICT DATA EXPORT TO FILE """
-    response = HttpResponse(content_type='application/ms-exel')
-    response['Content-Disposition'] = 'attachment; filename=humans' + str(datetime.now()) + '.xls'
-    wb = xlwt.Workbook(encoding = 'utf-8')
-    ws = wb.add_sheet("humans")
-    row_now = 0
-    font_style = xlwt.XFStyle()
-    font_style.font.bold = True
-
-    colums = ['id', 'f_name', 't_sana', 'jins', 'tuman', 'mahalla', 'uy', 'phone', 'email', 'imkonyat', 'qiziqish', 'sport', 'chettili', 'idea', 'short_f',]
-
-    for col_num in range(len(colums)):
-        ws.write(row_now, col_num, colums[col_num], font_style)
-
-    font_style=xlwt.XFStyle()
-    rows = SearchAllStudents.queryset
-
-    for row in rows:
-        row_now += 1 
-        for col_num in range(len(row)):
-            ws.write(row_now, col_num, str(row[col_num]), font_style)
-    wb.save(response)
-
-    return response

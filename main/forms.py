@@ -349,7 +349,10 @@ class UniversitetForm(forms.ModelForm):
             }),
             'guvohnoma':forms.SelectMultiple(attrs={
                 'class':'form-select'
-            })
+            }),
+            'img': forms.FileInput(attrs={
+                'display':"none"
+            }),
         }
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

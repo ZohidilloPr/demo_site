@@ -12,9 +12,6 @@
                 <nav class="navbar navbar-expand-lg my-4 bg-light">
                     <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav w-100 justify-content-center top-nav">
-                        <li class="nav-item">
-                            <a href="{% url 'H' %}" class="btn btn-outline-primary">Diagrammada ko'rish</a>
-                        </li>
                         <li class="nav-item ">
                             <a href="{% url 'T' %}" class="nav-link ">Hammasi</a>
                         </li>
@@ -30,14 +27,12 @@
                         <li class="nav-item active-li">
                         <a href="{% url 'E' %}" class="nav-link active">OTMga topshirganlar</a>
                         </li>
-                        <!-- <li class="nav-item">
-                            <a href="{% url 'I' %}" class="nav-link">Ish bilan taminlanganlar</a>
-                        </li> -->
-                        <!-- <li class="nav-item">
-                            <a href="{% url 'O' %}" class="nav-link">
-                                Boshqalar
-                            </a>
-                        </li> -->
+                        <li class="nav-item">
+                            <a href="{% url 'H' %}" class="btn btn-outline-success">Diagrammada ko'rish</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="btn btn-outline-success" id="OTM_T_Export" type="button" href="">Jadvalni yuklab olish</a>
+                        </li>
                     </ul>
                     </div>
                 </nav>
@@ -48,41 +43,31 @@
                                 <th>#</th>
                                 <th>F.I.SH</th>
                                 <th>
-                                    Tuman & Shaxar
+                                    Yashash manzili
                                 </th>
                                 <th>
-                                    Mahalalar
-                                </th>
-                                <th>
-                                    Maktablar №
-                                </th>
-                                <th>
-                                    Kollej №
+                                    Tugatayotgan ta'lim muassasi
                                 </th>
                                 <th>
                                     Topshirgan OTM nomi
                                 </th>
-                                <th>Telefon raqam</th>
                                 <th>Kun/Oy/Yil</th>
                             </tr>
                         </thead>
                         <tbody>
                             {% for i in all_list %}
-                                <tr>
-                                    <td>{{ forloop.counter }}</td>
-                                    {% if i.kollej %}
-                                        <td><a href="{% url 'RKT' pk=i.pk %}">{{i.f_name}}</a></td>
-                                    {% else %}
+                                {% if i.maktabbitiruvchisi.otm_name != None and i.kollejbitiruvchisi.otm_name != None %}
+                                    <tr>
+                                        <td>{{ forloop.counter }}</td>
                                         <td><a href="{% url 'RMT' pk=i.pk %}">{{i.f_name}}</a></td>
-                                    {% endif %}
-                                    <td>{{ i.tuman }}</td>
-                                    <td>{{ i.mahalla }}</td>
-                                    <td>{{ i.maktab }}</td>
-                                    <td>{{ i.kollej }}</td>
-                                    <td>{{ i.univer_sity }}</td>
-                                    <td>(+998) {{ i.phone }}</td>
-                                    <td>{{ i.t_sana }}</td>
-                                </tr>
+                                        <td>{{ i.tuman }} {{ i.mahalla }}</td>
+                                        <td>{{ i.maktabbitiruvchisi.maktab }} {{ i.kollejbitiruvchisi.kollej }}</td>
+                                        <td>{{ i.kollejbitiruvchisi.otm_name }}{{ i.maktabbitiruvchisi.otm_name }}</td>
+                                        <td>{{ i.t_sana }}</td>
+                                    </tr>
+                                {% else %}
+                                    123
+                                {% endif %}
                             {% endfor %}
                         </tbody>
                     </table>
@@ -91,4 +76,20 @@
             </div>
         </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $("#OTM_T_Export").click(function(){
+                $(".table").table2excel({
+                    exclude: ".noExl",
+                    name: "filterlangan barcha talabalar",
+                    filename: `OTM__topshirganlar__ro'yhati__${new Date()}`,
+                    fileext: ".xlsx",
+                    exclude_links: true,
+                    sheetName: "Open Data "
+                });
+            });
+        });
+    </script>
 {% endblock %}
