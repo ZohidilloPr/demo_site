@@ -325,9 +325,12 @@ def OTM_Finish(request):
 
 def OTM_Enter(request):
     all_graduents = Bitiruvchi.objects.all()
-
+    otm_fil = BitiruvchiFilter(request.GET, queryset=all_graduents)
+    all_graduents = otm_fil.qs
     return render(request, "pages/otm_topshirganlar.html", context={
         'all_list':all_graduents,
+        'mkFil':otm_fil,
+        
     })
     
 def AllDistricts(request):

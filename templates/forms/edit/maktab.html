@@ -50,10 +50,6 @@
                 </div>
             </div>
             <div class="mb-3" id="imkonyat">
-                <label for="id_imkonyat" class="form-label">Maqsadi</label>
-                {{ form.maqsad }}
-            </div>
-            <div class="mb-3" id="imkonyat">
                 <label for="id_imkonyat" class="form-label">Kompyuter bilimlari</label>
                 {{ form.imkonyat }}
             </div>
@@ -77,7 +73,7 @@
                 </div>
             </div>
             <div class="mb-3">
-                <label for="id_tuman" class="mb-1">Topshirmoqchi bolgan OTM</label>
+                <label for="id_vil" class="mb-1">Topshirmoqchi bolgan OTM</label>
                 <div class="input-group mb-3">
                     {{ form.vil }}
                     {{ form.otm_name }}
@@ -106,11 +102,11 @@
             $("#id_sport").chosen();
             $("#id_chettili").chosen();
         })
-        $(function(){
-            $("#id_t_sana_day option:selected").html("Kun");
-            $("#id_t_sana_month option:selected").html("Oy");
-            $("#id_t_sana_year option:selected").html("Yil");
-        });
+        // $(function(){
+        //     $("#id_t_sana_day option:selected").html("Kun");
+        //     $("#id_t_sana_month option:selected").html("Oy");
+        //     $("#id_t_sana_year option:selected").html("Yil");
+        // });
         $("#id_idea").change(function(){
             const idea = $(this).val()
             if (idea == "Bor") {

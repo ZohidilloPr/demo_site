@@ -1,4 +1,5 @@
 {% extends 'main.html' %}
+{% load widget_tweaks %}
 
 {% block title %}
     OTM_Enter
@@ -36,8 +37,19 @@
                     </ul>
                     </div>
                 </nav>
+                <div class="my-4 pb-3 bg-shadow-a bg-light">
+                    <form action="" method="get" novalidate class="indexFilter">
+                        <div class="input-group input-group-sm">
+                            <label for="id_tuman" class="input-group-text">Tuman&Shahar</label>
+                            {{ mkFil.form.tuman|add_class:"form-select" }}
+                            <label for="id_mahalla" class="input-group-text ms-3">Mahalla</label>
+                            {{ mkFil.form.mahalla|add_class:"form-select" }}
+                            <input type="submit" value="Qidirish" class="mx-3 btn btn-outline-dark  btn-sm">
+                        </div>
+                    </form>
+                </div>
                 <div class="table-box">
-                    <table class="table">
+                    <table class="table table_b">
                         <thead class="border-info">
                             <tr>
                                 <th>#</th>
@@ -56,13 +68,15 @@
                         </thead>
                         <tbody>
                             {% for i in all_list %}
-                                {% if i.maktabbitiruvchisi.otm_name == None or i.kollejbitiruvchisi.otm_name == None%}
+                                {% if i.maktabbitiruvchisi.otm_name == None %}
                                 
+                                {% elif i.kollejbitiruvchisi.otm_name == None %}   
+
                                 {% elif i.universitetbitiruvchisi %}    
                                 
                                 {% else %}
                                     <tr>
-                                        <td>{{ forloop.counter }}</td>
+                                        <td>{{ counter }}</td>
                                         <td><a href="{% url 'RE' pk=i.pk %}">{{i.f_name}}</a></td>
                                         <td>{{ i.tuman }} {{ i.mahalla }}</td>
                                         <td>{{ i.maktabbitiruvchisi.maktab }} {{ i.universitetbitiruvchisi.universitet }} {{ i.kollejbitiruvchisi.kollej }}</td>

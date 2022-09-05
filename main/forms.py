@@ -111,9 +111,6 @@ class MaktabForm(forms.ModelForm):
                 'class':'form-control w-50',
                 'placeholder':'Boshqa OTM'
             }),
-            'maqsad':forms.Select(attrs={
-                'class':'form-select'
-            }),
             'sinf':forms.Select(attrs={
                 'class':'form-select'
             })
@@ -198,7 +195,7 @@ class KollejForm(forms.ModelForm):
             't_sana': forms.SelectDateWidget(attrs={
                 'id':"datepicker",
                 'class':'form-control'
-            },years=range(1950, 2023)),
+            }, years=range(1950, 2023)),
             'phone':forms.TextInput(attrs={
                 'class':'form-control',
                 'placeholder':'332300701'
@@ -239,9 +236,6 @@ class KollejForm(forms.ModelForm):
             'type':forms.Select(attrs={
                 'id':'type',
                 'class':'form-select',    
-            }),
-            'maqsad':forms.Select(attrs={
-                'class':'form-select'
             }),
             'jins':forms.Select(attrs={
                 'class':'form-select'

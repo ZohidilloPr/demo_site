@@ -30,6 +30,10 @@ a{
 .table-box::-webkit-scrollbar{
     display: none;
 }
+/* .table_b tbody tr td:first-child:before{
+    counter-increment: Serial;      
+    content:counter(Serial); 
+} */
 table thead{
     top: 0%;
     position: sticky;
@@ -356,6 +360,12 @@ thead tr th{
     display: none;
 }
 @media only screen and (max-width: 1290px){
+    body{
+        overflow-x: scroll;
+    }
+    .background-table{
+        height: 0;
+    }
     .tumanlar ul {
         display: grid;
         grid-template-columns: auto auto auto;
